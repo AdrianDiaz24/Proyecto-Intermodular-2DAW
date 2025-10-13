@@ -1,41 +1,40 @@
-name: Generar documentación
+name: Generar documentación automática
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ "main" ]
+  pull_request:
 
 jobs:
-  build:
+  build-docs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout del repositorio
-        uses: actions/checkout@v3
+    - name: Checkout del repositorio
+      uses: actions/checkout@v4
 
-      - name: Instalar Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-      - name: Instalar dependencias
-        run: |
-          npm install
-          npm install jsdoc minami
+    - name: Instalar dependencias
+      run: npm install
 
-      - name: Generar documentación HTML
-        run: npx jsdoc -c jsdoc.json
+    - name: Generar documentación HTML
+      run: npx jsdoc -c jsdoc.json
 
-      - name: Instalar Pandoc
+    - name: Instalar Pandoc
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc
 
-      - name: Generar documentación PDF
-        run: pandoc README.md -o docs/manual.pdf
+    - name: Generar documentación en PDF
+      run: pandoc README.md -o docs/manual.pdf
 
-      - name: Subir artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: Documentacion
-          path: docs/
+    - name: Subir artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentacion
+        path: docs/
+
