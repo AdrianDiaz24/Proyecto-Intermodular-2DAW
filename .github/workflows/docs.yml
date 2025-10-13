@@ -24,10 +24,7 @@ jobs:
     - name: Generar documentación HTML
       run: npx jsdoc -c jsdoc.json
 
-    - name: Instalar Pandoc
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc
+
 
     - name: Generar documentación en PDF
       run: pandoc README.md -o docs/manual.pdf
