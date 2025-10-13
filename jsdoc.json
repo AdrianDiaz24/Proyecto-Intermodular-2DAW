@@ -1,0 +1,11 @@
+{
+  "source": {
+    "include": ["assets/js"],
+    "includePattern": ".js$"
+  },
+  "opts": {
+    "destination": "docs/html",
+    "recurse": true,
+    "template": "default"
+  }
+}
