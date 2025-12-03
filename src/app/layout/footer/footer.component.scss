@@ -1,0 +1,28 @@
+@use 'src/styles/settings/variables' as *;
+
+.c-footer {
+  background-color: $color-secondary;
+  color: $color-text-white;
+  padding: ($spacing-unit * 2) ($spacing-unit * 4);
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__nav {
+    a {
+      color: $color-text-white;
+      text-decoration: none;
+      margin-left: $spacing-unit * 2;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
