@@ -8,9 +8,8 @@ import jakarta.validation.constraints.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductoCreateDTO {
+public class ProductoUpdateDTO {
 
-    @NotBlank(message = "El nombre del producto es obligatorio")
     @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
     private String nombre;
 
@@ -19,9 +18,5 @@ public class ProductoCreateDTO {
 
     @Size(max = 50, message = "El modelo no puede tener más de 50 caracteres")
     private String modelo;
-
-    @NotNull(message = "El ID del usuario es obligatorio")
-    @Positive(message = "El ID del usuario debe ser positivo")
-    private Long usuarioId;
 }
 

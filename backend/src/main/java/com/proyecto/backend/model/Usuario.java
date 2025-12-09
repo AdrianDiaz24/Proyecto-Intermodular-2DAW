@@ -32,12 +32,15 @@ public class Usuario {
     @Column(nullable = false)
     private Role role = Role.USER;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Los productos NO se borran al eliminar usuario (solo incidencias y soluciones)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Producto> productos = new ArrayList<>();
 
+    // Las incidencias SÍ se borran al eliminar usuario
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Incidencia> incidencias = new ArrayList<>();
 
+    // Las soluciones SÍ se borran al eliminar usuario
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Solucion> soluciones = new ArrayList<>();
 

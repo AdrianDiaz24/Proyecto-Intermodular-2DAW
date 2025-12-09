@@ -1,30 +1,4 @@
 package com.proyecto.backend.config;
-}
-    }
-        return source;
-        source.registerCorsConfiguration("/api/**", configuration);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:4201"));
-        CorsConfiguration configuration = new CorsConfiguration();
-    public CorsConfigurationSource corsConfigurationSource() {
-    @Bean
-
-    }
-                .maxAge(3600);
-                .allowCredentials(true)
-                .allowedHeaders("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                .allowedOrigins("http://localhost:4200", "http://localhost:4201")
-        registry.addMapping("/api/**")
-    public void addCorsMappings(CorsRegistry registry) {
-    @Override
-
-public class CorsConfig implements WebMvcConfigurer {
-@Configuration
 
 import java.util.Arrays;
 
@@ -36,4 +10,39 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 
+@Configuration
+public class CorsConfig implements WebMvcConfigurer {
+
+    /**
+     * Configura CORS para la aplicación
+     * Permite que el frontend (en puertos 4200 y 4201) acceda a la API
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:4200", "http://localhost:4201")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);
+    }
+
+    /**
+     * Configuración alternativa usando CorsConfigurationSource
+     * Puede ser útil para configuraciones más complejas
+     */
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:4201"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", configuration);
+        return source;
+    }
+}
 

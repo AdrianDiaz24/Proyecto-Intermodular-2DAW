@@ -50,7 +50,7 @@ public class Incidencia {
     }
 
     public enum Estado {
-        ABIERTA, RESUELTA, CERRADA
+        ABIERTA, EN_PROGRESO, CERRADA
     }
 }
 
