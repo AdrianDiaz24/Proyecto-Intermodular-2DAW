@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AgentMigrationStateService">
-    <option name="migrationStatus" value="COMPLETED" />
+    <option name="pendingSessionIds">
+      <option value="bfa1e05b-0d4d-49d0-a779-2cc6c86fcd05" />
+    </option>
+    <option name="pendingTurns">
+      <map>
+        <entry key="bfa1e05b-0d4d-49d0-a779-2cc6c86fcd05">
+          <value>
+            <set>
+              <option value="98f6305b-9185-496e-9580-3104b4c21214" />
+              <option value="b2b6fa4c-a1a4-4175-a0b8-2bdb7b18eabc" />
+              <option value="ff4d6cb7-ee51-4853-9bef-af19f713aea2" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <pendingWorkingSetItems>
+      <entry key="bfa1e05b-0d4d-49d0-a779-2cc6c86fcd05">
+        <set>
+          <option value="file://$PROJECT_DIR$/backend/README.md" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/model/Usuario.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/model/Producto.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/model/Incidencia.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/model/Solucion.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/dto/UsuarioDTO.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/dto/UsuarioCreateDTO.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/dto/ProductoDTO.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/dto/ProductoCreateDTO.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/dto/IncidenciaDTO.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/dto/IncidenciaCreateDTO.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/dto/SolucionDTO.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/dto/SolucionCreateDTO.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/repository/UsuarioRepository.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/repository/ProductoRepository.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/repository/IncidenciaRepository.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/java/com/proyecto/backend/repository/SolucionRepository.java" />
+          <option value="file://$PROJECT_DIR$/backend/src/main/resources/application.properties" />
+        </set>
+      </entry>
+    </pendingWorkingSetItems>
   </component>
 </project>
