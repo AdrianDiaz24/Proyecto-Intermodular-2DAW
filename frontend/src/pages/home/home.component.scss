@@ -1,0 +1,93 @@
+// Importamos variables para usarlas aquí
+@use 'src/styles/settings/variables' as *;
+
+.p-home-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh; // Ocupa TODA la pantalla
+
+  // Tu imagen de fondo (la del taller)
+  background-image: url('/assets/images/hero-taller.jpg');
+  background-size: cover;
+  background-position: center;
+
+  &__overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+  }
+
+  &__text-container {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+    z-index: 2;
+    text-align: left;
+  }
+
+  &__title-line-1,
+  &__title-line-2 {
+    font-size: 4.5rem; // Tamaño de fuente grande para el título
+    font-weight: 800;
+    color: $color-text-black;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  &__subtitle {
+    font-size: 1.75rem; // Tamaño de fuente más pequeño para el subtítulo
+    opacity: 0.9;
+    color: $color-text-black;
+    margin-top: 1rem;
+  }
+
+  &__search-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: flex;
+    background: $color-text-white;
+    border-radius: 45px;
+    padding: 0.3rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 700px; // Ancho máximo del buscador
+
+    input {
+      flex-grow: 1;
+      border: none;
+      background: transparent;
+      padding: 0.5rem 1.5rem;
+      font-size: 1.1rem;
+      outline: none;
+      border-radius: 45px;
+    }
+
+    button {
+      background-color: $color-primary;
+      color: $color-text-white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%; // Botón redondo
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        transform: scale(1.05);
+        background-color: $color-primary-hover;
+      }
+
+      img {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
