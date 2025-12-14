@@ -1,11 +1,4 @@
-+114
--1
-Lines changed: 114 additions & 1 deletion
 
-
-Original file line number	Diff line number	Diff line change
-@@ -1 +1,114 @@
-# Proyecto-Intermodular-2DAW
 # Proyecto-Intermodular-2DAW
 ## Herramientas usadas
 - JSdoc
