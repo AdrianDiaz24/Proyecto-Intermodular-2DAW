@@ -23,6 +23,30 @@
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
     color: $color-accent;
+    text-decoration: none;
+    cursor: pointer;
+    @include transition(color);
+
+    &:hover {
+      color: lighten($color-accent, 10%);
+    }
+  }
+
+  &__user-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    background-color: rgba($color-text-white, 0.1);
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      background-color: rgba($color-text-white, 0.2);
+      transform: scale(1.05);
+    }
   }
 
   &__user-btn_img {

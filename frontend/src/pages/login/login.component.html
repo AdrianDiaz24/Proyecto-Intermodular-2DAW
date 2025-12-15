@@ -1,0 +1,68 @@
+<div class="login-page">
+  <div class="login-card">
+    <h1 class="login-title">Inicia sesión</h1>
+    <p class="login-subtitle">Accede a tu cuenta de ReparaFácil</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Correo electrónico *</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="tu@email.com"
+          class="form-control"
+          [class.is-invalid]="submitted && email?.invalid"
+        />
+        <div *ngIf="submitted && email?.invalid" class="error-message">
+          <span *ngIf="email?.errors?.['required']">El email es requerido</span>
+          <span *ngIf="email?.errors?.['email']">Email inválido</span>
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="password">Contraseña *</label>
+        <div class="password-wrapper">
+          <input
+            id="password"
+            [type]="passwordVisible ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Mínimo 6 caracteres"
+            class="form-control"
+            [class.is-invalid]="submitted && password?.invalid"
+          />
+          <button
+            type="button"
+            class="toggle-btn"
+            (click)="togglePassword()"
+            title="Mostrar/ocultar contraseña"
+          >
+            <i [class]="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+        <div *ngIf="submitted && password?.invalid" class="error-message">
+          <span *ngIf="password?.errors?.['required']">La contraseña es requerida</span>
+          <span *ngIf="password?.errors?.['minlength']">Mínimo 6 caracteres</span>
+        </div>
+      </div>
+
+      <!-- Botón submit -->
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="submitted && loginForm.invalid"
+      >
+        Inicia sesión
+      </button>
+
+      <!-- Link de registro -->
+      <p class="register-link">
+        ¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a>
+      </p>
+    </form>
+  </div>
+</div>
+

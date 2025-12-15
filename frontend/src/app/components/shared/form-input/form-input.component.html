@@ -1,0 +1,32 @@
+<div class="form-input">
+  <!-- Label con asterisco si es requerido -->
+  <label *ngIf="label" [for]="id" class="form-input__label">
+    {{ label }}
+    <span *ngIf="required" class="form-input__required">*</span>
+  </label>
+
+  <!-- Input -->
+  <input
+    [id]="id"
+    [type]="type"
+    [name]="name"
+    [placeholder]="placeholder"
+    [required]="required"
+    [value]="value"
+    class="form-input__input"
+    [class.form-input__input--error]="errorMessage"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+
+  <!-- Mensaje de error -->
+  <span *ngIf="errorMessage" class="form-input__error">
+    {{ errorMessage }}
+  </span>
+
+  <!-- Texto de ayuda -->
+  <span *ngIf="helpText && !errorMessage" class="form-input__help">
+    {{ helpText }}
+  </span>
+</div>
+

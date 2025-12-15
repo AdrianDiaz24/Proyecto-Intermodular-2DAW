@@ -1,0 +1,99 @@
+<div class="login-form">
+  <!-- Encabezado -->
+  <div class="login-form__header">
+    <h1 class="login-form__title">{{ title }}</h1>
+    <p class="login-form__subtitle">{{ subtitle }}</p>
+  </div>
+
+  <!-- Formulario con estructura semántica -->
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form__form">
+
+    <!-- Fieldset para agrupar campos de credenciales -->
+    <fieldset class="login-form__fieldset">
+      <legend class="login-form__legend">Credenciales de acceso</legend>
+
+      <!-- Email input -->
+      <div class="form-input">
+        <label for="email" class="form-input__label">
+          Correo electrónico
+          <span class="form-input__required">*</span>
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="tu@email.com"
+          required
+          class="form-input__input"
+          [class.form-input__input--error]="submitted && email?.invalid"
+          formControlName="email"
+        />
+
+        <span
+          *ngIf="submitted && email?.invalid"
+          class="form-input__error"
+        >
+          {{ email?.errors?.['required'] ? 'Por favor ingresa un email' : 'Email inválido' }}
+        </span>
+      </div>
+
+      <!-- Contraseña input -->
+      <div class="form-input">
+        <label for="password" class="form-input__label">
+          Contraseña
+          <span class="form-input__required">*</span>
+        </label>
+
+        <div class="password-input">
+          <input
+            id="password"
+            [type]="passwordVisible ? 'text' : 'password'"
+            name="password"
+            placeholder="Mínimo 6 caracteres"
+            required
+            class="form-input__input"
+            [class.form-input__input--error]="submitted && password?.invalid"
+            formControlName="password"
+          />
+
+          <button
+            type="button"
+            class="password-input__toggle"
+            (click)="togglePasswordVisibility()"
+            [title]="passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+            aria-label="Toggle password visibility"
+          >
+            <i [class]="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+
+        <span
+          *ngIf="submitted && password?.invalid"
+          class="form-input__error"
+        >
+          {{ password?.errors?.['required'] ? 'Por favor ingresa una contraseña' : 'Mínimo 6 caracteres' }}
+        </span>
+      </div>
+    </fieldset>
+
+    <!-- Botón submit -->
+    <button
+      type="submit"
+      class="login-form__submit"
+      [disabled]="loading || (submitted && loginForm.invalid)"
+      [attr.aria-busy]="loading"
+    >
+      <span *ngIf="!loading">{{ submitButtonText }}</span>
+      <span *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i> Cargando...
+      </span>
+    </button>
+
+    <!-- Link de registro -->
+    <p class="login-form__footer">
+      <a routerLink="/register" class="login-form__link">{{ registerLinkText }}</a>
+    </p>
+  </form>
+</div>
+

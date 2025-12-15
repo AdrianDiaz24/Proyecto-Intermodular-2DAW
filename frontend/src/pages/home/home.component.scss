@@ -90,9 +90,11 @@
       margin-right: 0.3rem;
 
       img {
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 14px;
         display: block;
+        object-fit: contain;
+        object-position: center;
       }
 
       &:hover {
