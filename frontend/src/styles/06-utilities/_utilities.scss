@@ -1,0 +1,276 @@
+
+
+@use '../settings/variables' as *;
+@use '../01-tools/mixins' as *;
+
+// Visibilidad
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+// Texto
+.text {
+  &--center {
+    text-align: center;
+  }
+
+  &--left {
+    text-align: left;
+  }
+
+  &--right {
+    text-align: right;
+  }
+
+  &--justify {
+    text-align: justify;
+  }
+
+  &--bold {
+    font-weight: $font-weight-bold;
+  }
+
+  &--semibold {
+    font-weight: $font-weight-semibold;
+  }
+
+  &--medium {
+    font-weight: $font-weight-medium;
+  }
+
+  &--italic {
+    font-style: italic;
+  }
+
+  &--primary {
+    color: $color-primary;
+  }
+
+  &--secondary {
+    color: $color-secondary;
+  }
+
+  &--accent {
+    color: $color-accent;
+  }
+
+  &--success {
+    color: $color-success;
+  }
+
+  &--error {
+    color: $color-error;
+  }
+
+  &--muted {
+    color: $color-gray-500;
+  }
+
+  &--xs {
+    font-size: $font-size-xs;
+  }
+
+  &--sm {
+    font-size: $font-size-sm;
+  }
+
+  &--base {
+    font-size: $font-size-base;
+  }
+
+  &--lg {
+    font-size: $font-size-lg;
+  }
+
+  &--xl {
+    font-size: $font-size-xl;
+  }
+
+  &--truncate {
+    @include text-truncate();
+  }
+
+  &--clamp-2 {
+    @include text-truncate(2);
+  }
+
+  &--clamp-3 {
+    @include text-truncate(3);
+  }
+}
+
+// Display
+.d {
+  &-none {
+    display: none;
+  }
+
+  &-inline {
+    display: inline;
+  }
+
+  &-inline-block {
+    display: inline-block;
+  }
+
+  &-block {
+    display: block;
+  }
+
+  &-flex {
+    display: flex;
+  }
+
+  &-grid {
+    display: grid;
+  }
+}
+
+// Flex utilities
+.flex {
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  &--nowrap {
+    flex-wrap: nowrap;
+  }
+
+  &--gap-1 {
+    gap: $spacing-1;
+  }
+
+  &--gap-2 {
+    gap: $spacing-2;
+  }
+
+  &--gap-3 {
+    gap: $spacing-3;
+  }
+
+  &--gap-4 {
+    gap: $spacing-4;
+  }
+
+  &--gap-6 {
+    gap: $spacing-6;
+  }
+}
+
+// Bordes
+.border {
+  border: $border-thin solid $color-gray-300;
+
+  &--none {
+    border: none;
+  }
+
+  &--top {
+    border-top: $border-thin solid $color-gray-300;
+  }
+
+  &--bottom {
+    border-bottom: $border-thin solid $color-gray-300;
+  }
+
+  &--primary {
+    border-color: $color-primary;
+  }
+
+  &--rounded {
+    border-radius: $radius-lg;
+  }
+
+  &--rounded-full {
+    border-radius: $radius-full;
+  }
+}
+
+// Sombras
+.shadow {
+  &-sm {
+    box-shadow: $shadow-sm;
+  }
+
+  &-md {
+    box-shadow: $shadow-md;
+  }
+
+  &-lg {
+    box-shadow: $shadow-lg;
+  }
+
+  &-xl {
+    box-shadow: $shadow-xl;
+  }
+
+  &-none {
+    box-shadow: none;
+  }
+}
+
+// Opacidad
+.opacity {
+  &-50 {
+    opacity: 0.5;
+  }
+
+  &-75 {
+    opacity: 0.75;
+  }
+
+  &-100 {
+    opacity: 1;
+  }
+}
+
+// Transiciones
+.transition {
+  @include transition(all);
+
+  &--fast {
+    @include transition(all, $transition-fast);
+  }
+
+  &--slow {
+    @include transition(all, $transition-slow);
+  }
+
+  &--no {
+    transition: none;
+  }
+}
+
+// Responsive display
+@include media-query('sm') {
+  .hidden-sm {
+    display: none !important;
+  }
+}
+
+@include media-query('md') {
+  .hidden-md {
+    display: none !important;
+  }
+}
+
+@include media-query('lg') {
+  .hidden-lg {
+    display: none !important;
+  }
+}
+
+@include media-query('xl') {
+  .hidden-xl {
+    display: none !important;
+  }
+}
+

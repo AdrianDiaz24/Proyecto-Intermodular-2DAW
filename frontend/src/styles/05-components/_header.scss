@@ -1,0 +1,46 @@
+
+
+
+@use '../settings/variables' as *;
+@use '../01-tools/mixins' as *;
+
+header {
+  background-color: $color-secondary;
+  color: $color-text-white;
+  padding: $spacing-4 $spacing-6;
+  box-shadow: $shadow-md;
+
+  nav {
+    @include flex-center(row, space-between, center);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-4;
+
+    ul {
+      @include flex-center(row, center);
+      gap: $spacing-6;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        a {
+          color: $color-text-white;
+          font-weight: $font-weight-medium;
+          @include transition(color);
+
+          &:hover {
+            color: $color-accent;
+          }
+        }
+      }
+    }
+  }
+
+  .logo {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-accent;
+    padding: $spacing-3 $spacing-4;
+  }
+}

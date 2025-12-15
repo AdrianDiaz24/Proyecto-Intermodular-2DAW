@@ -1,10 +1,19 @@
 // Importamos variables para usarlas aquí
 @use 'src/styles/settings/variables' as *;
 
+:host {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .p-home-hero {
   position: relative;
   width: 100%;
-  height: 100vh; // Ocupa TODA la pantalla
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 
   // Tu imagen de fondo (la del taller)
   background-image: url('/assets/images/hero-taller.jpg');
@@ -14,20 +23,21 @@
   &__overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 1;
+    z-index: 0;
+    background-color: transparent; // Hacer transparente para ver el texto
   }
 
   &__text-container {
     position: absolute;
     top: 4rem;
     left: 4rem;
-    z-index: 2;
+    z-index: 10;
     text-align: left;
   }
 
   &__title-line-1,
   &__title-line-2 {
-    font-size: 4.5rem; // Tamaño de fuente grande para el título
+    font-size: 4.5rem;
     font-weight: 800;
     color: $color-text-black;
     margin: 0;
@@ -35,8 +45,7 @@
   }
 
   &__subtitle {
-    font-size: 1.75rem; // Tamaño de fuente más pequeño para el subtítulo
-    opacity: 0.9;
+    font-size: 1.75rem;
     color: $color-text-black;
     margin-top: 1rem;
   }
@@ -46,14 +55,14 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2;
+    z-index: 5;
     display: flex;
     background: $color-text-white;
     border-radius: 45px;
     padding: 0.3rem;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     width: 100%;
-    max-width: 700px; // Ancho máximo del buscador
+    max-width: 700px;
 
     input {
       flex-grow: 1;
@@ -71,22 +80,23 @@
       border: none;
       width: 36px;
       height: 36px;
-      border-radius: 50%; // Botón redondo
+      border-radius: 50%;
       cursor: pointer;
-      font-size: 1.5rem;
-      transition: all 0.3s;
+      padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      &:hover {
-        transform: scale(1.05);
-        background-color: $color-primary-hover;
-      }
+      flex-shrink: 0;
+      margin-right: 0.3rem;
 
       img {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
+        display: block;
+      }
+
+      &:hover {
+        background-color: $color-primary-hover;
       }
     }
   }

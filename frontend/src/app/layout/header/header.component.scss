@@ -1,0 +1,39 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.c-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4 $spacing-6;
+  background-color: $color-secondary;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-accent;
+  }
+
+  &__user-btn_img {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    @include transition(transform);
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+

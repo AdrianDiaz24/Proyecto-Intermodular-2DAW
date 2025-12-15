@@ -1,0 +1,34 @@
+@use 'src/styles/settings/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+app-header {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+router-outlet {
+  display: contents;
+}
+
+app-home {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+app-footer {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+

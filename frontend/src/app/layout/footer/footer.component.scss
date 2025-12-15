@@ -1,9 +1,19 @@
 @use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 .c-footer {
   background-color: $color-secondary;
   color: $color-text-white;
-  padding: ($spacing-unit * 2) ($spacing-unit * 4);
+  padding: $spacing-4 $spacing-6;
+  margin: 0;
+  width: 100%;
 
   &__content {
     display: flex;
@@ -17,7 +27,7 @@
     a {
       color: $color-text-white;
       text-decoration: none;
-      margin-left: $spacing-unit * 2;
+      margin-left: $spacing-4;
 
       &:hover {
         text-decoration: underline;

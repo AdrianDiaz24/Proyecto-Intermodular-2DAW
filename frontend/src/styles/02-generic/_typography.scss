@@ -1,0 +1,78 @@
+
+
+@use '../settings/variables' as *;
+
+// Importar fuente Open Sans
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+// Escalas de tamaño reutilizables
+.heading {
+  &-1 {
+    font-size: $font-size-5xl;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+  }
+
+  &-2 {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+  }
+
+  &-3 {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+  }
+
+  &-4 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
+  }
+
+  &-5 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
+  }
+
+  &-6 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
+  }
+}
+
+.body {
+  &-text {
+    font-size: $font-size-base;
+    line-height: $line-height-normal;
+  }
+
+  &-small {
+    font-size: $font-size-sm;
+    line-height: $line-height-normal;
+  }
+
+  &-xs {
+    font-size: $font-size-xs;
+    line-height: $line-height-normal;
+  }
+}
+
+.caption {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-relaxed;
+  color: $color-gray-500;
+}
+
+.overline {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-gray-600;
+}
+

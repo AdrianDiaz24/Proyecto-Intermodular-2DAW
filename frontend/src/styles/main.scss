@@ -1,12 +1,23 @@
-/* src/styles/main.scss */
 
-// 1. Configuración (Variables globales)
-@use 'settings/variables';
+@use 'settings/variables' as *;
 
-// 2. Base y Resets (Para limpiar el navegador)
-@use 'generic/reset';
-// @use 'objects/layouts'; // Descomenta si ya creaste algo aquí
 
-// 3. Componentes Globales (Aquí cargamos tu Header)
-@use 'components/header';
-// @use 'components/footer'; // Descomenta cuando tengas footer
+@use '01-tools/mixins' as *;
+
+
+@use '02-generic/reset' as *;
+@use '02-generic/typography' as *;
+
+
+@use '03-objects/layouts' as *;
+
+
+@use '04-elements/base' as *;
+
+
+@use '05-components/components' as *;
+@use '05-components/header' as *;
+@use '05-components/footer' as *;
+
+
+@use '06-utilities/utilities' as *;

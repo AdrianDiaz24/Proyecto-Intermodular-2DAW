@@ -1,0 +1,98 @@
+
+
+@use '../settings/variables' as *;
+@use '../01-tools/mixins' as *;
+
+footer {
+  background-color: $color-secondary;
+  color: $color-text-white;
+  padding: $spacing-12 $spacing-4 $spacing-6;
+  margin-top: $spacing-16;
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-8;
+    margin-bottom: $spacing-12;
+
+    @include media-query('md') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .footer-section {
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-4;
+      color: $color-accent;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin-bottom: $spacing-2;
+
+        a {
+          color: $color-text-white;
+          @include transition(color);
+
+          &:hover {
+            color: $color-accent;
+          }
+        }
+      }
+    }
+  }
+
+  .footer-divider {
+    border-top: $border-thin solid rgba($color-text-white, 0.2);
+    margin: $spacing-8 0;
+  }
+
+  .footer-bottom {
+    @include flex-center(row, space-between, center);
+    flex-wrap: wrap;
+    gap: $spacing-4;
+
+    @include media-query('md') {
+      flex-wrap: nowrap;
+    }
+
+    p {
+      margin: 0;
+      font-size: $font-size-sm;
+      color: $color-gray-300;
+    }
+
+    .social-links {
+      @include flex-center(row, center);
+      gap: $spacing-4;
+
+      a {
+        width: 40px;
+        height: 40px;
+        @include flex-center();
+        border-radius: $radius-full;
+        background-color: rgba($color-accent, 0.2);
+        color: $color-accent;
+        @include transition(all);
+
+        &:hover {
+          background-color: $color-accent;
+          color: $color-secondary;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
