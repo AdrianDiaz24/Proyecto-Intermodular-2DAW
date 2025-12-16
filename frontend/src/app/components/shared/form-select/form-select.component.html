@@ -1,0 +1,40 @@
+<div class="form-select">
+  <!-- Label asociado al select mediante [for] e [id] -->
+  <label *ngIf="label" [for]="id" class="form-select__label">
+    {{ label }}
+    <span *ngIf="required" class="form-select__required">*</span>
+  </label>
+
+  <!-- Select con opciones dinámicas -->
+  <select
+    [id]="id"
+    [name]="name"
+    [required]="required"
+    [value]="value"
+    class="form-select__input"
+    [class.form-select__input--error]="errorMessage"
+    (change)="onSelectChange($event)"
+    (blur)="onBlur()"
+  >
+    <!-- Opción de placeholder -->
+    <option *ngIf="placeholder" [value]="" [disabled]="!value">
+      {{ placeholder }}
+    </option>
+
+    <!-- Opciones dinámicas -->
+    <option *ngFor="let option of options" [value]="option.value" [disabled]="option.disabled">
+      {{ option.label }}
+    </option>
+  </select>
+
+  <!-- Mensaje de error -->
+  <span *ngIf="errorMessage" class="form-select__error">
+    {{ errorMessage }}
+  </span>
+
+  <!-- Texto de ayuda -->
+  <span *ngIf="helpText && !errorMessage" class="form-select__help">
+    {{ helpText }}
+  </span>
+</div>
+

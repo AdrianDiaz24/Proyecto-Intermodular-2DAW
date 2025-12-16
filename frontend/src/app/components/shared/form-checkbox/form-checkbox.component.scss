@@ -1,0 +1,104 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+.form-checkbox {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $spacing-6;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: $color-primary;
+    @include transition(all);
+
+    &:hover:not(:disabled) {
+      transform: scale(1.1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    // Aspecto personalizado del checkbox
+    appearance: none;
+    -webkit-appearance: none;
+    border: 2px solid $color-gray-300;
+    border-radius: $radius-sm;
+    background-color: $color-text-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include transition(border-color, background-color);
+
+    &:checked {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='white' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 14px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background-color: $color-gray-100;
+      border-color: $color-gray-300;
+      cursor: not-allowed;
+    }
+  }
+
+  &__label {
+    display: inline;
+    font-size: $font-size-base;
+    color: $color-text-black;
+    font-weight: $font-weight-regular;
+    cursor: pointer;
+    user-select: none;
+    @include transition(color);
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__error {
+    display: block;
+    margin-top: $spacing-1;
+    margin-left: $spacing-7;
+    color: $color-error;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+  &__help {
+    display: block;
+    margin-top: $spacing-1;
+    margin-left: $spacing-7;
+    color: $color-gray-500;
+    font-size: $font-size-sm;
+    font-style: italic;
+  }
+}
+

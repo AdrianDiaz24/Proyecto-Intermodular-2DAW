@@ -1,0 +1,19 @@
+<div [ngClass]="alertClasses" *ngIf="isVisible" class="alert">
+  <!-- Icono según el tipo de alerta -->
+  <i [class]="iconClass" class="alert__icon" aria-hidden="true"></i>
+
+  <!-- Mensaje de la alerta -->
+  <span class="alert__message">{{ message }}</span>
+
+  <!-- Botón de cerrar (opcional) -->
+  <button
+    *ngIf="closeable"
+    type="button"
+    class="alert__close"
+    (click)="closeAlert()"
+    aria-label="Cerrar alerta"
+  >
+    <i class="fas fa-times" aria-hidden="true"></i>
+  </button>
+</div>
+

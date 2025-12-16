@@ -1,0 +1,33 @@
+<div class="form-checkbox">
+  <!-- Contenedor del checkbox con label -->
+  <div class="form-checkbox__wrapper">
+    <!-- Input checkbox -->
+    <input
+      type="checkbox"
+      [id]="id"
+      [name]="name"
+      [value]="value"
+      [checked]="isChecked"
+      [disabled]="disabled"
+      class="form-checkbox__input"
+      (change)="onCheckboxChange($event)"
+      (blur)="onBlur()"
+    />
+
+    <!-- Label asociado al checkbox mediante [for] e [id] -->
+    <label [for]="id" class="form-checkbox__label">
+      {{ label }}
+    </label>
+  </div>
+
+  <!-- Mensaje de error -->
+  <span *ngIf="errorMessage" class="form-checkbox__error">
+    {{ errorMessage }}
+  </span>
+
+  <!-- Texto de ayuda -->
+  <span *ngIf="helpText && !errorMessage" class="form-checkbox__help">
+    {{ helpText }}
+  </span>
+</div>
+

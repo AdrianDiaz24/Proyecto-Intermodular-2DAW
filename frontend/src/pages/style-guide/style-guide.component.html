@@ -1,0 +1,211 @@
+<main class="style-guide">
+  <div class="style-guide__container">
+    <!-- ENCABEZADO -->
+    <section class="style-guide__section">
+      <h1>Style Guide - Componentes</h1>
+      <p>Guía completa de todos los componentes disponibles en la aplicación.</p>
+    </section>
+
+    <!-- BOTONES -->
+    <section class="style-guide__section">
+      <h2>Botones</h2>
+
+      <h3>Variantes</h3>
+      <div class="style-guide__row">
+        <app-button variant="primary">Primary</app-button>
+        <app-button variant="secondary">Secondary</app-button>
+        <app-button variant="ghost">Ghost</app-button>
+        <app-button variant="danger">Danger</app-button>
+      </div>
+
+      <h3>Tamaños</h3>
+      <div class="style-guide__row">
+        <app-button variant="primary" size="sm">Pequeño</app-button>
+        <app-button variant="primary" size="md">Mediano</app-button>
+        <app-button variant="primary" size="lg">Grande</app-button>
+      </div>
+
+      <h3>Estados</h3>
+      <div class="style-guide__row">
+        <app-button variant="primary">Normal</app-button>
+        <app-button variant="primary" [disabled]="true">Disabled</app-button>
+        <app-button variant="primary" [fullWidth]="true">Full Width</app-button>
+      </div>
+    </section>
+
+    <!-- CARDS -->
+    <section class="style-guide__section">
+      <h2>Cards</h2>
+
+      <h3>Variante Básica</h3>
+      <div class="style-guide__cards">
+        <app-card
+          variant="basic"
+          title="Card con Imagen"
+          description="Esta es una tarjeta básica con título y descripción."
+          imageSrc="assets/images/hero-taller.jpg"
+          imageAlt="Imagen del taller"
+          [interactive]="true"
+        ></app-card>
+
+        <app-card
+          variant="basic"
+          title="Card sin Imagen"
+          description="Tarjeta sin imagen, solo con título y descripción."
+          [interactive]="true"
+        ></app-card>
+      </div>
+
+      <h3>Variante Horizontal</h3>
+      <app-card
+        variant="horizontal"
+        title="Card Horizontal"
+        description="Tarjeta con layout horizontal, imagen a la izquierda."
+        imageSrc="assets/images/hero-taller.jpg"
+        imageAlt="Imagen del taller"
+        [interactive]="true"
+      ></app-card>
+    </section>
+
+    <!-- FORMULARIOS -->
+    <section class="style-guide__section">
+      <h2>Formularios</h2>
+
+      <h3>Form Input</h3>
+      <div class="style-guide__form">
+        <app-form-input
+          label="Email"
+          type="email"
+          placeholder="tu@email.com"
+          [required]="true"
+        ></app-form-input>
+
+        <app-form-input
+          label="Contraseña"
+          type="password"
+          placeholder="••••••••"
+          [showPasswordToggle]="true"
+        ></app-form-input>
+
+        <app-form-input
+          label="Con error"
+          type="text"
+          errorMessage="Este campo es inválido"
+        ></app-form-input>
+      </div>
+
+      <h3>Form Textarea</h3>
+      <div class="style-guide__form">
+        <app-form-textarea
+          label="Descripción"
+          placeholder="Escribe una descripción..."
+          [rows]="4"
+        ></app-form-textarea>
+
+        <app-form-textarea
+          label="Con contador"
+          placeholder="Máximo 100 caracteres"
+          [maxLength]="100"
+          [rows]="3"
+        ></app-form-textarea>
+      </div>
+
+      <h3>Form Select</h3>
+      <div class="style-guide__form">
+        <app-form-select
+          label="Selecciona una opción"
+          [options]="selectOptions"
+        ></app-form-select>
+
+        <app-form-select
+          label="Con error"
+          [options]="selectOptions"
+          errorMessage="Selecciona una opción válida"
+        ></app-form-select>
+      </div>
+
+      <h3>Form Checkbox</h3>
+      <div class="style-guide__form">
+        <app-form-checkbox
+          label="Acepto los términos y condiciones"
+        ></app-form-checkbox>
+
+        <app-form-checkbox
+          label="Checkbox deshabilitado"
+          [disabled]="true"
+        ></app-form-checkbox>
+      </div>
+    </section>
+
+    <!-- ALERTAS -->
+    <section class="style-guide__section">
+      <h2>Alertas</h2>
+
+      <h3>Tipos de Alerta</h3>
+      <div class="style-guide__alerts">
+        <app-alert
+          *ngIf="isAlertVisible('success')"
+          type="success"
+          message="¡Operación completada exitosamente!"
+          [closeable]="true"
+          (close)="onAlertClose('success')"
+        ></app-alert>
+
+        <app-alert
+          *ngIf="isAlertVisible('error')"
+          type="error"
+          message="Ha ocurrido un error."
+          [closeable]="true"
+          (close)="onAlertClose('error')"
+        ></app-alert>
+
+        <app-alert
+          *ngIf="isAlertVisible('warning')"
+          type="warning"
+          message="Advertencia importante."
+          [closeable]="true"
+          (close)="onAlertClose('warning')"
+        ></app-alert>
+
+        <app-alert
+          *ngIf="isAlertVisible('info')"
+          type="info"
+          message="Información para el usuario."
+          [closeable]="true"
+          (close)="onAlertClose('info')"
+        ></app-alert>
+      </div>
+
+      <h3>Sin Botón de Cerrar</h3>
+      <div class="style-guide__alerts">
+        <app-alert
+          type="success"
+          message="Alerta permanente"
+          [closeable]="false"
+        ></app-alert>
+      </div>
+    </section>
+
+    <!-- COLORES -->
+    <section class="style-guide__section">
+      <h2>Paleta de Colores</h2>
+      <div class="style-guide__colors">
+        <div class="style-guide__color" style="background-color: #659CCA;">
+          <span>Primary #659CCA</span>
+        </div>
+        <div class="style-guide__color" style="background-color: #134672;">
+          <span>Secondary #134672</span>
+        </div>
+        <div class="style-guide__color" style="background-color: #CA681F;">
+          <span>Accent #CA681F</span>
+        </div>
+        <div class="style-guide__color" style="background-color: #15CA31;">
+          <span>Success #15CA31</span>
+        </div>
+        <div class="style-guide__color" style="background-color: #EA1D1D;">
+          <span>Error #EA1D1D</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

@@ -13,10 +13,17 @@ import { FooterComponent } from './layout/footer/footer.component';
 // Shared Components
 import { FormInputComponent } from './components/shared/form-input/form-input.component';
 import { LoginFormComponent } from './components/shared/login-form/login-form.component';
+import { ButtonComponent } from './components/shared/button/button.component';
+import { CardComponent } from './components/shared/card/card.component';
+import { FormTextareaComponent } from './components/shared/form-textarea/form-textarea.component';
+import { FormSelectComponent } from './components/shared/form-select/form-select.component';
+import { FormCheckboxComponent } from './components/shared/form-checkbox/form-checkbox.component';
+import { AlertComponent } from './components/shared/alert/alert.component';
 
 // Pages
 import { HomeComponent } from '../pages/home/home.component';
 import { LoginComponent } from '../pages/login/login.component';
+import { StyleGuideComponent } from '../pages/style-guide/style-guide.component';
 
 @NgModule({
     declarations: [
@@ -25,8 +32,15 @@ import { LoginComponent } from '../pages/login/login.component';
         FooterComponent,
         FormInputComponent,
         LoginFormComponent,
+        ButtonComponent,
+        CardComponent,
+        FormTextareaComponent,
+        FormSelectComponent,
+        FormCheckboxComponent,
+        AlertComponent,
         HomeComponent,
-        LoginComponent
+        LoginComponent,
+        StyleGuideComponent
     ],
     imports: [
         BrowserModule,

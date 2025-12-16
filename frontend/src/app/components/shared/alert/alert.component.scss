@@ -1,0 +1,89 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  padding: $spacing-4 $spacing-6;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  @include transition(all);
+  margin-bottom: $spacing-4;
+
+
+  &__icon {
+    flex-shrink: 0;
+    font-size: $font-size-xl;
+  }
+
+  &__message {
+    flex: 1;
+  }
+
+  &__close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $spacing-1 $spacing-2;
+    color: inherit;
+    font-size: $font-size-lg;
+    @include transition(opacity, transform);
+
+    &:hover {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+
+  &--success {
+    background-color: rgba($color-success, 0.1);
+    color: darken($color-success, 10%);
+    border-left: 4px solid $color-success;
+
+    .alert__icon {
+      color: $color-success;
+    }
+  }
+
+
+  &--error {
+    background-color: rgba($color-error, 0.1);
+    color: darken($color-error, 10%);
+    border-left: 4px solid $color-error;
+
+    .alert__icon {
+      color: $color-error;
+    }
+  }
+
+
+  &--warning {
+    background-color: rgba($color-accent, 0.1);
+    color: darken($color-accent, 10%);
+    border-left: 4px solid $color-accent;
+
+    .alert__icon {
+      color: $color-accent;
+    }
+  }
+
+
+  &--info {
+    background-color: rgba($color-primary, 0.1);
+    color: darken($color-primary, 10%);
+    border-left: 4px solid $color-primary;
+
+    .alert__icon {
+      color: $color-primary;
+    }
+  }
+}
+

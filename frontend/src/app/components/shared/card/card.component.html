@@ -1,0 +1,61 @@
+<!-- Contenedor principal de la card con clases dinámicas -->
+<div [ngClass]="cardClasses">
+  <!-- VARIANTE BÁSICA: Imagen en la parte superior -->
+  <ng-container *ngIf="variant === 'basic'">
+    <!-- Imagen opcional (solo si imageSrc está definido) -->
+    <div *ngIf="hasImage" class="card__image">
+      <img
+        [src]="imageSrc"
+        [alt]="imageAlt || title"
+        class="card__image-element"
+      />
+    </div>
+
+    <!-- Contenedor de contenido -->
+    <div class="card__content">
+      <!-- Título -->
+      <h3 *ngIf="title" class="card__title">{{ title }}</h3>
+
+      <!-- Descripción -->
+      <p *ngIf="description" class="card__description">{{ description }}</p>
+
+      <!-- Botón de acción -->
+      <div *ngIf="hasAction" class="card__action">
+        <ng-content select="[card-action]"></ng-content>
+      </div>
+
+      <!-- Slot para contenido adicional -->
+      <ng-content></ng-content>
+    </div>
+  </ng-container>
+
+  <!-- VARIANTE HORIZONTAL: Imagen a la izquierda, contenido a la derecha -->
+  <ng-container *ngIf="variant === 'horizontal'">
+    <!-- Imagen a la izquierda -->
+    <div *ngIf="hasImage" class="card__image-side">
+      <img
+        [src]="imageSrc"
+        [alt]="imageAlt || title"
+        class="card__image-element"
+      />
+    </div>
+
+    <!-- Contenedor de contenido a la derecha -->
+    <div class="card__content-side">
+      <!-- Título -->
+      <h3 *ngIf="title" class="card__title">{{ title }}</h3>
+
+      <!-- Descripción -->
+      <p *ngIf="description" class="card__description">{{ description }}</p>
+
+      <!-- Botón de acción -->
+      <div *ngIf="hasAction" class="card__action">
+        <ng-content select="[card-action]"></ng-content>
+      </div>
+
+      <!-- Slot para contenido adicional -->
+      <ng-content></ng-content>
+    </div>
+  </ng-container>
+</div>
+

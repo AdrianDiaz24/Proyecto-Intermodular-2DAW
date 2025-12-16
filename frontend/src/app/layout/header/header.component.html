@@ -4,8 +4,32 @@
         <span>ReparaFácil</span>
     </a>
 
-    <a routerLink="/login" class="c-header__user-btn" title="Ir a iniciar sesión">
-        <img class="c-header__user-btn_img" src="assets/icons/UsuarioBlanco.png" alt="Perfil de usuario">
-    </a>
+    <!-- Navegación -->
+    <nav class="c-header__nav" [class.c-header__nav--open]="menuOpen">
+        <a routerLink="/" class="c-header__nav-item" (click)="closeMenu()">Inicio</a>
+        <a routerLink="/servicios" class="c-header__nav-item" (click)="closeMenu()">Servicios</a>
+        <a routerLink="/contacto" class="c-header__nav-item" (click)="closeMenu()">Contacto</a>
+        <a routerLink="/sobre-nosotros" class="c-header__nav-item" (click)="closeMenu()">Sobre nosotros</a>
+    </nav>
 
+    <!-- Contenedor derecho: usuario + hamburguesa -->
+    <div class="c-header__right">
+        <!-- Botón usuario -->
+        <a routerLink="/login" class="c-header__user-btn" title="Ir a iniciar sesión">
+            <img class="c-header__user-btn_img" src="assets/icons/UsuarioBlanco.png" alt="Perfil de usuario">
+        </a>
+
+        <!-- Botón hamburguesa -->
+        <button
+            class="c-header__hamburger"
+            [class.c-header__hamburger--open]="menuOpen"
+            (click)="toggleMenu()"
+            type="button"
+            aria-label="Menú de navegación"
+        >
+            <span class="c-header__line"></span>
+            <span class="c-header__line"></span>
+            <span class="c-header__line"></span>
+        </button>
+    </div>
 </header>

@@ -1,0 +1,202 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+
+
+.button {
+  // PROPIEDADES BASE
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  border: none;
+  font-family: $font-primary;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  border-radius: $radius-md;
+  @include transition(all);
+
+  // Asegurar que no hereda text-align
+  text-align: center;
+
+  // Accesibilidad: outline visible en focus
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: inherit;
+
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+
+  &__spinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-lg;
+  }
+
+
+
+
+  &--primary {
+    background-color: $color-primary;
+    color: $color-text-white;
+    border: 2px solid transparent;
+
+    &:hover:not(:disabled) {
+      background-color: darken($color-primary, 10%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+
+    &:focus-visible {
+      outline-color: $color-primary;
+    }
+  }
+
+
+  &--secondary {
+    background-color: $color-secondary;
+    color: $color-text-white;
+    border: 2px solid transparent;
+
+    &:hover:not(:disabled) {
+      background-color: darken($color-secondary, 10%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+
+    &:focus-visible {
+      outline-color: $color-secondary;
+    }
+  }
+
+
+  &--ghost {
+    background-color: transparent;
+    color: $color-primary;
+    border: 2px solid $color-primary;
+
+    &:hover:not(:disabled) {
+      background-color: rgba($color-primary, 0.08);
+      border-color: darken($color-primary, 10%);
+      color: darken($color-primary, 10%);
+    }
+
+    &:active:not(:disabled) {
+      background-color: rgba($color-primary, 0.15);
+    }
+
+    &:focus-visible {
+      outline-color: $color-primary;
+    }
+  }
+
+
+  &--danger {
+    background-color: $color-error;
+    color: $color-text-white;
+    border: 2px solid transparent;
+
+    &:hover:not(:disabled) {
+      background-color: darken($color-error, 10%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+
+    &:focus-visible {
+      outline-color: $color-error;
+    }
+  }
+
+
+
+  // SMALL - Botones compactos
+  &--sm {
+    padding: $spacing-1 $spacing-2;
+    font-size: $font-size-sm;
+
+    .button__spinner {
+      font-size: $font-size-base;
+    }
+  }
+
+  // MEDIUM - Tamaño por defecto
+  &--md {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-base;
+
+    .button__spinner {
+      font-size: $font-size-lg;
+    }
+  }
+
+  // LARGE - Botones prominentes
+  &--lg {
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-lg;
+
+    .button__spinner {
+      font-size: $font-size-xl;
+    }
+  }
+
+  &--disabled,
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    &:hover,
+    &:active,
+    &:focus-visible {
+      transform: none;
+      box-shadow: none;
+      background-color: inherit;
+      color: inherit;
+      border-color: inherit;
+    }
+  }
+
+
+  &--block {
+    width: 100%;
+  }
+
+
+  &--loading {
+    pointer-events: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+
+

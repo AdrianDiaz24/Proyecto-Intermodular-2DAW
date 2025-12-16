@@ -1,0 +1,103 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+.form-select {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $spacing-8;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: $spacing-2;
+    font-weight: $font-weight-medium;
+    color: $color-text-black;
+    font-size: $font-size-base;
+  }
+
+  &__required {
+    color: $color-error;
+    margin-left: $spacing-1;
+    font-weight: $font-weight-bold;
+  }
+
+  &__input {
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    border: $border-thin solid $color-gray-300;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-family: $font-primary;
+    color: $color-text-black;
+    background-color: $color-text-white;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23659CCA' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $spacing-3 center;
+    padding-right: $spacing-8;
+    cursor: pointer;
+    @include transition(border-color, box-shadow);
+
+    &::placeholder {
+      color: $color-gray-400;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+
+    &:disabled {
+      background-color: $color-gray-100;
+      color: $color-gray-500;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    &--error {
+      border-color: $color-error;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($color-error, 0.1);
+      }
+    }
+
+    // Opciones dentro del select
+    option {
+      color: $color-text-black;
+      background-color: $color-text-white;
+      padding: $spacing-2;
+
+      &:disabled {
+        color: $color-gray-400;
+      }
+
+      &:checked {
+        background: linear-gradient($color-primary, $color-primary);
+        background-color: $color-primary;
+        color: $color-text-white;
+      }
+    }
+  }
+
+  &__error {
+    display: block;
+    margin-top: $spacing-1;
+    color: $color-error;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+  &__help {
+    display: block;
+    margin-top: $spacing-1;
+    color: $color-gray-500;
+    font-size: $font-size-sm;
+    font-style: italic;
+  }
+}
+

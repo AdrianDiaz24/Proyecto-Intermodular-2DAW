@@ -1,0 +1,39 @@
+<div class="form-textarea">
+  <!-- Label asociado al textarea mediante [for] e [id] -->
+  <label *ngIf="label" [for]="id" class="form-textarea__label">
+    {{ label }}
+    <span *ngIf="required" class="form-textarea__required">*</span>
+  </label>
+
+  <!-- Textarea con propiedades dinámicas -->
+  <textarea
+    [id]="id"
+    [name]="name"
+    [placeholder]="placeholder"
+    [required]="required"
+    [value]="value"
+    [rows]="rows"
+    [cols]="cols"
+    [maxLength]="maxLength > 0 ? maxLength : null"
+    class="form-textarea__input"
+    [class.form-textarea__input--error]="errorMessage"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  ></textarea>
+
+  <!-- Contador de caracteres (si maxLength está definido) -->
+  <span *ngIf="maxLength > 0" class="form-textarea__counter">
+    {{ characterCount }} / {{ maxLength }}
+  </span>
+
+  <!-- Mensaje de error -->
+  <span *ngIf="errorMessage" class="form-textarea__error">
+    {{ errorMessage }}
+  </span>
+
+  <!-- Texto de ayuda -->
+  <span *ngIf="helpText && !errorMessage" class="form-textarea__help">
+    {{ helpText }}
+  </span>
+</div>
+

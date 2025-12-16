@@ -1,0 +1,20 @@
+<!-- Botón semántico con todas las características de accesibilidad -->
+<button
+  [ngClass]="buttonClasses"
+  [type]="type"
+  [disabled]="disabled || loading"
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-busy]="loading"
+  (click)="onClick()"
+>
+  <!-- Contenido del botón -->
+  <span class="button__content" [class.button__content--hidden]="loading">
+    <ng-content></ng-content>
+  </span>
+
+  <!-- Spinner de carga (visible cuando loading es true) -->
+  <span *ngIf="loading" class="button__spinner">
+    <i class="fas fa-spinner fa-spin"></i>
+  </span>
+</button>
+
