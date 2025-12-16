@@ -15,6 +15,15 @@
   padding: $spacing-4 $spacing-6;
   background-color: $color-secondary;
 
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  @include transition(all);
+
   &__logo {
     display: flex;
     align-items: center;
@@ -25,10 +34,15 @@
     color: $color-accent;
     text-decoration: none;
     cursor: pointer;
-    @include transition(color);
+    @include transition(color, transform);
 
     &:hover {
       color: lighten($color-accent, 10%);
+      transform: translateX(-2px);
+    }
+
+    &:active {
+      transform: translateX(0);
     }
   }
 
@@ -36,22 +50,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: $radius-full;
     background-color: rgba($color-text-white, 0.1);
     cursor: pointer;
+    border: 2px solid transparent;
     @include transition(all);
 
     &:hover {
       background-color: rgba($color-text-white, 0.2);
       transform: scale(1.05);
+      border-color: $color-accent;
+    }
+
+    &:active {
+      transform: scale(0.98);
     }
   }
 
   &__user-btn_img {
     width: 36px;
-    height: 36px;
+    height: 30px;
     cursor: pointer;
     @include transition(transform);
 

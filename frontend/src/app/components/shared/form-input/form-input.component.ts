@@ -1,5 +1,5 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-form-input',
@@ -13,7 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/for
     }
   ]
 })
-export class FormInputComponent implements ControlValueAccessor {
+export class FormInputComponent implements ControlValueAccessor, OnInit {
   @Input() label: string = '';
   @Input() type: string = 'text';
   @Input() name: string = '';
@@ -22,16 +22,23 @@ export class FormInputComponent implements ControlValueAccessor {
   @Input() errorMessage: string = '';
   @Input() helpText: string = '';
   @Input() id: string = '';
+  @Input() showPasswordToggle: boolean = false;
 
   value: string = '';
+  passwordVisible: boolean = false;
+  currentType: string = 'text';
 
-  constructor(public ngControl: NgControl) {
-    this.ngControl.valueAccessor = this;
-
+  ngOnInit(): void {
     // Si no se proporciona ID, generarlo automáticamente
     if (!this.id) {
       this.id = `input-${Math.random().toString(36).substr(2, 9)}`;
     }
+    this.currentType = this.type;
+  }
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+    this.currentType = this.passwordVisible ? 'text' : 'password';
   }
 
   // Implementar ControlValueAccessor

@@ -10,6 +10,10 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 
+// Shared Components
+import { FormInputComponent } from './components/shared/form-input/form-input.component';
+import { LoginFormComponent } from './components/shared/login-form/login-form.component';
+
 // Pages
 import { HomeComponent } from '../pages/home/home.component';
 import { LoginComponent } from '../pages/login/login.component';
@@ -19,6 +23,8 @@ import { LoginComponent } from '../pages/login/login.component';
         AppComponent,
         HeaderComponent,
         FooterComponent,
+        FormInputComponent,
+        LoginFormComponent,
         HomeComponent,
         LoginComponent
     ],

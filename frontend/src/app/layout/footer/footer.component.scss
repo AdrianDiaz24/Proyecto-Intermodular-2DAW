@@ -11,26 +11,68 @@
 .c-footer {
   background-color: $color-secondary;
   color: $color-text-white;
-  padding: $spacing-4 $spacing-6;
+  padding: $spacing-8 $spacing-6;
   margin: 0;
   width: 100%;
+
+  // Transición suave
+  @include transition(all);
 
   &__content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
+    padding: 0 $spacing-4;
+    gap: $spacing-6;
+
+    // Responsive: stack en móviles
+    @media (max-width: 768px) {
+      flex-direction: column;
+      justify-content: center;
+      gap: $spacing-4;
+      text-align: center;
+    }
+
+    p {
+      margin: 0;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-regular;
+      @include transition(color);
+    }
   }
 
   &__nav {
+    display: flex;
+    gap: $spacing-6;
+    align-items: center;
+    justify-content: center;
+
+    // Responsive: stack en móviles
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: $spacing-4;
+    }
+
     a {
       color: $color-text-white;
       text-decoration: none;
-      margin-left: $spacing-4;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      padding: $spacing-2 $spacing-3;
+      border-radius: $radius-md;
+      @include transition(all);
 
       &:hover {
+        color: $color-accent;
+        background-color: rgba($color-accent, 0.1);
         text-decoration: underline;
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
   }

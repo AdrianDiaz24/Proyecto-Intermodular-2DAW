@@ -24,6 +24,19 @@
     font-weight: $font-weight-bold;
   }
 
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    &--password {
+      .form-input__input {
+        padding-right: $spacing-12;
+      }
+    }
+  }
+
   &__input {
     width: 100%;
     padding: $spacing-3 $spacing-4;
@@ -58,6 +71,31 @@
       &:focus {
         box-shadow: 0 0 0 3px rgba($color-error, 0.1);
       }
+    }
+
+    &--has-toggle {
+      padding-right: $spacing-12;
+    }
+  }
+
+  &__toggle {
+    position: absolute;
+    right: $spacing-3;
+    background: none;
+    border: none;
+    color: $color-gray-500;
+    cursor: pointer;
+    font-size: $font-size-lg;
+    padding: $spacing-2;
+    @include transition(color);
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    &:focus {
+      outline: none;
+      color: $color-primary;
     }
   }
 

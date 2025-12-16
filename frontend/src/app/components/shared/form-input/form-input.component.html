@@ -5,19 +5,35 @@
     <span *ngIf="required" class="form-input__required">*</span>
   </label>
 
-  <!-- Input -->
-  <input
-    [id]="id"
-    [type]="type"
-    [name]="name"
-    [placeholder]="placeholder"
-    [required]="required"
-    [value]="value"
-    class="form-input__input"
-    [class.form-input__input--error]="errorMessage"
-    (input)="onInput($event)"
-    (blur)="onBlur()"
-  />
+  <!-- Contenedor del input con soporte para toggle de contraseña -->
+  <div class="form-input__wrapper" [class.form-input__wrapper--password]="showPasswordToggle">
+    <!-- Input -->
+    <input
+      [id]="id"
+      [type]="currentType"
+      [name]="name"
+      [placeholder]="placeholder"
+      [required]="required"
+      [value]="value"
+      class="form-input__input"
+      [class.form-input__input--error]="errorMessage"
+      [class.form-input__input--has-toggle]="showPasswordToggle"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+    />
+
+    <!-- Botón toggle para contraseña -->
+    <button
+      *ngIf="showPasswordToggle"
+      type="button"
+      class="form-input__toggle"
+      (click)="togglePasswordVisibility()"
+      [title]="passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+      aria-label="Toggle password visibility"
+    >
+      <i [class]="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+    </button>
+  </div>
 
   <!-- Mensaje de error -->
   <span *ngIf="errorMessage" class="form-input__error">

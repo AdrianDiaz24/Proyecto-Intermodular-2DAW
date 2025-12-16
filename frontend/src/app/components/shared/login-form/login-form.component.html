@@ -12,69 +12,30 @@
     <fieldset class="login-form__fieldset">
       <legend class="login-form__legend">Credenciales de acceso</legend>
 
-      <!-- Email input -->
-      <div class="form-input">
-        <label for="email" class="form-input__label">
-          Correo electrónico
-          <span class="form-input__required">*</span>
-        </label>
+      <!-- Email input usando app-form-input -->
+      <app-form-input
+        id="email"
+        type="email"
+        name="email"
+        label="Correo electrónico"
+        placeholder="tu@email.com"
+        [required]="true"
+        formControlName="email"
+        [errorMessage]="submitted && email?.invalid ? (email?.errors?.['required'] ? 'Por favor ingresa un email' : 'Email inválido') : ''"
+      ></app-form-input>
 
-        <input
-          id="email"
-          type="email"
-          name="email"
-          placeholder="tu@email.com"
-          required
-          class="form-input__input"
-          [class.form-input__input--error]="submitted && email?.invalid"
-          formControlName="email"
-        />
-
-        <span
-          *ngIf="submitted && email?.invalid"
-          class="form-input__error"
-        >
-          {{ email?.errors?.['required'] ? 'Por favor ingresa un email' : 'Email inválido' }}
-        </span>
-      </div>
-
-      <!-- Contraseña input -->
-      <div class="form-input">
-        <label for="password" class="form-input__label">
-          Contraseña
-          <span class="form-input__required">*</span>
-        </label>
-
-        <div class="password-input">
-          <input
-            id="password"
-            [type]="passwordVisible ? 'text' : 'password'"
-            name="password"
-            placeholder="Mínimo 6 caracteres"
-            required
-            class="form-input__input"
-            [class.form-input__input--error]="submitted && password?.invalid"
-            formControlName="password"
-          />
-
-          <button
-            type="button"
-            class="password-input__toggle"
-            (click)="togglePasswordVisibility()"
-            [title]="passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'"
-            aria-label="Toggle password visibility"
-          >
-            <i [class]="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-          </button>
-        </div>
-
-        <span
-          *ngIf="submitted && password?.invalid"
-          class="form-input__error"
-        >
-          {{ password?.errors?.['required'] ? 'Por favor ingresa una contraseña' : 'Mínimo 6 caracteres' }}
-        </span>
-      </div>
+      <!-- Contraseña input usando app-form-input -->
+      <app-form-input
+        id="password"
+        type="password"
+        name="password"
+        label="Contraseña"
+        placeholder="Mínimo 6 caracteres"
+        [required]="true"
+        [showPasswordToggle]="true"
+        formControlName="password"
+        [errorMessage]="submitted && password?.invalid ? (password?.errors?.['required'] ? 'Por favor ingresa una contraseña' : 'Mínimo 6 caracteres') : ''"
+      ></app-form-input>
     </fieldset>
 
     <!-- Botón submit -->

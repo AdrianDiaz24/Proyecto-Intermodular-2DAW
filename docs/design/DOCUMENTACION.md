@@ -1163,7 +1163,7 @@ $easing-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   font-family: $font-primary;
   font-weight: $font-weight-medium;
   cursor: pointer;
-  @include transition(all, $transition-base);
+  @include transition(all);
 
   &:hover {
     transform: translateY(-2px);
@@ -1490,9 +1490,460 @@ Resultado: Máxima modularidad + estilos compartidos
 
 ---
 
-**Próximas secciones de la documentación:**
-- Sección 2: Componentes (Header, Footer, Cards, etc.)
-- Sección 3: Patrones de Diseño (Formularios, Tablas, etc.)
-- Sección 4: Guía de Implementación
-- Sección 5: Troubleshooting y FAQ
+# 2. HTML Semántico y Estructura
+
+## 2.1 Elementos Semánticos Utilizados
+
+**Principio:**
+El HTML semántico proporciona significado al contenido, mejorando accesibilidad, SEO y mantenibilidad del código.
+
+### Elementos Semánticos en el Proyecto
+
+```
+ESTRUCTURA PRINCIPAL
+├── <header> - Encabezado del sitio/sección
+├── <nav>    - Navegación principal
+├── <main>   - Contenido principal
+├── <section> - Secciones temáticas
+├── <article> - Contenido independiente
+├── <aside>   - Contenido relacionado
+└── <footer> - Pie de página
+
+DENTRO DE CONTENIDO
+├── <h1>...<h6> - Títulos jerárquicos
+├── <p>         - Párrafos
+├── <ul>, <ol>  - Listas
+├── <form>      - Formularios
+├── <fieldset>  - Agrupación de campos
+├── <legend>    - Descripción de fieldset
+└── <label>     - Etiquetas de inputs
+```
+
+### Ejemplo 1: Estructura de Página (Header)
+
+**Ubicación:** `src/app/layout/header/header.component.html`
+
+```html
+<!-- Elemento semántico: <header> -->
+<!-- Define el encabezado principal de la aplicación -->
+<header class="c-header">
+    <!-- Logo con enlace semántico a inicio -->
+    <a routerLink="/" class="c-header__logo" title="Volver a inicio">
+        <i class="fas fa-tools" aria-hidden="true"></i>
+        <span>ReparaFácil</span>
+    </a>
+
+    <!-- Botón de acceso a perfil/login -->
+    <a routerLink="/login" class="c-header__user-btn" title="Ir a iniciar sesión">
+        <img class="c-header__user-btn_img" 
+             src="assets/icons/UsuarioBlanco.png" 
+             alt="Perfil de usuario">
+    </a>
+</header>
+```
+
+**Ventajas:**
+-  `<header>` define claramente que es el encabezado principal
+-  `<a>` con `routerLink` para navegación semántica
+-  `alt` descriptivo en imagen
+-  `aria-hidden="true"` en icono puramente decorativo
+-  `title` para contexto adicional
+
+### Ejemplo 2: Estructura de Pie de Página (Footer)
+
+**Ubicación:** `src/app/layout/footer/footer.component.html`
+
+```html
+<!-- Elemento semántico: <footer> -->
+<!-- Define el pie de página del sitio -->
+<footer class="c-footer">
+  <div class="c-footer__content">
+    <!-- Párrafo con información de copyright -->
+    <p>&copy; 2025 ReparaFácil. Todos los derechos reservados.</p>
+    
+    <!-- Elemento semántico: <nav> -->
+    <!-- Define navegación secundaria en pie de página -->
+    <nav class="c-footer__nav">
+      <a href="#" title="Ver términos de servicio">Términos de servicio</a>
+      <a href="#" title="Ver política de privacidad">Política de privacidad</a>
+      <a href="#" title="Contactar con nosotros">Contacto</a>
+    </nav>
+  </div>
+</footer>
+```
+
+**Ventajas:**
+-  `<footer>` marca claramente el pie de página
+-  `<nav>` dentro de footer define navegación secundaria
+-  Enlaces con `title` descriptivo
+-  Estructura lógica y accesible
+
+### Ejemplo 3: Página de Inicio (Main + Section)
+
+**Ubicación:** `src/pages/home/home.component.html`
+
+```html
+<!-- Elemento semántico: <main> -->
+<!-- Contenido principal único de la página -->
+<main class="p-home-hero">
+  <!-- Elemento semántico: <section> -->
+  <!-- Sección temática: Hero con búsqueda -->
+  <section class="p-home-hero__section">
+    <!-- Contenedor de texto -->
+    <div class="p-home-hero__text-container">
+      <h1 class="p-home-hero__title-line-1">Repara.</h1>
+      <h1 class="p-home-hero__title-line-1">Colabora.</h1>
+      <h5 class="p-home-hero__subtitle">Arreglémoslo juntos.</h5>
+    </div>
+
+    <!-- Caja de búsqueda -->
+    <div class="p-home-hero__search-box">
+      <input type="search" placeholder="Busca una reparación..." />
+      <button type="submit" title="Buscar">
+        <img src="assets/icons/buscar.png" alt="Buscar">
+      </button>
+    </div>
+  </section>
+</main>
+```
+
+**Ventajas:**
+-  `<main>` contiene el contenido principal
+-  `<section>` agrupa contenido temático relacionado
+-  `<h1>` para título principal de la página
+-  `<h5>` para subtítulo (siguiendo jerarquía)
+
+---
+
+## 2.2 Jerarquía de Headings
+
+**Regla Principal:** 
+-  **UN SOLO `<h1>` por página**
+-  `<h2>` para secciones principales
+-  `<h3>` para subsecciones
+
+### Diagrama de Jerarquía
+
+```
+PÁGINA DE HOME
+├── <h1> "Repara. Colabora. Aprende." (Único en la página)
+│   ├── <h5> "Arreglémoslo juntos." (Subtítulo)
+│   └── <input type="search"> (Búsqueda)
+│
+├── <section> "Servicios"
+│   ├── <h2> "Nuestros Servicios" (Sección principal)
+│   ├── <article> "Servicio 1"
+│   │   └── <h3> "Reparaciones técnicas" (Subsección)
+│   ├── <article> "Servicio 2"
+│   │   └── <h3> "Asesoramiento" (Subsección)
+│   └── <article> "Servicio 3"
+│       └── <h3> "Capacitación" (Subsección)
+│
+└── <section> "Testimonios"
+    ├── <h2> "Lo que dicen nuestros usuarios" (Sección principal)
+    ├── <article> "Testimonio 1"
+    │   └── <h3> "Juan García" (Nombre - subsección)
+    └── <article> "Testimonio 2"
+        └── <h3> "María López" (Nombre - subsección)
+```
+
+### Diagrama de Jerarquía (Página de Login)
+
+```
+PÁGINA DE LOGIN
+├── <h1> "Inicia sesión" (Único en la página)
+│   └── <p> "Accede a tu cuenta de ReparaFácil" (Descripción)
+│
+└── <form> "Formulario de login"
+    ├── <fieldset>
+    │   ├── <legend> "Credenciales de acceso" (Agrupa campos)
+    │   ├── <label> "Correo electrónico"
+    │   │   └── <input type="email">
+    │   ├── <label> "Contraseña"
+    │   └── <input type="password">
+    ├── <button type="submit"> "Inicia sesión"
+    └── <p> "¿No tienes cuenta? <a>Regístrate aquí</a>"
+```
+
+**Análisis de Niveles:**
+```
+Nivel 1: h1 (Título único)
+Nivel 2: h2 (Secciones principales)
+Nivel 3: h3 (Subsecciones)
+Nivel 4: h4 (Si es necesario subir detalles)
+```
+
+**Regla de No-Skip:**
+```
+INCORRECTO: h1 → h3 (salta h2)
+├── <h1> Título principal
+├── <h3> Subtítulo (¡SALTO!)
+└── <h4> Detalle
+
+CORRECTO: h1 → h2 → h3
+├── <h1> Título principal
+├── <h2> Sección principal
+├── <h3> Subsección
+└── <h2> Otra sección principal
+```
+
+---
+
+## 2.3 Estructura de Formularios
+
+**Principio:**
+Los formularios deben ser accesibles, semánticos y fáciles de usar. Usamos `<fieldset>`, `<legend>`, y asociaciones correctas de `<label>` con `<input>`.
+
+### Estrategia de Formularios
+
+```
+COMPONENTES UTILIZADOS
+├── <form>         - Contenedor del formulario
+├── <fieldset>     - Agrupa campos relacionados
+├── <legend>       - Describe el fieldset
+├── <label>        - Etiqueta de input
+├── <input>        - Campo de entrada
+├── <app-form-input> - Componente reutilizable
+└── <button type="submit"> - Botón de envío
+```
+
+### Ejemplo 1: Componente app-form-input
+
+**Ubicación:** `src/app/components/shared/form-input/form-input.component.html`
+
+```html
+<!-- Contenedor del campo de input -->
+<div class="form-input">
+  <!-- LABEL: Asociado al input mediante el atributo 'for' -->
+  <!-- Esto mejora la accesibilidad (aumenta área clickeable) -->
+  <label *ngIf="label" [for]="id" class="form-input__label">
+    {{ label }}
+    <!-- Asterisco para indicar campo requerido -->
+    <span *ngIf="required" class="form-input__required">*</span>
+  </label>
+
+  <!-- WRAPPER: Contenedor flexible para inputs con toggle -->
+  <div class="form-input__wrapper" [class.form-input__wrapper--password]="showPasswordToggle">
+    <!-- INPUT: Campo de entrada -->
+    <!-- Atributos accesibles:
+         - [id]: Asociado al label mediante 'for'
+         - [type]: Dinámico (text, email, password, etc.)
+         - [required]: Indica campo obligatorio
+         - [value]: Valor actual del campo
+         - (input): Evento de captura de cambios
+         - (blur): Evento cuando pierde el foco
+    -->
+    <input
+      [id]="id"
+      [type]="currentType"
+      [name]="name"
+      [placeholder]="placeholder"
+      [required]="required"
+      [value]="value"
+      class="form-input__input"
+      [class.form-input__input--error]="errorMessage"
+      [class.form-input__input--has-toggle]="showPasswordToggle"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+    />
+
+    <!-- TOGGLE DE CONTRASEÑA: Botón para mostrar/ocultar -->
+    <!-- Solo se muestra si showPasswordToggle es true -->
+    <button
+      *ngIf="showPasswordToggle"
+      type="button"
+      class="form-input__toggle"
+      (click)="togglePasswordVisibility()"
+      [title]="passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+      aria-label="Toggle password visibility"
+    >
+      <i [class]="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+    </button>
+  </div>
+
+  <!-- MENSAJE DE ERROR: Se muestra cuando hay validación -->
+  <span *ngIf="errorMessage" class="form-input__error">
+    {{ errorMessage }}
+  </span>
+
+  <!-- TEXTO DE AYUDA: Información adicional (no se muestra si hay error) -->
+  <span *ngIf="helpText && !errorMessage" class="form-input__help">
+    {{ helpText }}
+  </span>
+</div>
+```
+
+**Características Accesibles:**
+- `<label>` con `[for]` e `id` asociado al input
+- `[id]` único generado automáticamente si no se proporciona
+- `aria-label` en botón de toggle
+- `[required]` para indicar campos obligatorios
+- Mensajes de error descriptivos
+- Control de validación integrado
+
+### Ejemplo 2: Formulario de Login Completo
+
+**Ubicación:** `src/app/components/shared/login-form/login-form.component.html`
+
+```html
+<div class="login-form">
+  <!-- Encabezado del formulario -->
+  <div class="login-form__header">
+    <h1 class="login-form__title">{{ title }}</h1>
+    <p class="login-form__subtitle">{{ subtitle }}</p>
+  </div>
+
+  <!-- FORMULARIO: Elemento semántico <form> -->
+  <!-- [formGroup]: Vinculación a FormGroup de Angular
+       (ngSubmit): Evento de envío
+  -->
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form__form">
+
+    <!-- FIELDSET: Agrupa campos relacionados -->
+    <!-- Mejora la semántica y accesibilidad -->
+    <fieldset class="login-form__fieldset">
+      <!-- LEGEND: Describe el propósito del fieldset -->
+      <!-- Leído por lectores de pantalla para contexto -->
+      <legend class="login-form__legend">Credenciales de acceso</legend>
+
+      <!-- EMAIL INPUT: Usando componente reutilizable app-form-input -->
+      <!-- Propiedades:
+           - id: Identificador único
+           - type="email": Validación de email nativa
+           - label: Etiqueta visible
+           - placeholder: Texto de ayuda
+           - [required]=true: Campo obligatorio
+           - formControlName: Vinculación a FormGroup
+           - [errorMessage]: Validación desde TypeScript
+      -->
+      <app-form-input
+        id="email"
+        type="email"
+        name="email"
+        label="Correo electrónico"
+        placeholder="tu@email.com"
+        [required]="true"
+        formControlName="email"
+        [errorMessage]="submitted && email?.invalid ? 
+          (email?.errors?.['required'] ? 'Por favor ingresa un email' : 'Email inválido') : ''"
+      ></app-form-input>
+
+      <!-- PASSWORD INPUT: Con toggle de visibilidad -->
+      <!-- Propiedades adicionales:
+           - [showPasswordToggle]=true: Activa botón de mostrar/ocultar
+           - currentType: Cambia dinámicamente entre 'password' y 'text'
+      -->
+      <app-form-input
+        id="password"
+        type="password"
+        name="password"
+        label="Contraseña"
+        placeholder="Mínimo 6 caracteres"
+        [required]="true"
+        [showPasswordToggle]="true"
+        formControlName="password"
+        [errorMessage]="submitted && password?.invalid ? 
+          (password?.errors?.['required'] ? 'Por favor ingresa una contraseña' : 'Mínimo 6 caracteres') : ''"
+      ></app-form-input>
+    </fieldset>
+
+    <!-- BOTÓN SUBMIT: Envío del formulario -->
+    <!-- Atributos accesibles:
+         - type="submit": Envía el formulario
+         - [disabled]: Se deshabilita si hay errores o está cargando
+         - [attr.aria-busy]: Indica estado de carga para lectores de pantalla
+    -->
+    <button
+      type="submit"
+      class="login-form__submit"
+      [disabled]="loading || (submitted && loginForm.invalid)"
+      [attr.aria-busy]="loading"
+    >
+      <span *ngIf="!loading">{{ submitButtonText }}</span>
+      <span *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i> Cargando...
+      </span>
+    </button>
+
+    <!-- LINK DE REGISTRO: Navegación a página de registro -->
+    <p class="login-form__footer">
+      <a routerLink="/register" class="login-form__link">{{ registerLinkText }}</a>
+    </p>
+  </form>
+</div>
+```
+
+**Estructura Semántica:**
+```
+<form> ─ Contenedor del formulario
+  ├─ <h1> ─ Título principal
+  ├─ <p> ─ Subtítulo/descripción
+  │
+  └─ <fieldset> ─ Agrupa campos relacionados
+      ├─ <legend> ─ "Credenciales de acceso"
+      ├─ <app-form-input> (Email)
+      │   └─ <label>, <input>, <span error>
+      ├─ <app-form-input> (Password)
+      │   └─ <label>, <input>, <button toggle>, <span error>
+      │
+      ├─ <button type="submit">
+      └─ <p><a> ─ Link a registro
+```
+
+### Validación y Accesibilidad en Formularios
+
+```
+VALIDACIÓN
+├── Validación HTML5 (required, type="email")
+├── Validación Angular (Validators.required, Validators.email)
+├── Validación Custom (minLength, pattern)
+└── Mensajes de error descriptivos
+
+ACCESIBILIDAD
+├── <label> asociados con [for] e [id]
+├── [required] para campos obligatorios
+├── aria-label en botones sin texto
+├── aria-busy en estados de carga
+├── Mensajes de error descriptivos
+└── Contraste de colores en errores
+```
+
+**Ejemplo de Validación en Componente:**
+
+```typescript
+// login-form.component.ts
+export class LoginFormComponent {
+  loginForm: FormGroup;
+  submitted = false;
+
+  constructor(private formBuilder: FormBuilder) {
+    // Crear FormGroup con validadores
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+
+  // Getters para acceso fácil en template
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  // Envío del formulario
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.loginForm.valid) {
+      // Procesar datos válidos
+      this.formSubmit.emit(this.loginForm.value);
+    }
+  }
+}
+```
+
+---
 
