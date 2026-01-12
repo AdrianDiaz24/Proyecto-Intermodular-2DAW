@@ -1,0 +1,56 @@
+<div class="search-results-page">
+  <div class="search-results-container">
+    <!-- Encabezado con título y búsqueda -->
+    <div class="search-header">
+      <h1 class="search-header__title">Resultados de búsqueda</h1>
+      <p class="search-header__subtitle">{{ searchQuery ? 'Búsqueda: "' + searchQuery + '"' : 'Todos nuestros servicios' }}</p>
+    </div>
+
+    <!-- Información de resultados -->
+    <div class="search-info">
+      <p class="search-info__count">
+        Se encontraron <strong>{{ filteredResults.length }}</strong> resultado{{ filteredResults.length !== 1 ? 's' : '' }}
+      </p>
+    </div>
+
+    <!-- Resultados -->
+    <div class="search-results-grid">
+      <!-- Mensaje si no hay resultados -->
+      <div *ngIf="filteredResults.length === 0" class="no-results">
+        <div class="no-results__icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h2 class="no-results__title">No encontramos resultados</h2>
+        <p class="no-results__text">
+          Lo sentimos, no encontramos resultados que coincidan con "<strong>{{ searchQuery }}</strong>"
+        </p>
+        <p class="no-results__suggestion">Intenta con otras palabras clave o <a href="/" class="no-results__link">vuelve al inicio</a></p>
+      </div>
+
+      <!-- Grid de resultados -->
+      <div *ngIf="filteredResults.length > 0" class="results-container">
+        <div *ngFor="let result of filteredResults" class="result-card">
+          <!-- Logo como placeholder -->
+          <div class="result-card__image">
+            <img src="assets/icons/logoNaranja.png" alt="Logo" class="result-card__logo">
+          </div>
+
+          <!-- Contenido de la tarjeta -->
+          <div class="result-card__content">
+            <h2 class="result-card__title">{{ result.title }}</h2>
+            <p class="result-card__category">{{ result.category }}</p>
+            <p class="result-card__description">{{ result.description }}</p>
+          </div>
+
+          <!-- Botón de acción -->
+          <div class="result-card__footer">
+            <button class="result-card__button">
+              Ver producto
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

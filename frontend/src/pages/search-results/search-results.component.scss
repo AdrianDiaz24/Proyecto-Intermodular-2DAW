@@ -1,0 +1,215 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+.search-results-page {
+  min-height: calc(100vh - 100px);
+  padding: $spacing-8 $spacing-4;
+  background-color: $color-background;
+}
+
+.search-results-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// Encabezado
+.search-header {
+  margin-bottom: $spacing-12;
+  text-align: center;
+
+  &__title {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0 0 $spacing-4 0;
+  }
+
+  &__subtitle {
+    font-size: $font-size-lg;
+    color: $color-gray-600;
+    margin: 0;
+  }
+}
+
+// Información de búsqueda
+.search-info {
+  margin-bottom: $spacing-8;
+  padding: $spacing-4 $spacing-6;
+  background-color: $color-text-white;
+  border-left: 4px solid $color-primary;
+  border-radius: $radius-md;
+
+  &__count {
+    font-size: $font-size-base;
+    color: $color-gray-600;
+    margin: 0;
+
+    strong {
+      color: $color-primary;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+// Grid de resultados
+.search-results-grid {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-8;
+}
+
+.results-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-8;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-6;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Tarjeta de resultado
+.result-card {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-text-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  border: 2px solid $color-primary;
+  overflow: hidden;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+  }
+
+  &__image {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, rgba($color-primary, 0.1) 0%, rgba($color-primary, 0.05) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-6;
+  }
+
+  &__logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  &__content {
+    flex: 1;
+    padding: $spacing-6;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0;
+    line-height: $line-height-normal;
+  }
+
+  &__category {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    margin: 0;
+    line-height: $line-height-normal;
+  }
+
+  &__footer {
+    padding: $spacing-4 $spacing-6 $spacing-6;
+    border-top: 1px solid $color-gray-100;
+  }
+
+  &__button {
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    background-color: $color-primary;
+    color: $color-text-white;
+    border: none;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:hover {
+      background-color: darken($color-primary, 10%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Sin resultados
+.no-results {
+  text-align: center;
+  padding: $spacing-12 $spacing-6;
+  background-color: $color-text-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+
+  &__icon {
+    font-size: 64px;
+    color: $color-gray-300;
+    margin-bottom: $spacing-6;
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0 0 $spacing-4 0;
+  }
+
+  &__text {
+    font-size: $font-size-base;
+    color: $color-gray-600;
+    margin: 0 0 $spacing-4 0;
+    line-height: $line-height-normal;
+  }
+
+  &__suggestion {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    margin: 0;
+  }
+
+  &__link {
+    color: $color-primary;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    transition: color $transition-base;
+
+    &:hover {
+      color: darken($color-primary, 10%);
+      text-decoration: underline;
+    }
+  }
+}
+

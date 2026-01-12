@@ -4,13 +4,27 @@
         <span>ReparaFácil</span>
     </a>
 
-    <!-- Navegación -->
-    <nav class="c-header__nav" [class.c-header__nav--open]="menuOpen">
+    <!-- Navegación normal -->
+    <nav class="c-header__nav" [class.c-header__nav--open]="menuOpen" *ngIf="!isSearchPage">
         <a routerLink="/" class="c-header__nav-item" (click)="closeMenu()">Inicio</a>
         <a routerLink="/perfil" class="c-header__nav-item" (click)="closeMenu()">Perfil</a>
         <a routerLink="/contacto" class="c-header__nav-item" (click)="closeMenu()">Contacto</a>
         <a routerLink="/sobre-nosotros" class="c-header__nav-item" (click)="closeMenu()">Sobre nosotros</a>
     </nav>
+
+    <!-- Buscador en página de búsqueda -->
+    <div class="c-header__search" *ngIf="isSearchPage">
+        <input
+          type="text"
+          class="c-header__search-input"
+          placeholder="Busca el electrodoméstico o aparato a reparar..."
+          [(ngModel)]="searchQuery"
+          (keypress)="onSearchKeyPress($event)"
+        >
+        <button class="c-header__search-button" (click)="onSearch()">
+            <img src="assets/icons/buscar.png" alt="Buscar">
+        </button>
+    </div>
 
     <!-- Contenedor derecho: usuario + hamburguesa -->
     <div class="c-header__right">
@@ -26,6 +40,7 @@
             (click)="toggleMenu()"
             type="button"
             aria-label="Menú de navegación"
+            *ngIf="!isSearchPage"
         >
             <span class="c-header__line"></span>
             <span class="c-header__line"></span>

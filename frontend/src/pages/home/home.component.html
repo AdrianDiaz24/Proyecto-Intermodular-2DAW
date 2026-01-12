@@ -8,8 +8,13 @@
     </div>
 
     <div class="p-home-hero__search-box">
-        <input type="text" placeholder="Busca el electrodoméstico o aparato a reparar...">
-        <button>
+        <input
+          type="text"
+          placeholder="Busca el electrodoméstico o aparato a reparar..."
+          [(ngModel)]="searchQuery"
+          (keypress)="onSearchKeyPress($event)"
+        >
+        <button (click)="onSearch()">
             <img src="assets/icons/buscar.png" alt="Buscar">
         </button>
     </div>
