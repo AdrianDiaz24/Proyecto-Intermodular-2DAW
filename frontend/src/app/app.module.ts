@@ -13,6 +13,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 // Shared Components
 import { FormInputComponent } from './components/shared/form-input/form-input.component';
 import { LoginFormComponent } from './components/shared/login-form/login-form.component';
+import { RegisterFormComponent } from './components/shared/register-form/register-form.component';
 import { ButtonComponent } from './components/shared/button/button.component';
 import { CardComponent } from './components/shared/card/card.component';
 import { FormTextareaComponent } from './components/shared/form-textarea/form-textarea.component';
@@ -23,6 +24,7 @@ import { AlertComponent } from './components/shared/alert/alert.component';
 // Pages
 import { HomeComponent } from '../pages/home/home.component';
 import { LoginComponent } from '../pages/login/login.component';
+import { RegisterComponent } from '../pages/register/register.component';
 import { StyleGuideComponent } from '../pages/style-guide/style-guide.component';
 
 @NgModule({
@@ -32,6 +34,7 @@ import { StyleGuideComponent } from '../pages/style-guide/style-guide.component'
         FooterComponent,
         FormInputComponent,
         LoginFormComponent,
+        RegisterFormComponent,
         ButtonComponent,
         CardComponent,
         FormTextareaComponent,
@@ -40,6 +43,7 @@ import { StyleGuideComponent } from '../pages/style-guide/style-guide.component'
         AlertComponent,
         HomeComponent,
         LoginComponent,
+        RegisterComponent,
         StyleGuideComponent
     ],
     imports: [

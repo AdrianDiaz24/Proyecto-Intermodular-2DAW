@@ -1,0 +1,103 @@
+<div class="register-form">
+  <!-- Encabezado -->
+  <div class="register-form__header">
+    <h1 class="register-form__title">{{ title }}</h1>
+    <p class="register-form__subtitle">{{ subtitle }}</p>
+  </div>
+
+  <!-- Formulario con estructura semántica -->
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form__form">
+
+    <!-- Fieldset para agrupar campos de registro -->
+    <fieldset class="register-form__fieldset">
+      <legend class="register-form__legend">Información de la cuenta</legend>
+
+      <!-- Username input -->
+      <app-form-input
+        id="username"
+        type="text"
+        name="username"
+        label="Nombre de usuario"
+        placeholder="ejemplo_usuario"
+        [required]="true"
+        formControlName="username"
+        [errorMessage]="submitted && username?.invalid ? (username?.errors?.['required'] ? 'Por favor ingresa un nombre de usuario' : 'Mínimo 3 caracteres') : ''"
+      ></app-form-input>
+
+      <!-- Email input -->
+      <app-form-input
+        id="email"
+        type="email"
+        name="email"
+        label="Correo electrónico"
+        placeholder="tu@email.com"
+        [required]="true"
+        formControlName="email"
+        [errorMessage]="submitted && email?.invalid ? (email?.errors?.['required'] ? 'Por favor ingresa un email' : 'Email inválido') : ''"
+      ></app-form-input>
+
+      <!-- Contraseña input -->
+      <app-form-input
+        id="password"
+        type="password"
+        name="password"
+        label="Contraseña"
+        placeholder="Mínimo 6 caracteres"
+        [required]="true"
+        [showPasswordToggle]="true"
+        formControlName="password"
+        [errorMessage]="submitted && password?.invalid ? (password?.errors?.['required'] ? 'Por favor ingresa una contraseña' : 'Mínimo 6 caracteres') : ''"
+      ></app-form-input>
+
+      <!-- Confirmación de contraseña input -->
+      <app-form-input
+        id="passwordConfirm"
+        type="password"
+        name="passwordConfirm"
+        label="Confirmar contraseña"
+        placeholder="Confirma tu contraseña"
+        [required]="true"
+        [showPasswordToggle]="true"
+        formControlName="passwordConfirm"
+        [errorMessage]="submitted && (passwordConfirm?.invalid || registerForm.errors?.['passwordMismatch']) ? (passwordConfirm?.errors?.['required'] ? 'Por favor confirma tu contraseña' : (registerForm.errors?.['passwordMismatch'] ? 'Las contraseñas no coinciden' : 'Mínimo 6 caracteres')) : ''"
+      ></app-form-input>
+    </fieldset>
+
+    <!-- Checkbox de términos y condiciones -->
+    <div class="register-form__checkbox">
+      <label class="register-form__checkbox-label">
+        <input
+          type="checkbox"
+          name="terms"
+          formControlName="terms"
+          [required]="true"
+          class="register-form__checkbox-input"
+        />
+        <span class="register-form__checkbox-text">
+          Acepto los <a href="#" class="register-form__link">términos y condiciones</a>
+        </span>
+      </label>
+      <span *ngIf="submitted && !terms?.value" class="register-form__error">
+        Debes aceptar los términos y condiciones
+      </span>
+    </div>
+
+    <!-- Botón submit -->
+    <button
+      type="submit"
+      class="register-form__submit"
+      [disabled]="loading || (submitted && registerForm.invalid)"
+      [attr.aria-busy]="loading"
+    >
+      <span *ngIf="!loading">{{ submitButtonText }}</span>
+      <span *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i> Cargando...
+      </span>
+    </button>
+
+    <!-- Link de login -->
+    <p class="register-form__footer">
+      ¿Tienes cuenta? <a routerLink="/login" class="register-form__link">Inicia sesión aquí</a>
+    </p>
+  </form>
+</div>
