@@ -26,6 +26,7 @@ import { HomeComponent } from '../pages/home/home.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
 import { StyleGuideComponent } from '../pages/style-guide/style-guide.component';
+import { ProfileComponent } from '../pages/profile/profile.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { StyleGuideComponent } from '../pages/style-guide/style-guide.component'
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        StyleGuideComponent
+        StyleGuideComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,

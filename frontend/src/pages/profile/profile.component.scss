@@ -1,0 +1,347 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+.profile-page {
+  min-height: calc(100vh - 100px);
+  padding: $spacing-8 $spacing-4;
+  background-color: $color-background;
+}
+
+.profile-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+// Encabezado de perfil
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-8;
+  padding: $spacing-8;
+  background-color: $color-text-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  margin-bottom: $spacing-8;
+  border: 2px solid $color-primary;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+
+  &__img {
+    width: 120px;
+    height: 120px;
+    border-radius: $radius-full;
+    object-fit: cover;
+    border: 3px solid $color-primary;
+    background-color: $color-gray-100;
+  }
+}
+
+.profile-info {
+  flex: 1;
+
+  &__name {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0 0 $spacing-2 0;
+  }
+
+  &__email {
+    font-size: $font-size-base;
+    color: $color-gray-600;
+    margin: 0 0 $spacing-1 0;
+  }
+
+  &__join-date {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    margin: 0;
+  }
+}
+
+.profile-actions {
+  display: flex;
+  gap: $spacing-4;
+  flex-wrap: wrap;
+
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+    justify-content: center;
+
+    button {
+      flex: 1;
+      min-width: 150px;
+    }
+  }
+}
+
+// Botones de perfil
+.profile-btn {
+  padding: $spacing-3 $spacing-6;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &--primary {
+    background-color: $color-primary;
+    color: $color-text-white;
+
+    &:hover {
+      background-color: darken($color-primary, 10%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &--secondary {
+    background-color: $color-gray-200;
+    color: $color-text-black;
+
+    &:hover {
+      background-color: darken($color-gray-200, 10%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &--tertiary {
+    background-color: transparent;
+    color: $color-gray-600;
+    border: 1px solid $color-gray-300;
+
+    &:hover {
+      background-color: $color-gray-50;
+      border-color: $color-gray-400;
+    }
+  }
+}
+
+// Detalles del perfil
+.profile-details {
+  display: grid;
+  gap: $spacing-8;
+}
+
+.profile-card {
+  background-color: $color-text-white;
+  border-radius: $radius-lg;
+  padding: $spacing-8;
+  box-shadow: $shadow-md;
+  border: 2px solid $color-primary;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-6;
+    padding: $spacing-3 0;
+    gap: $spacing-4;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0;
+    flex: 1;
+  }
+
+  &__toggle {
+    background: none;
+    border: none;
+    color: $color-primary;
+    cursor: pointer;
+    padding: $spacing-3 $spacing-4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-base;
+    flex-shrink: 0;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: $radius-md;
+
+    &:focus {
+      outline: none;
+    }
+
+    &--expanded {
+      .profile-card__toggle-icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &__toggle-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform $transition-base;
+  }
+
+  &__content {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height $transition-base;
+
+    &--collapsed {
+      max-height: 0;
+      overflow: hidden;
+    }
+  }
+}
+
+// Campos de perfil
+.profile-field {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  gap: $spacing-4;
+  padding: $spacing-4 0;
+  border-bottom: 1px solid $color-gray-100;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  &__label {
+    font-weight: $font-weight-medium;
+    color: $color-text-black;
+    font-size: $font-size-base;
+  }
+
+  &__value {
+    color: $color-gray-600;
+    font-size: $font-size-base;
+    padding: $spacing-2;
+  }
+
+  &__input {
+    padding: $spacing-2 $spacing-3;
+    border: 1px solid $color-gray-300;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-family: $font-primary;
+    transition: all $transition-base;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+  }
+}
+
+// Acciones de edición
+.profile-actions-edit {
+  display: flex;
+  gap: $spacing-4;
+  margin-top: $spacing-6;
+  padding-top: 0;
+  border-top: none;
+  justify-content: flex-end;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    justify-content: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+// Mensajes de validación
+.profile-message {
+  padding: $spacing-4;
+  border-radius: $radius-md;
+  margin: $spacing-4 0;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  &--success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  &--error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+}
+
+// Mensaje vacío
+.profile-empty-message {
+  padding: $spacing-6 $spacing-4;
+  text-align: center;
+  color: $color-gray-600;
+  font-size: $font-size-base;
+}
+
+// Lista de incidencias
+.incidencies-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.incidency-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-4;
+  border: 1px solid $color-gray-200;
+  border-radius: $radius-md;
+  background-color: $color-gray-50;
+  transition: all $transition-base;
+  gap: $spacing-6;
+
+  &:hover {
+    background-color: $color-gray-100;
+    box-shadow: $shadow-sm;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-4;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__appliance {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0 0 $spacing-2 0;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    margin: 0;
+  }
+}
+

@@ -1,0 +1,203 @@
+<div class="profile-page">
+  <div class="profile-container">
+    <!-- Encabezado de perfil -->
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <img [src]="user.profileImage" [alt]="user.username" class="profile-avatar__img">
+      </div>
+      <div class="profile-info">
+        <h1 class="profile-info__name">{{ user.username }}</h1>
+        <p class="profile-info__email">{{ user.email }}</p>
+        <p class="profile-info__join-date">Miembro desde el {{ user.joinDate | date:'d MMMM yyyy':'':'es' }}</p>
+      </div>
+      <div class="profile-actions">
+        <button
+          class="profile-btn profile-btn--secondary"
+          (click)="logout()"
+        >
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+
+    <!-- Información detallada -->
+    <div class="profile-details">
+      <div class="profile-card">
+        <div class="profile-card__header">
+          <h2 class="profile-card__title">Información personal</h2>
+          <button
+            class="profile-card__toggle"
+            [class.profile-card__toggle--expanded]="isCardExpanded"
+            (click)="toggleCardExpanded()"
+            [attr.aria-expanded]="isCardExpanded"
+            type="button"
+          >
+            <img src="assets/icons/boton-de-reproduccion.png" alt="Expandir/Contraer" class="profile-card__toggle-icon">
+          </button>
+        </div>
+
+        <div class="profile-card__content" [class.profile-card__content--collapsed]="!isCardExpanded">
+          <div class="profile-field">
+            <label class="profile-field__label">Nombre de usuario</label>
+            <div *ngIf="!editMode" class="profile-field__value">
+              {{ user.username }}
+            </div>
+            <input
+              *ngIf="editMode"
+              type="text"
+              class="profile-field__input"
+              [value]="formData.username"
+              (input)="updateField('username', $any($event.target).value)"
+              placeholder="Tu nombre de usuario"
+            >
+          </div>
+
+          <div class="profile-field">
+            <label class="profile-field__label">Correo electrónico</label>
+            <div *ngIf="!editMode" class="profile-field__value">
+              {{ user.email }}
+            </div>
+            <input
+              *ngIf="editMode"
+              type="email"
+              class="profile-field__input"
+              [value]="formData.email"
+              (input)="updateField('email', $any($event.target).value)"
+              placeholder="tu@email.com"
+            >
+          </div>
+
+          <div class="profile-field">
+            <label class="profile-field__label">Teléfono</label>
+            <div *ngIf="!editMode" class="profile-field__value">
+              {{ user.phone }}
+            </div>
+            <input
+              *ngIf="editMode"
+              type="tel"
+              class="profile-field__input"
+              [value]="formData.phone"
+              (input)="updateField('phone', $any($event.target).value)"
+              placeholder="Tu número de teléfono"
+            >
+          </div>
+
+          <!-- Botones de acción dentro del recuadro -->
+          <div class="profile-actions-edit">
+            <button
+              class="profile-btn profile-btn--primary"
+              (click)="toggleEditMode()"
+            >
+              {{ editMode ? 'Guardar cambios' : 'Editar perfil' }}
+            </button>
+            <button
+              *ngIf="editMode"
+              class="profile-btn profile-btn--tertiary"
+              (click)="cancelEdit()"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recuadro de Seguridad -->
+      <div class="profile-card">
+        <div class="profile-card__header">
+          <h2 class="profile-card__title">Seguridad</h2>
+          <button
+            class="profile-card__toggle"
+            [class.profile-card__toggle--expanded]="isSecurityCardExpanded"
+            (click)="toggleSecurityCardExpanded()"
+            [attr.aria-expanded]="isSecurityCardExpanded"
+            type="button"
+          >
+            <img src="assets/icons/boton-de-reproduccion.png" alt="Expandir/Contraer" class="profile-card__toggle-icon">
+          </button>
+        </div>
+
+        <div class="profile-card__content" [class.profile-card__content--collapsed]="!isSecurityCardExpanded">
+          <div class="profile-field">
+            <label class="profile-field__label">Nueva contraseña</label>
+            <input
+              type="password"
+              class="profile-field__input"
+              [(ngModel)]="newPassword"
+              placeholder="Ingresa tu nueva contraseña"
+            >
+          </div>
+
+          <div class="profile-field">
+            <label class="profile-field__label">Confirmar contraseña</label>
+            <input
+              type="password"
+              class="profile-field__input"
+              [(ngModel)]="confirmPassword"
+              placeholder="Confirma tu nueva contraseña"
+            >
+          </div>
+
+          <!-- Mensaje de validación -->
+          <div
+            *ngIf="passwordChangeMessage"
+            class="profile-message"
+            [class.profile-message--error]="passwordChangeError"
+            [class.profile-message--success]="!passwordChangeError"
+          >
+            {{ passwordChangeMessage }}
+          </div>
+
+          <!-- Botón de cambiar contraseña -->
+          <div class="profile-actions-edit">
+            <button
+              class="profile-btn profile-btn--primary"
+              (click)="changePassword()"
+            >
+              Cambiar contraseña
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recuadro de Incidencias Creadas -->
+      <div class="profile-card">
+        <div class="profile-card__header">
+          <h2 class="profile-card__title">Incidencias creadas</h2>
+          <button
+            class="profile-card__toggle"
+            [class.profile-card__toggle--expanded]="isIncidenciesCardExpanded"
+            (click)="toggleIncidenciesCardExpanded()"
+            [attr.aria-expanded]="isIncidenciesCardExpanded"
+            type="button"
+          >
+            <img src="assets/icons/boton-de-reproduccion.png" alt="Expandir/Contraer" class="profile-card__toggle-icon">
+          </button>
+        </div>
+
+        <div class="profile-card__content" [class.profile-card__content--collapsed]="!isIncidenciesCardExpanded">
+          <!-- Mensaje si no hay incidencias -->
+          <div *ngIf="incidencies.length === 0" class="profile-empty-message">
+            No tienes incidencias creadas aún
+          </div>
+
+          <!-- Lista de incidencias -->
+          <div *ngIf="incidencies.length > 0" class="incidencies-list">
+            <div *ngFor="let incidency of incidencies" class="incidency-item">
+              <div class="incidency-item__content">
+                <h3 class="incidency-item__appliance">{{ incidency.appliance }}</h3>
+                <p class="incidency-item__title">{{ incidency.title }}</p>
+              </div>
+              <button
+                class="profile-btn profile-btn--primary"
+                (click)="goToIncidency(incidency.id)"
+              >
+                Ir a la incidencia
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
