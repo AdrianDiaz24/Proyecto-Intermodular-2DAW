@@ -1,0 +1,119 @@
+<section class="report-incidence-overlay" (click)="closeModal()">
+  <article class="report-incidence-modal" (click)="$event.stopPropagation()">
+    <!-- Encabezado -->
+    <header class="report-incidence-modal__header">
+      <h2 class="report-incidence-modal__title">Reportar Incidencia</h2>
+      <app-close-button
+        icon="assets/icons/error.png"
+        (click)="closeModal()"
+      ></app-close-button>
+    </header>
+
+    <!-- Formulario -->
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="report-incidence-form">
+      <section class="report-incidence-form__content">
+        <!-- Campo: Título de la incidencia -->
+        <div class="report-incidence-form__group">
+          <label class="report-incidence-form__label">Título de la incidencia *</label>
+          <input
+            type="text"
+            class="report-incidence-form__input"
+            placeholder="Describe brevemente el problema..."
+            formControlName="title"
+            [class.report-incidence-form__input--error]="submitted && title?.invalid"
+          >
+          <span *ngIf="submitted && title?.invalid" class="report-incidence-form__error">
+            {{ title?.errors?.['required'] ? 'El título es obligatorio' : 'Mínimo 5 caracteres' }}
+          </span>
+        </div>
+
+        <!-- Campo: Descripción -->
+        <div class="report-incidence-form__group">
+          <label class="report-incidence-form__label">Descripción detallada *</label>
+          <textarea
+            class="report-incidence-form__textarea"
+            placeholder="Describe el problema en detalle, pasos para reproducirlo, etc..."
+            formControlName="description"
+            rows="6"
+            [class.report-incidence-form__input--error]="submitted && description?.invalid"
+          ></textarea>
+          <span *ngIf="submitted && description?.invalid" class="report-incidence-form__error">
+            {{ description?.errors?.['required'] ? 'La descripción es obligatoria' : 'Mínimo 20 caracteres' }}
+          </span>
+        </div>
+
+        <!-- Campo: Categoría -->
+        <div class="report-incidence-form__group">
+          <label class="report-incidence-form__label">Categoría *</label>
+          <select
+            class="report-incidence-form__select"
+            formControlName="category"
+            [class.report-incidence-form__input--error]="submitted && category?.invalid"
+          >
+            <option value="">Selecciona una categoría</option>
+            <option value="functionality">Funcionalidad</option>
+            <option value="performance">Rendimiento</option>
+            <option value="appearance">Apariencia</option>
+            <option value="other">Otro</option>
+          </select>
+          <span *ngIf="submitted && category?.invalid" class="report-incidence-form__error">
+            Selecciona una categoría
+          </span>
+        </div>
+
+        <!-- Campo: Severidad -->
+        <div class="report-incidence-form__group">
+          <label class="report-incidence-form__label">Severidad *</label>
+          <div class="report-incidence-form__severity-options">
+            <label class="report-incidence-form__severity-option">
+              <input
+                type="radio"
+                value="low"
+                formControlName="severity"
+              >
+              <span>Baja</span>
+            </label>
+            <label class="report-incidence-form__severity-option">
+              <input
+                type="radio"
+                value="medium"
+                formControlName="severity"
+              >
+              <span>Media</span>
+            </label>
+            <label class="report-incidence-form__severity-option">
+              <input
+                type="radio"
+                value="high"
+                formControlName="severity"
+              >
+              <span>Alta</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Nombre del producto (solo lectura) -->
+        <div class="report-incidence-form__product-info">
+          <p class="report-incidence-form__product-name">
+            Producto: <strong>{{ productName }}</strong>
+          </p>
+        </div>
+
+        <!-- Nota de campos obligatorios -->
+        <p class="report-incidence-modal__required-note">* Información obligatoria</p>
+      </section>
+
+      <!-- Pie del modal: Botones -->
+      <footer class="report-incidence-modal__footer">
+        <button
+          type="submit"
+          class="report-incidence-btn report-incidence-btn--primary"
+          [disabled]="loading"
+        >
+          {{ loading ? 'Reportando...' : 'Reportar Incidencia' }}
+        </button>
+      </footer>
+    </form>
+  </article>
+</section>
+

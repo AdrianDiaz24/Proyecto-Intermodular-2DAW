@@ -3,9 +3,7 @@
     <!-- Encabezado -->
     <header class="add-product-modal__header">
       <h2 class="add-product-modal__title">Añadir nuevo producto</h2>
-      <button class="add-product-modal__close-btn" (click)="closeModal()" type="button" title="Cerrar">
-        <img src="assets/icons/error.png" alt="Cerrar">
-      </button>
+      <app-close-button (click)="closeModal()"></app-close-button>
     </header>
 
     <!-- Contenido del modal - PASO 1: Campos Obligatorios -->

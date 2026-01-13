@@ -1,0 +1,297 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+.report-incidence-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.report-incidence-modal {
+  background-color: $color-text-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-6;
+    border-bottom: 1px solid $color-gray-200;
+    flex-shrink: 0;
+    background-color: $color-text-white;
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-4;
+    padding: $spacing-6;
+    border-top: 1px solid $color-gray-200;
+    flex-shrink: 0;
+    background-color: $color-gray-50;
+  }
+
+  &__required-note {
+    font-size: $font-size-xs;
+    color: $color-gray-600;
+    margin: $spacing-4 0 0 0;
+  }
+}
+
+.report-incidence-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  &__content {
+    padding: $spacing-6;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+    flex: 1;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+  }
+
+  &__label {
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-text-black;
+  }
+
+  &__input {
+    padding: $spacing-3 $spacing-4;
+    border: 2px solid $color-primary;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-family: inherit;
+    color: $color-text-black;
+
+    &::placeholder {
+      color: $color-gray-400;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary-hover;
+      box-shadow: 0 0 0 3px rgba(101, 156, 202, 0.1);
+    }
+
+    &--error {
+      border-color: $color-error;
+      background-color: rgba(234, 29, 29, 0.05);
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(234, 29, 29, 0.1);
+      }
+    }
+  }
+
+  &__textarea {
+    padding: $spacing-3 $spacing-4;
+    border: 2px solid $color-primary;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-family: inherit;
+    color: $color-text-black;
+    resize: vertical;
+    min-height: 120px;
+
+    &::placeholder {
+      color: $color-gray-400;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary-hover;
+      box-shadow: 0 0 0 3px rgba(101, 156, 202, 0.1);
+    }
+
+    &.report-incidence-form__input--error {
+      border-color: $color-error;
+      background-color: rgba(234, 29, 29, 0.05);
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(234, 29, 29, 0.1);
+      }
+    }
+  }
+
+  &__select {
+    padding: $spacing-3 $spacing-4;
+    border: 2px solid $color-primary;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-family: inherit;
+    color: $color-text-black;
+    background-color: $color-text-white;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary-hover;
+      box-shadow: 0 0 0 3px rgba(101, 156, 202, 0.1);
+    }
+
+    &.report-incidence-form__input--error {
+      border-color: $color-error;
+    }
+
+    option {
+      background-color: $color-text-white;
+      color: $color-text-black;
+    }
+  }
+
+  &__error {
+    font-size: $font-size-xs;
+    color: $color-error;
+  }
+
+  &__severity-options {
+    display: flex;
+    gap: $spacing-4;
+  }
+
+  &__severity-option {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    cursor: pointer;
+    font-size: $font-size-base;
+    color: $color-text-black;
+
+    input {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: $color-primary;
+    }
+
+    span {
+      user-select: none;
+    }
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__product-info {
+    background-color: $color-gray-50;
+    border-left: 4px solid $color-primary;
+    padding: $spacing-4;
+    border-radius: $radius-md;
+  }
+
+  &__product-name {
+    margin: 0;
+    font-size: $font-size-base;
+    color: $color-text-black;
+
+    strong {
+      color: $color-primary;
+    }
+  }
+}
+
+.report-incidence-btn {
+  padding: $spacing-3 $spacing-6;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-base;
+  font-family: inherit;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background-color: $color-accent;
+    color: $color-text-white;
+
+    &:hover:not(:disabled) {
+      background-color: lighten($color-accent, 5%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  &--secondary {
+    background-color: $color-gray-100;
+    color: $color-text-black;
+    border: 1px solid $color-gray-300;
+
+    &:hover:not(:disabled) {
+      background-color: $color-gray-200;
+      border-color: $color-gray-400;
+    }
+
+    &:active:not(:disabled) {
+      background-color: $color-gray-100;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .report-incidence-modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .report-incidence-form {
+    &__content {
+      padding: $spacing-4;
+      gap: $spacing-4;
+    }
+
+    &__severity-options {
+      flex-direction: column;
+      gap: $spacing-2;
+    }
+  }
+
+  .report-incidence-modal__footer {
+    flex-direction: column-reverse;
+    padding: $spacing-4;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+

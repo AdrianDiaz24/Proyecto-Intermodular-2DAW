@@ -1,0 +1,33 @@
+@use 'src/styles/settings/variables' as *;
+
+.close-button {
+  width: 28px;
+  height: 28px;
+  background-color: $color-accent;
+  border: none;
+  border-radius: $radius-full;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-base;
+  flex-shrink: 0;
+
+  img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+
+  &:hover {
+    background-color: lighten($color-accent, 10%);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+

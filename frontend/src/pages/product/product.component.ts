@@ -81,6 +81,7 @@ export class ProductComponent implements OnInit {
   itemsPerView = 3;
   searchQuery: string = '';
   filterStatus: 'all' | 'solved' | 'pending' = 'all';
+  showReportIncidenceModal = false;
 
   constructor(private route: ActivatedRoute) {
   }
@@ -173,8 +174,19 @@ export class ProductComponent implements OnInit {
   }
 
   onAddIncidence(): void {
-    // Navegar a crear nueva incidencia o abrir modal
-    console.log('Reportar nueva incidencia para:', this.product.name);
-    // Aquí irá la lógica para crear/reportar una nueva incidencia
+    this.showReportIncidenceModal = true;
+  }
+
+  onCloseReportModal(): void {
+    this.showReportIncidenceModal = false;
+  }
+
+  onReportIncidenceSubmit(formData: any): void {
+    console.log('Nueva incidencia reportada:', formData);
+    // Aquí irá la lógica para enviar la incidencia al servidor
+    // Por ahora solo cerramos el modal
+    this.showReportIncidenceModal = false;
+    // Recargar incidencias desde el servidor
+    this.loadIncidences(1); // O el ID del producto actual
   }
 }
