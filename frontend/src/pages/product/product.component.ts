@@ -76,10 +76,14 @@ export class ProductComponent implements OnInit {
 
   product: any;
   incidences: any[] = [];
+  filteredIncidences: any[] = [];
   currentSlide = 0;
   itemsPerView = 3;
+  searchQuery: string = '';
+  filterStatus: 'all' | 'solved' | 'pending' = 'all';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -93,26 +97,27 @@ export class ProductComponent implements OnInit {
     // Datos de ejemplo de incidencias para cada producto
     const incidencesData: { [key: number]: any[] } = {
       1: [
-        { id: 1, title: 'No centrifuga', user: 'Juan M.', date: '2024-12-20', solved: false, replies: 3 },
-        { id: 2, title: 'Fuga de agua', user: 'María L.', date: '2024-12-18', solved: true, replies: 5 },
-        { id: 3, title: 'Error E2', user: 'Pedro G.', date: '2024-12-15', solved: false, replies: 2 },
-        { id: 4, title: 'Ruido excesivo', user: 'Ana P.', date: '2024-12-10', solved: true, replies: 4 },
-        { id: 5, title: 'No abre la puerta', user: 'Carlos R.', date: '2024-12-05', solved: false, replies: 1 },
-        { id: 6, title: 'Programa se queda a mitad', user: 'Laura D.', date: '2024-11-28', solved: true, replies: 3 }
+        {id: 1, title: 'No centrifuga', user: 'Juan M.', date: '2024-12-20', solved: false, replies: 3},
+        {id: 2, title: 'Fuga de agua', user: 'María L.', date: '2024-12-18', solved: true, replies: 5},
+        {id: 3, title: 'Error E2', user: 'Pedro G.', date: '2024-12-15', solved: false, replies: 2},
+        {id: 4, title: 'Ruido excesivo', user: 'Ana P.', date: '2024-12-10', solved: true, replies: 4},
+        {id: 5, title: 'No abre la puerta', user: 'Carlos R.', date: '2024-12-05', solved: false, replies: 1},
+        {id: 6, title: 'Programa se queda a mitad', user: 'Laura D.', date: '2024-11-28', solved: true, replies: 3}
       ],
       7: [
-        { id: 1, title: 'Conectividad WiFi', user: 'Roberto T.', date: '2024-12-19', solved: false, replies: 2 },
-        { id: 2, title: 'Pantalla oscura', user: 'Sofía H.', date: '2024-12-17', solved: true, replies: 4 },
-        { id: 3, title: 'Error AI DD', user: 'Miguel N.', date: '2024-12-12', solved: false, replies: 1 }
+        {id: 1, title: 'Conectividad WiFi', user: 'Roberto T.', date: '2024-12-19', solved: false, replies: 2},
+        {id: 2, title: 'Pantalla oscura', user: 'Sofía H.', date: '2024-12-17', solved: true, replies: 4},
+        {id: 3, title: 'Error AI DD', user: 'Miguel N.', date: '2024-12-12', solved: false, replies: 1}
       ],
       8: [
-        { id: 1, title: 'Batería no carga', user: 'Javier S.', date: '2024-12-21', solved: true, replies: 3 },
-        { id: 2, title: 'Motor no funciona', user: 'Daniela V.', date: '2024-12-16', solved: false, replies: 2 }
+        {id: 1, title: 'Batería no carga', user: 'Javier S.', date: '2024-12-21', solved: true, replies: 3},
+        {id: 2, title: 'Motor no funciona', user: 'Daniela V.', date: '2024-12-16', solved: false, replies: 2}
       ]
     };
 
     this.incidences = incidencesData[productId] || incidencesData[1];
     this.currentSlide = 0;
+    this.applyFilters();
   }
 
   nextSlide(): void {
@@ -136,5 +141,34 @@ export class ProductComponent implements OnInit {
     console.log('Ver incidencia:', incidenceId);
     // Aquí irá la navegación a la página de incidencia
   }
-}
 
+  applyFilters(): void {
+    let filtered = this.incidences;
+
+    // Filtrar por estado
+    if (this.filterStatus === 'solved') {
+      filtered = filtered.filter(inc => inc.solved);
+    } else if (this.filterStatus === 'pending') {
+      filtered = filtered.filter(inc => !inc.solved);
+    }
+
+    // Filtrar por búsqueda
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase();
+      filtered = filtered.filter(inc =>
+          inc.title.toLowerCase().includes(query) ||
+          inc.user.toLowerCase().includes(query)
+      );
+    }
+
+    this.filteredIncidences = filtered;
+  }
+
+  onStatusFilterChange(): void {
+    this.applyFilters();
+  }
+
+  onSearch(): void {
+    this.applyFilters();
+  }
+}
