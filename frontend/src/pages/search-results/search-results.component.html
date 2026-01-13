@@ -11,9 +11,10 @@
       <p class="search-info__count">
         Se encontraron <strong>{{ filteredResults.length }}</strong> resultado{{ filteredResults.length !== 1 ? 's' : '' }}
       </p>
-      <button class="search-info__add-btn" title="Añadir nuevo producto" (click)="openAddProductModal()">
-        <img src="assets/icons/mas.png" alt="Añadir producto">
-      </button>
+      <app-add-button
+        title="Añadir nuevo producto"
+        (click)="openAddProductModal()"
+      ></app-add-button>
     </section>
 
     <!-- Resultados -->

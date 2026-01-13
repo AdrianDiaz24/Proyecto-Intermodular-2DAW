@@ -174,15 +174,21 @@
 
   // Incidencias - Carrusel
   &__incidences-section {
-    margin-top: $spacing-4;
+    margin-top: $spacing-10;
+  }
+
+  &__incidences-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-6;
   }
 
   &__incidences-title {
     font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     color: $color-text-black;
-    margin: 0 0 $spacing-6 0;
-    padding-top: $spacing-8;
+    margin: 0;
   }
 
   &__carousel {

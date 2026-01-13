@@ -20,6 +20,7 @@ import { FormTextareaComponent } from './components/shared/form-textarea/form-te
 import { FormSelectComponent } from './components/shared/form-select/form-select.component';
 import { FormCheckboxComponent } from './components/shared/form-checkbox/form-checkbox.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
+import { AddButtonComponent } from './components/shared/add-button/add-button.component';
 
 // Pages
 import { HomeComponent } from '../pages/home/home.component';
@@ -45,6 +46,7 @@ import { ProductComponent } from '../pages/product/product.component';
         FormSelectComponent,
         FormCheckboxComponent,
         AlertComponent,
+        AddButtonComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,

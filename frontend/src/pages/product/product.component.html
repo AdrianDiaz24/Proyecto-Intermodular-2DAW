@@ -76,7 +76,13 @@
 
     <!-- Carrusel de incidencias -->
     <section class="p-product__incidences-section" *ngIf="incidences.length > 0">
-      <h2 class="p-product__incidences-title">Incidencias Reportadas</h2>
+      <div class="p-product__incidences-header">
+        <h2 class="p-product__incidences-title">Incidencias Reportadas</h2>
+        <app-add-button
+          title="Reportar nueva incidencia"
+          (click)="onAddIncidence()"
+        ></app-add-button>
+      </div>
 
       <div class="p-product__carousel">
         <!-- Botón anterior -->

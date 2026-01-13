@@ -171,4 +171,10 @@ export class ProductComponent implements OnInit {
   onSearch(): void {
     this.applyFilters();
   }
+
+  onAddIncidence(): void {
+    // Navegar a crear nueva incidencia o abrir modal
+    console.log('Reportar nueva incidencia para:', this.product.name);
+    // Aquí irá la lógica para crear/reportar una nueva incidencia
+  }
 }
