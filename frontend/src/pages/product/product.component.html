@@ -1,0 +1,124 @@
+<div class="p-product">
+  <!-- Contenido principal -->
+  <main class="p-product__main">
+    <!-- Breadcrumb -->
+    <div class="p-product__breadcrumb">
+      <a href="/" class="p-product__breadcrumb-link">Inicio</a>
+      <span class="p-product__breadcrumb-separator">/</span>
+      <a href="/buscar" class="p-product__breadcrumb-link">Productos</a>
+      <span class="p-product__breadcrumb-separator">/</span>
+      <span class="p-product__breadcrumb-current">{{ product.name }}</span>
+    </div>
+
+    <!-- Recuadro único con toda la información -->
+    <div class="p-product__card">
+      <div class="p-product__card-grid">
+        <!-- Imagen principal -->
+        <div class="p-product__image-container">
+          <img [src]="product.image" [alt]="product.name" class="p-product__image">
+        </div>
+
+        <!-- Información del producto -->
+        <div class="p-product__info">
+          <h1 class="p-product__title">{{ product.name }}</h1>
+          <p class="p-product__brand">Marca: <strong>{{ product.brand }}</strong></p>
+          <p class="p-product__model">Modelo: <strong>{{ product.model }}</strong></p>
+
+          <!-- Especificaciones -->
+          <h3 class="p-product__spec-title">Especificaciones</h3>
+          <dl class="p-product__spec-list">
+            <div class="p-product__spec-item">
+              <dt class="p-product__spec-label">Peso:</dt>
+              <dd class="p-product__spec-value">{{ product.specifications.weight }}</dd>
+            </div>
+            <div class="p-product__spec-item">
+              <dt class="p-product__spec-label">Ancho:</dt>
+              <dd class="p-product__spec-value">{{ product.specifications.width }}</dd>
+            </div>
+            <div class="p-product__spec-item">
+              <dt class="p-product__spec-label">Largo:</dt>
+              <dd class="p-product__spec-value">{{ product.specifications.length }}</dd>
+            </div>
+            <div class="p-product__spec-item">
+              <dt class="p-product__spec-label">Alto:</dt>
+              <dd class="p-product__spec-value">{{ product.specifications.height }}</dd>
+            </div>
+            <div class="p-product__spec-item">
+              <dt class="p-product__spec-label">Consumo Eléctrico:</dt>
+              <dd class="p-product__spec-value">{{ product.specifications.consumption }}</dd>
+            </div>
+            <div class="p-product__spec-item">
+              <dt class="p-product__spec-label">Características:</dt>
+              <dd class="p-product__spec-value">{{ product.specifications.characteristics }}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Tarjeta de estadísticas de incidencias -->
+      <div class="p-product__stats">
+        <div class="p-product__stat-item">
+          <span class="p-product__stat-label">Incidencias Reportadas</span>
+          <span class="p-product__stat-value">{{ product.incidences }}</span>
+        </div>
+        <div class="p-product__stat-item">
+          <span class="p-product__stat-label">Resueltas</span>
+          <span class="p-product__stat-value">{{ product.solved }}</span>
+        </div>
+        <div class="p-product__stat-item">
+          <span class="p-product__stat-label">Tasa de resolución</span>
+          <span class="p-product__stat-value">{{ (product.solved / product.incidences * 100 | number: '1.0-0') }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrusel de incidencias -->
+    <div class="p-product__incidences-section" *ngIf="incidences.length > 0">
+      <h2 class="p-product__incidences-title">Incidencias Reportadas</h2>
+
+      <div class="p-product__carousel">
+        <!-- Botón anterior -->
+        <button
+          class="p-product__carousel-btn p-product__carousel-btn--prev"
+          (click)="prevSlide()"
+          [disabled]="currentSlide === 0"
+          aria-label="Incidencias anteriores"
+        >
+          ‹
+        </button>
+
+        <!-- Contenedor de tarjetas -->
+        <div class="p-product__carousel-container">
+          <div class="p-product__carousel-track" [style.transform]="'translateX(' + (-currentSlide * 33.333) + '%)'">
+            <button class="p-product__incidence-card" *ngFor="let incidence of incidences" (click)="viewIncidence(incidence.id)">
+              <div class="p-product__incidence-header">
+                <div class="p-product__incidence-content">
+                  <h3 class="p-product__incidence-title">{{ incidence.title }}</h3>
+                  <span class="p-product__incidence-status" [ngClass]="{ 'solved': incidence.solved }">
+                    {{ incidence.solved ? 'Resuelta' : 'Pendiente' }}
+                  </span>
+                  <p class="p-product__incidence-user">{{ incidence.user }}</p>
+                  <p class="p-product__incidence-date">{{ incidence.date }}</p>
+                </div>
+              </div>
+              <div class="p-product__incidence-footer">
+                <span class="p-product__incidence-replies">{{ incidence.replies }} respuestas</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Botón siguiente -->
+        <button
+          class="p-product__carousel-btn p-product__carousel-btn--next"
+          (click)="nextSlide()"
+          [disabled]="currentSlide >= incidences.length - itemsPerView"
+          aria-label="Más incidencias"
+        >
+          ›
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+

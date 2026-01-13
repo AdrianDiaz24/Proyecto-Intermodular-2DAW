@@ -29,6 +29,7 @@ import { StyleGuideComponent } from '../pages/style-guide/style-guide.component'
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { SearchResultsComponent } from '../pages/search-results/search-results.component';
 import { AddProductComponent } from '../pages/search-results/add-product/add-product.component';
+import { ProductComponent } from '../pages/product/product.component';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { AddProductComponent } from '../pages/search-results/add-product/add-pro
         StyleGuideComponent,
         ProfileComponent,
         SearchResultsComponent,
-        AddProductComponent
+        AddProductComponent,
+        ProductComponent
     ],
     imports: [
         BrowserModule,

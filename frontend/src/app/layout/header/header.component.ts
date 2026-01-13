@@ -15,9 +15,9 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Detectar si estamos en la página de búsqueda
+    // Detectar si estamos en la página de búsqueda o producto
     this.router.events.subscribe(() => {
-      this.isSearchPage = this.router.url.includes('/buscar');
+      this.isSearchPage = this.router.url.includes('/buscar') || this.router.url.includes('/producto');
     });
 
     // Obtener el parámetro de búsqueda si existe

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-results',
@@ -64,7 +64,7 @@ export class SearchResultsComponent implements OnInit {
   filteredResults: any[] = [];
   showAddProductModal = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     // Obtener el parámetro de búsqueda de la URL
@@ -98,6 +98,10 @@ export class SearchResultsComponent implements OnInit {
 
   closeAddProductModal(): void {
     this.showAddProductModal = false;
+  }
+
+  viewProduct(productId: number): void {
+    this.router.navigate(['/producto', productId]);
   }
 }
 
