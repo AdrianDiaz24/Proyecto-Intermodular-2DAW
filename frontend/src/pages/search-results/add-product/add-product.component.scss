@@ -161,6 +161,25 @@
     gap: $spacing-2;
   }
 
+  &__section-group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+    padding: $spacing-4;
+    background-color: $color-gray-50;
+    border-radius: $radius-md;
+    border: 1px solid $color-gray-200;
+  }
+
+  &__section-title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-text-black;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
   &__label {
     font-weight: $font-weight-semibold;
     color: $color-text-black;

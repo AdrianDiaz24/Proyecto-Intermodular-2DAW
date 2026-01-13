@@ -14,7 +14,13 @@ export class AddProductComponent {
     model: '',
     file: null as File | null,
     fileName: '',
-    description: ''
+    // Step 2 - Optional fields
+    weight: '',
+    width: '',
+    length: '',
+    height: '',
+    consumption: '',
+    characteristics: ''
   };
 
   submitted = false;
@@ -56,7 +62,12 @@ export class AddProductComponent {
       model: '',
       file: null,
       fileName: '',
-      description: ''
+      weight: '',
+      width: '',
+      length: '',
+      height: '',
+      consumption: '',
+      characteristics: ''
     };
     this.submitted = false;
     this.currentStep = 1;

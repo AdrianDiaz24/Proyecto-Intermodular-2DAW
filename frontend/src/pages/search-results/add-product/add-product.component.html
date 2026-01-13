@@ -87,15 +87,78 @@
       <div class="add-product-modal__section">
         <h3 class="add-product-modal__section-title">Información adicional (opcional)</h3>
 
-        <!-- Campo: Descripción -->
-        <div class="add-product-form__group">
-          <label class="add-product-form__label">Descripción</label>
-          <textarea
-            class="add-product-form__textarea"
-            placeholder="Describe las características del producto, modelo, año, etc..."
-            [(ngModel)]="productForm.description"
-            rows="8"
-          ></textarea>
+        <!-- Sección: Peso -->
+        <div class="add-product-form__section-group">
+          <h4 class="add-product-form__section-title">Peso</h4>
+          <div class="add-product-form__group">
+            <label class="add-product-form__label">Peso (kg)</label>
+            <input
+              type="text"
+              class="add-product-form__input"
+              placeholder="Ej: 85.5"
+              [(ngModel)]="productForm.weight"
+            >
+          </div>
+        </div>
+
+        <!-- Sección: Tamaño -->
+        <div class="add-product-form__section-group">
+          <h4 class="add-product-form__section-title">Tamaño</h4>
+          <div class="add-product-form__group">
+            <label class="add-product-form__label">Ancho (cm)</label>
+            <input
+              type="text"
+              class="add-product-form__input"
+              placeholder="Ej: 60"
+              [(ngModel)]="productForm.width"
+            >
+          </div>
+          <div class="add-product-form__group">
+            <label class="add-product-form__label">Largo (cm)</label>
+            <input
+              type="text"
+              class="add-product-form__input"
+              placeholder="Ej: 65"
+              [(ngModel)]="productForm.length"
+            >
+          </div>
+          <div class="add-product-form__group">
+            <label class="add-product-form__label">Alto (cm)</label>
+            <input
+              type="text"
+              class="add-product-form__input"
+              placeholder="Ej: 85"
+              [(ngModel)]="productForm.height"
+            >
+          </div>
+        </div>
+
+        <!-- Sección: Consumo eléctrico -->
+        <div class="add-product-form__section-group">
+          <h4 class="add-product-form__section-title">Consumo eléctrico</h4>
+          <div class="add-product-form__group">
+            <label class="add-product-form__label">Consumo (kWh/año)</label>
+            <input
+              type="text"
+              class="add-product-form__input"
+              placeholder="Ej: 192"
+              [(ngModel)]="productForm.consumption"
+            >
+          </div>
+        </div>
+
+        <!-- Sección: Otras características -->
+        <div class="add-product-form__section-group">
+          <h4 class="add-product-form__section-title">Otras características</h4>
+          <div class="add-product-form__group">
+            <label class="add-product-form__label">Características</label>
+            <textarea
+              class="add-product-form__textarea"
+              placeholder="Describe otras características relevantes..."
+              [(ngModel)]="productForm.characteristics"
+              rows="5"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>
