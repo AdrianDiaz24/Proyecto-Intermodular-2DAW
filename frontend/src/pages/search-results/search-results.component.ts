@@ -62,6 +62,7 @@ export class SearchResultsComponent implements OnInit {
   ];
 
   filteredResults: any[] = [];
+  showAddProductModal = false;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -89,6 +90,14 @@ export class SearchResultsComponent implements OnInit {
   onSearch(query: string): void {
     this.searchQuery = query;
     this.filterResults();
+  }
+
+  openAddProductModal(): void {
+    this.showAddProductModal = true;
+  }
+
+  closeAddProductModal(): void {
+    this.showAddProductModal = false;
   }
 }
 

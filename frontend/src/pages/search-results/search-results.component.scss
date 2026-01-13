@@ -33,6 +33,9 @@
 
 // Información de búsqueda
 .search-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: $spacing-8;
   padding: $spacing-4 $spacing-6;
   background-color: $color-text-white;
@@ -47,6 +50,36 @@
     strong {
       color: $color-primary;
       font-weight: $font-weight-bold;
+    }
+  }
+
+  &__add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: $color-accent;
+    border: none;
+    border-radius: $radius-full;
+    cursor: pointer;
+    padding: 0;
+    transition: all $transition-base;
+
+    &:hover {
+      background-color: lighten($color-accent, 10%);
+      box-shadow: $shadow-md;
+      transform: scale(1.15);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
     }
   }
 }

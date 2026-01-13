@@ -11,6 +11,9 @@
       <p class="search-info__count">
         Se encontraron <strong>{{ filteredResults.length }}</strong> resultado{{ filteredResults.length !== 1 ? 's' : '' }}
       </p>
+      <button class="search-info__add-btn" title="Añadir nuevo producto" (click)="openAddProductModal()">
+        <img src="assets/icons/mas.png" alt="Añadir producto">
+      </button>
     </div>
 
     <!-- Resultados -->
@@ -53,4 +56,10 @@
     </div>
   </div>
 </div>
+
+<!-- Modal para añadir nuevo producto -->
+<app-add-product
+  *ngIf="showAddProductModal"
+  (close)="closeAddProductModal()"
+></app-add-product>
 

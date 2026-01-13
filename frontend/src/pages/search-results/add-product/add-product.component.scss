@@ -1,0 +1,295 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+// Overlay
+.add-product-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: $spacing-4;
+}
+
+// Modal
+.add-product-modal {
+  background-color: $color-text-white;
+  border-radius: $radius-lg;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid $color-primary;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-6;
+    border-bottom: 1px solid $color-gray-100;
+    position: sticky;
+    top: 0;
+    background-color: $color-text-white;
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: $font-size-xl;
+    color: $color-gray-600;
+    cursor: pointer;
+    padding: $spacing-2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-base;
+
+    &:hover {
+      color: $color-text-black;
+      transform: scale(1.2);
+    }
+  }
+
+  &__close-btn {
+    width: 28px;
+    height: 28px;
+    background-color: $color-accent;
+    border: none;
+    border-radius: $radius-full;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all $transition-base;
+
+    img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    &:hover {
+      background-color: lighten($color-accent, 10%);
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-8;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+
+    &--left {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    &--right {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+
+  &__section-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__footer {
+    display: flex;
+    gap: $spacing-4;
+    padding: $spacing-6;
+    border-top: 1px solid $color-gray-100;
+    background-color: $color-gray-50;
+    justify-content: flex-end;
+  }
+
+  &__footer-actions {
+    display: flex;
+    gap: $spacing-4;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__required-note {
+    font-size: $font-size-xs;
+    color: $color-gray-600;
+    text-align: right;
+    margin: 0;
+    margin-top: $spacing-4;
+  }
+}
+
+// Formulario
+.add-product-form {
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+  }
+
+  &__label {
+    font-weight: $font-weight-semibold;
+    color: $color-text-black;
+    font-size: $font-size-base;
+  }
+
+  &__input,
+  &__textarea {
+    padding: $spacing-3 $spacing-4;
+    border: 1px solid $color-gray-300;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-family: $font-primary;
+    color: $color-text-black;
+    transition: all $transition-base;
+
+    &::placeholder {
+      color: $color-gray-400;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+
+    &--error {
+      border-color: $color-error;
+      background-color: rgba($color-error, 0.05);
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($color-error, 0.1);
+      }
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  &__error {
+    color: $color-error;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+  &__file-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__file-input {
+    display: none;
+  }
+
+  &__file-btn {
+    padding: $spacing-2 $spacing-4;
+    background-color: $color-primary;
+    color: $color-text-white;
+    border: none;
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all $transition-base;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: darken($color-primary, 10%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &__file-name {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// Botones
+.add-product-btn {
+  padding: $spacing-3 $spacing-6;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-base;
+  min-width: 150px;
+
+  &--primary {
+    background-color: $color-accent;
+    color: $color-text-white;
+
+    &:hover {
+      background-color: lighten($color-accent, 10%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &--secondary {
+    background-color: $color-gray-200;
+    color: $color-text-black;
+    border: 1px solid $color-gray-300;
+
+    &:hover {
+      background-color: $color-gray-300;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+

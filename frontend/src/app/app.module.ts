@@ -28,6 +28,7 @@ import { RegisterComponent } from '../pages/register/register.component';
 import { StyleGuideComponent } from '../pages/style-guide/style-guide.component';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { SearchResultsComponent } from '../pages/search-results/search-results.component';
+import { AddProductComponent } from '../pages/search-results/add-product/add-product.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import { SearchResultsComponent } from '../pages/search-results/search-results.c
         RegisterComponent,
         StyleGuideComponent,
         ProfileComponent,
-        SearchResultsComponent
+        SearchResultsComponent,
+        AddProductComponent
     ],
     imports: [
         BrowserModule,

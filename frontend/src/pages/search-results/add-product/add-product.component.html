@@ -1,0 +1,143 @@
+<div class="add-product-overlay" (click)="closeModal()">
+  <div class="add-product-modal" (click)="$event.stopPropagation()">
+    <!-- Encabezado -->
+    <div class="add-product-modal__header">
+      <h2 class="add-product-modal__title">Añadir nuevo producto</h2>
+      <button class="add-product-modal__close-btn" (click)="closeModal()" type="button" title="Cerrar">
+        <img src="assets/icons/error.png" alt="Cerrar">
+      </button>
+    </div>
+
+    <!-- Contenido del modal - PASO 1: Campos Obligatorios -->
+    <div class="add-product-modal__content" *ngIf="currentStep === 1">
+      <div class="add-product-modal__section">
+
+        <!-- Campo: Nombre del producto -->
+        <div class="add-product-form__group">
+          <label class="add-product-form__label">Nombre del producto *</label>
+          <input
+            type="text"
+            class="add-product-form__input"
+            placeholder="Ej: Lavadora Samsung"
+            [(ngModel)]="productForm.name"
+            [class.add-product-form__input--error]="submitted && !productForm.name"
+          >
+          <span *ngIf="submitted && !productForm.name" class="add-product-form__error">
+            El nombre del producto es obligatorio
+          </span>
+        </div>
+
+        <!-- Campo: Marca -->
+        <div class="add-product-form__group">
+          <label class="add-product-form__label">Marca del producto *</label>
+          <input
+            type="text"
+            class="add-product-form__input"
+            placeholder="Ej: Samsung"
+            [(ngModel)]="productForm.brand"
+            [class.add-product-form__input--error]="submitted && !productForm.brand"
+          >
+          <span *ngIf="submitted && !productForm.brand" class="add-product-form__error">
+            La marca del producto es obligatoria
+          </span>
+        </div>
+
+        <!-- Campo: Modelo -->
+        <div class="add-product-form__group">
+          <label class="add-product-form__label">Modelo del producto</label>
+          <input
+            type="text"
+            class="add-product-form__input"
+            placeholder="Ej: WF2100XEC"
+            [(ngModel)]="productForm.model"
+          >
+        </div>
+
+        <!-- Sección: Subir archivos -->
+        <div class="add-product-form__group">
+          <label class="add-product-form__label">Subir archivo (imagen o documento)</label>
+          <div class="add-product-form__file-input-wrapper">
+            <input
+              #fileInput
+              type="file"
+              class="add-product-form__file-input"
+              (change)="onFileSelected($event)"
+              accept="image/*,.pdf,.doc,.docx"
+            >
+            <button
+              type="button"
+              class="add-product-form__file-btn"
+              (click)="fileInput.click()"
+            >
+              Elegir archivo
+            </button>
+            <span class="add-product-form__file-name" *ngIf="productForm.fileName">
+              {{ productForm.fileName }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Nota de campos obligatorios -->
+        <p class="add-product-modal__required-note">* Información obligatoria</p>
+      </div>
+    </div>
+
+    <!-- Contenido del modal - PASO 2: Campos Opcionales -->
+    <div class="add-product-modal__content" *ngIf="currentStep === 2">
+      <div class="add-product-modal__section">
+        <h3 class="add-product-modal__section-title">Información adicional (opcional)</h3>
+
+        <!-- Campo: Descripción -->
+        <div class="add-product-form__group">
+          <label class="add-product-form__label">Descripción</label>
+          <textarea
+            class="add-product-form__textarea"
+            placeholder="Describe las características del producto, modelo, año, etc..."
+            [(ngModel)]="productForm.description"
+            rows="8"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pie del modal: Botones -->
+    <div class="add-product-modal__footer">
+      <!-- PASO 1: Botón Cancelar y Siguiente -->
+      <div *ngIf="currentStep === 1" class="add-product-modal__footer-actions">
+        <button
+          class="add-product-btn add-product-btn--secondary"
+          (click)="closeModal()"
+          type="button"
+        >
+          Cancelar
+        </button>
+        <button
+          class="add-product-btn add-product-btn--primary"
+          (click)="onNext()"
+          type="button"
+        >
+          Siguiente
+        </button>
+      </div>
+
+      <!-- PASO 2: Botón Atrás y Añadir -->
+      <div *ngIf="currentStep === 2" class="add-product-modal__footer-actions">
+        <button
+          class="add-product-btn add-product-btn--secondary"
+          (click)="onBack()"
+          type="button"
+        >
+          Atrás
+        </button>
+        <button
+          class="add-product-btn add-product-btn--primary"
+          (click)="onSubmit()"
+          type="button"
+        >
+          Añadir producto
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
