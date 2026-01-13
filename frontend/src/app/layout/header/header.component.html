@@ -28,10 +28,15 @@
 
     <!-- Contenedor derecho: usuario + hamburguesa -->
     <div class="c-header__right">
-        <!-- Botón usuario -->
-        <a routerLink="/login" class="c-header__user-btn" title="Ir a iniciar sesión">
+        <!-- Imagen de usuario como botón -->
+        <button
+            class="c-header__user-btn"
+            routerLink="/login"
+            title="Ir a iniciar sesión"
+            type="button"
+        >
             <img class="c-header__user-btn_img" src="assets/icons/UsuarioBlanco.png" alt="Perfil de usuario">
-        </a>
+        </button>
 
         <!-- Botón hamburguesa -->
         <button
