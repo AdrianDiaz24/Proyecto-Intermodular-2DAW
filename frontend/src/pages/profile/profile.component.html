@@ -1,7 +1,7 @@
-<div class="profile-page">
-  <div class="profile-container">
+<section class="profile-page">
+  <section class="profile-container">
     <!-- Encabezado de perfil -->
-    <div class="profile-header">
+    <header class="profile-header">
       <div class="profile-avatar">
         <img [src]="user.profileImage" [alt]="user.username" class="profile-avatar__img">
       </div>
@@ -18,11 +18,11 @@
           Cerrar sesión
         </button>
       </div>
-    </div>
+    </header>
 
     <!-- Información detallada -->
-    <div class="profile-details">
-      <div class="profile-card">
+    <section class="profile-details">
+      <article class="profile-card">
         <div class="profile-card__header">
           <h2 class="profile-card__title">Información personal</h2>
           <button
@@ -99,10 +99,10 @@
             </button>
           </div>
         </div>
-      </div>
+      </article>
 
       <!-- Recuadro de Seguridad -->
-      <div class="profile-card">
+      <article class="profile-card">
         <div class="profile-card__header">
           <h2 class="profile-card__title">Seguridad</h2>
           <button
@@ -157,10 +157,10 @@
             </button>
           </div>
         </div>
-      </div>
+      </article>
 
       <!-- Recuadro de Incidencias Creadas -->
-      <div class="profile-card">
+      <article class="profile-card">
         <div class="profile-card__header">
           <h2 class="profile-card__title">Incidencias creadas</h2>
           <button
@@ -181,8 +181,8 @@
           </div>
 
           <!-- Lista de incidencias -->
-          <div *ngIf="incidencies.length > 0" class="incidencies-list">
-            <div *ngFor="let incidency of incidencies" class="incidency-item">
+          <section *ngIf="incidencies.length > 0" class="incidencies-list">
+            <article *ngFor="let incidency of incidencies" class="incidency-item">
               <div class="incidency-item__content">
                 <h3 class="incidency-item__appliance">{{ incidency.appliance }}</h3>
                 <p class="incidency-item__title">{{ incidency.title }}</p>
@@ -193,11 +193,11 @@
               >
                 Ir a la incidencia
               </button>
-            </div>
-          </div>
+            </article>
+          </section>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+      </article>
+    </section>
+  </section>
+</section>
 

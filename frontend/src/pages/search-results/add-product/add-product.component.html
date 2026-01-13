@@ -1,16 +1,16 @@
-<div class="add-product-overlay" (click)="closeModal()">
-  <div class="add-product-modal" (click)="$event.stopPropagation()">
+<section class="add-product-overlay" (click)="closeModal()">
+  <article class="add-product-modal" (click)="$event.stopPropagation()">
     <!-- Encabezado -->
-    <div class="add-product-modal__header">
+    <header class="add-product-modal__header">
       <h2 class="add-product-modal__title">Añadir nuevo producto</h2>
       <button class="add-product-modal__close-btn" (click)="closeModal()" type="button" title="Cerrar">
         <img src="assets/icons/error.png" alt="Cerrar">
       </button>
-    </div>
+    </header>
 
     <!-- Contenido del modal - PASO 1: Campos Obligatorios -->
-    <div class="add-product-modal__content" *ngIf="currentStep === 1">
-      <div class="add-product-modal__section">
+    <section class="add-product-modal__content" *ngIf="currentStep === 1">
+      <section class="add-product-modal__section">
 
         <!-- Campo: Nombre del producto -->
         <div class="add-product-form__group">
@@ -79,16 +79,16 @@
 
         <!-- Nota de campos obligatorios -->
         <p class="add-product-modal__required-note">* Información obligatoria</p>
-      </div>
-    </div>
+      </section>
+    </section>
 
     <!-- Contenido del modal - PASO 2: Campos Opcionales -->
-    <div class="add-product-modal__content" *ngIf="currentStep === 2">
-      <div class="add-product-modal__section">
+    <section class="add-product-modal__content" *ngIf="currentStep === 2">
+      <section class="add-product-modal__section">
         <h3 class="add-product-modal__section-title">Información adicional (opcional)</h3>
 
         <!-- Sección: Peso -->
-        <div class="add-product-form__section-group">
+        <section class="add-product-form__section-group">
           <h4 class="add-product-form__section-title">Peso</h4>
           <div class="add-product-form__group">
             <label class="add-product-form__label">Peso (kg)</label>
@@ -99,10 +99,10 @@
               [(ngModel)]="productForm.weight"
             >
           </div>
-        </div>
+        </section>
 
         <!-- Sección: Tamaño -->
-        <div class="add-product-form__section-group">
+        <section class="add-product-form__section-group">
           <h4 class="add-product-form__section-title">Tamaño</h4>
           <div class="add-product-form__group">
             <label class="add-product-form__label">Ancho (cm)</label>
@@ -131,10 +131,10 @@
               [(ngModel)]="productForm.height"
             >
           </div>
-        </div>
+        </section>
 
         <!-- Sección: Consumo eléctrico -->
-        <div class="add-product-form__section-group">
+        <section class="add-product-form__section-group">
           <h4 class="add-product-form__section-title">Consumo eléctrico</h4>
           <div class="add-product-form__group">
             <label class="add-product-form__label">Consumo (kWh/año)</label>
@@ -145,10 +145,10 @@
               [(ngModel)]="productForm.consumption"
             >
           </div>
-        </div>
+        </section>
 
         <!-- Sección: Otras características -->
-        <div class="add-product-form__section-group">
+        <section class="add-product-form__section-group">
           <h4 class="add-product-form__section-title">Otras características</h4>
           <div class="add-product-form__group">
             <label class="add-product-form__label">Características</label>
@@ -159,12 +159,12 @@
               rows="5"
             ></textarea>
           </div>
-        </div>
-      </div>
-    </div>
+        </section>
+      </section>
+    </section>
 
     <!-- Pie del modal: Botones -->
-    <div class="add-product-modal__footer">
+    <footer class="add-product-modal__footer">
       <!-- PASO 1: Botón Cancelar y Siguiente -->
       <div *ngIf="currentStep === 1" class="add-product-modal__footer-actions">
         <button
@@ -200,7 +200,7 @@
           Añadir producto
         </button>
       </div>
-    </div>
-  </div>
-</div>
+    </footer>
+  </article>
+</section>
 

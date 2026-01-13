@@ -1,17 +1,17 @@
-<div class="p-product">
+<section class="p-product">
   <!-- Contenido principal -->
   <main class="p-product__main">
     <!-- Breadcrumb -->
-    <div class="p-product__breadcrumb">
+    <nav class="p-product__breadcrumb">
       <a href="/" class="p-product__breadcrumb-link">Inicio</a>
       <span class="p-product__breadcrumb-separator">/</span>
       <a href="/buscar" class="p-product__breadcrumb-link">Productos</a>
       <span class="p-product__breadcrumb-separator">/</span>
       <span class="p-product__breadcrumb-current">{{ product.name }}</span>
-    </div>
+    </nav>
 
     <!-- Recuadro único con toda la información -->
-    <div class="p-product__card">
+    <article class="p-product__card">
       <div class="p-product__card-grid">
         <!-- Imagen principal -->
         <div class="p-product__image-container">
@@ -19,61 +19,63 @@
         </div>
 
         <!-- Información del producto -->
-        <div class="p-product__info">
+        <section class="p-product__info">
           <h1 class="p-product__title">{{ product.name }}</h1>
           <p class="p-product__brand">Marca: <strong>{{ product.brand }}</strong></p>
           <p class="p-product__model">Modelo: <strong>{{ product.model }}</strong></p>
 
           <!-- Especificaciones -->
-          <h3 class="p-product__spec-title">Especificaciones</h3>
-          <dl class="p-product__spec-list">
-            <div class="p-product__spec-item">
-              <dt class="p-product__spec-label">Peso:</dt>
-              <dd class="p-product__spec-value">{{ product.specifications.weight }}</dd>
-            </div>
-            <div class="p-product__spec-item">
-              <dt class="p-product__spec-label">Ancho:</dt>
-              <dd class="p-product__spec-value">{{ product.specifications.width }}</dd>
-            </div>
-            <div class="p-product__spec-item">
-              <dt class="p-product__spec-label">Largo:</dt>
-              <dd class="p-product__spec-value">{{ product.specifications.length }}</dd>
-            </div>
-            <div class="p-product__spec-item">
-              <dt class="p-product__spec-label">Alto:</dt>
-              <dd class="p-product__spec-value">{{ product.specifications.height }}</dd>
-            </div>
-            <div class="p-product__spec-item">
-              <dt class="p-product__spec-label">Consumo Eléctrico:</dt>
-              <dd class="p-product__spec-value">{{ product.specifications.consumption }}</dd>
-            </div>
-            <div class="p-product__spec-item">
-              <dt class="p-product__spec-label">Características:</dt>
-              <dd class="p-product__spec-value">{{ product.specifications.characteristics }}</dd>
-            </div>
-          </dl>
-        </div>
+          <section>
+            <h3 class="p-product__spec-title">Especificaciones</h3>
+            <dl class="p-product__spec-list">
+              <div class="p-product__spec-item">
+                <dt class="p-product__spec-label">Peso:</dt>
+                <dd class="p-product__spec-value">{{ product.specifications.weight }}</dd>
+              </div>
+              <div class="p-product__spec-item">
+                <dt class="p-product__spec-label">Ancho:</dt>
+                <dd class="p-product__spec-value">{{ product.specifications.width }}</dd>
+              </div>
+              <div class="p-product__spec-item">
+                <dt class="p-product__spec-label">Largo:</dt>
+                <dd class="p-product__spec-value">{{ product.specifications.length }}</dd>
+              </div>
+              <div class="p-product__spec-item">
+                <dt class="p-product__spec-label">Alto:</dt>
+                <dd class="p-product__spec-value">{{ product.specifications.height }}</dd>
+              </div>
+              <div class="p-product__spec-item">
+                <dt class="p-product__spec-label">Consumo Eléctrico:</dt>
+                <dd class="p-product__spec-value">{{ product.specifications.consumption }}</dd>
+              </div>
+              <div class="p-product__spec-item">
+                <dt class="p-product__spec-label">Características:</dt>
+                <dd class="p-product__spec-value">{{ product.specifications.characteristics }}</dd>
+              </div>
+            </dl>
+          </section>
+        </section>
       </div>
 
       <!-- Tarjeta de estadísticas de incidencias -->
-      <div class="p-product__stats">
-        <div class="p-product__stat-item">
+      <section class="p-product__stats">
+        <article class="p-product__stat-item">
           <span class="p-product__stat-label">Incidencias Reportadas</span>
           <span class="p-product__stat-value">{{ product.incidences }}</span>
-        </div>
-        <div class="p-product__stat-item">
+        </article>
+        <article class="p-product__stat-item">
           <span class="p-product__stat-label">Resueltas</span>
           <span class="p-product__stat-value">{{ product.solved }}</span>
-        </div>
-        <div class="p-product__stat-item">
+        </article>
+        <article class="p-product__stat-item">
           <span class="p-product__stat-label">Tasa de resolución</span>
           <span class="p-product__stat-value">{{ (product.solved / product.incidences * 100 | number: '1.0-0') }}%</span>
-        </div>
-      </div>
-    </div>
+        </article>
+      </section>
+    </article>
 
     <!-- Carrusel de incidencias -->
-    <div class="p-product__incidences-section" *ngIf="incidences.length > 0">
+    <section class="p-product__incidences-section" *ngIf="incidences.length > 0">
       <h2 class="p-product__incidences-title">Incidencias Reportadas</h2>
 
       <div class="p-product__carousel">
@@ -90,7 +92,7 @@
         <!-- Contenedor de tarjetas -->
         <div class="p-product__carousel-container">
           <div class="p-product__carousel-track" [style.transform]="'translateX(' + (-currentSlide * 33.333) + '%)'">
-            <button class="p-product__incidence-card" *ngFor="let incidence of incidences" (click)="viewIncidence(incidence.id)">
+            <article class="p-product__incidence-card" *ngFor="let incidence of incidences" (click)="viewIncidence(incidence.id)">
               <div class="p-product__incidence-header">
                 <div class="p-product__incidence-content">
                   <h3 class="p-product__incidence-title">{{ incidence.title }}</h3>
@@ -104,7 +106,7 @@
               <div class="p-product__incidence-footer">
                 <span class="p-product__incidence-replies">{{ incidence.replies }} respuestas</span>
               </div>
-            </button>
+            </article>
           </div>
         </div>
 
@@ -118,10 +120,10 @@
           ›
         </button>
       </div>
-    </div>
+    </section>
 
     <!-- Buscador y filtro de incidencias -->
-    <div class="p-product__search-section">
+    <section class="p-product__search-section">
       <div class="p-product__search-container">
         <input
           type="text"
@@ -147,12 +149,12 @@
           <option value="solved">Resueltas</option>
         </select>
       </div>
-    </div>
+    </section>
 
     <!-- Resultados de búsqueda -->
-    <div class="p-product__search-results" *ngIf="filteredIncidences.length > 0 && (searchQuery || filterStatus !== 'all')">
+    <section class="p-product__search-results" *ngIf="filteredIncidences.length > 0 && (searchQuery || filterStatus !== 'all')">
       <div class="p-product__results-grid">
-        <div class="p-product__result-card" *ngFor="let incidence of filteredIncidences" (click)="viewIncidence(incidence.id)">
+        <article class="p-product__result-card" *ngFor="let incidence of filteredIncidences" (click)="viewIncidence(incidence.id)">
           <div class="p-product__result-header">
             <h3 class="p-product__result-title">{{ incidence.title }}</h3>
             <span class="p-product__result-status" [ngClass]="{ 'solved': incidence.solved }">
@@ -164,12 +166,12 @@
           <div class="p-product__result-footer">
             <span class="p-product__result-replies">{{ incidence.replies }} respuestas</span>
           </div>
-        </div>
+        </article>
       </div>
-    </div>
+    </section>
 
     <!-- Sin resultados -->
-    <div class="p-product__no-results" *ngIf="filteredIncidences.length === 0 && (searchQuery || filterStatus !== 'all')">
+    <section class="p-product__no-results" *ngIf="filteredIncidences.length === 0 && (searchQuery || filterStatus !== 'all')">
       <p>No se encontraron incidencias que coincidan con tu búsqueda</p>
-    </div>
+    </section>
 

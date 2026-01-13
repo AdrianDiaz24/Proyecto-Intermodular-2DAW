@@ -1,25 +1,25 @@
-<div class="search-results-page">
-  <div class="search-results-container">
+<section class="search-results-page">
+  <section class="search-results-container">
     <!-- Encabezado con título y búsqueda -->
-    <div class="search-header">
+    <header class="search-header">
       <h1 class="search-header__title">Resultados de búsqueda</h1>
       <p class="search-header__subtitle">{{ searchQuery ? 'Búsqueda: "' + searchQuery + '"' : 'Todos nuestros servicios' }}</p>
-    </div>
+    </header>
 
     <!-- Información de resultados -->
-    <div class="search-info">
+    <section class="search-info">
       <p class="search-info__count">
         Se encontraron <strong>{{ filteredResults.length }}</strong> resultado{{ filteredResults.length !== 1 ? 's' : '' }}
       </p>
       <button class="search-info__add-btn" title="Añadir nuevo producto" (click)="openAddProductModal()">
         <img src="assets/icons/mas.png" alt="Añadir producto">
       </button>
-    </div>
+    </section>
 
     <!-- Resultados -->
-    <div class="search-results-grid">
+    <section class="search-results-grid">
       <!-- Mensaje si no hay resultados -->
-      <div *ngIf="filteredResults.length === 0" class="no-results">
+      <section *ngIf="filteredResults.length === 0" class="no-results">
         <div class="no-results__icon">
           <i class="fas fa-search"></i>
         </div>
@@ -28,11 +28,11 @@
           Lo sentimos, no encontramos resultados que coincidan con "<strong>{{ searchQuery }}</strong>"
         </p>
         <p class="no-results__suggestion">Intenta con otras palabras clave o <a href="/" class="no-results__link">vuelve al inicio</a></p>
-      </div>
+      </section>
 
       <!-- Grid de resultados -->
-      <div *ngIf="filteredResults.length > 0" class="results-container">
-        <div *ngFor="let result of filteredResults" class="result-card">
+      <section *ngIf="filteredResults.length > 0" class="results-container">
+        <article *ngFor="let result of filteredResults" class="result-card">
           <!-- Logo como placeholder -->
           <div class="result-card__image">
             <img src="assets/icons/logoNaranja.png" alt="Logo" class="result-card__logo">
@@ -51,11 +51,11 @@
               Ver producto
             </button>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </article>
+      </section>
+    </section>
+  </section>
+</section>
 
 <!-- Modal para añadir nuevo producto -->
 <app-add-product
