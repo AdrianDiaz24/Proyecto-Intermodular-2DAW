@@ -1,0 +1,36 @@
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumbs__list">
+    <li
+      *ngFor="let breadcrumb of breadcrumbs; let i = index"
+      class="breadcrumbs__item"
+      [class.breadcrumbs__item--active]="isLastBreadcrumb(i)"
+    >
+      <!-- Separador -->
+      <span *ngIf="i > 0" class="breadcrumbs__separator">/</span>
+
+      <!-- Link o texto -->
+      <ng-container *ngIf="!isLastBreadcrumb(i); else lastBreadcrumb">
+        <a
+          class="breadcrumbs__link"
+          [routerLink]="breadcrumb.url"
+          [title]="breadcrumb.label"
+        >
+          <img
+            *ngIf="breadcrumb.icon && i === 0"
+            [src]="breadcrumb.icon"
+            [alt]="breadcrumb.label"
+            class="breadcrumbs__icon"
+          >
+          <span class="breadcrumbs__text">{{ breadcrumb.label }}</span>
+        </a>
+      </ng-container>
+
+      <ng-template #lastBreadcrumb>
+        <span class="breadcrumbs__current" aria-current="page">
+          {{ breadcrumb.label }}
+        </span>
+      </ng-template>
+    </li>
+  </ol>
+</nav>
+

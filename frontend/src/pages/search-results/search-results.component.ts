@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationService } from '../../app/services/navigation.service';
+import { ProductService } from '../../app/services/product.service';
 
 @Component({
   selector: 'app-search-results',
@@ -8,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SearchResultsComponent implements OnInit {
   searchQuery: string = '';
+  loading = false;
 
   // Datos de ejemplo de resultados de búsqueda (productos)
   searchResults = [
@@ -64,7 +67,12 @@ export class SearchResultsComponent implements OnInit {
   filteredResults: any[] = [];
   showAddProductModal = false;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private navigationService: NavigationService,
+    private productService: ProductService
+  ) {}
 
   ngOnInit(): void {
     // Obtener el parámetro de búsqueda de la URL
@@ -72,6 +80,22 @@ export class SearchResultsComponent implements OnInit {
       this.searchQuery = params['q'] || '';
       this.filterResults();
     });
+  }
+
+  /**
+   * Navega al producto seleccionado
+   */
+  goToProduct(productId: number): void {
+    this.navigationService.goToProduct(productId, {
+      state: { fromSearch: true, searchQuery: this.searchQuery }
+    });
+  }
+
+  /**
+   * Realiza una nueva búsqueda actualizando los query params
+   */
+  onSearch(): void {
+    this.navigationService.goToSearch(this.searchQuery);
   }
 
   filterResults(): void {
@@ -87,10 +111,6 @@ export class SearchResultsComponent implements OnInit {
     }
   }
 
-  onSearch(query: string): void {
-    this.searchQuery = query;
-    this.filterResults();
-  }
 
   openAddProductModal(): void {
     this.showAddProductModal = true;

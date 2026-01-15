@@ -1,0 +1,12 @@
+<div
+  class="loading-spinner"
+  [class.loading-spinner--fullscreen]="fullScreen"
+  [class.loading-spinner--small]="size === 'small'"
+  [class.loading-spinner--large]="size === 'large'"
+>
+  <div class="loading-spinner__container">
+    <div class="loading-spinner__circle"></div>
+    <p *ngIf="message" class="loading-spinner__message">{{ message }}</p>
+  </div>
+</div>
+

@@ -1,0 +1,92 @@
+
+<main class="about">
+  <!-- Breadcrumbs -->
+  <app-breadcrumbs></app-breadcrumbs>
+
+  <!-- Hero Section -->
+  <section class="about__hero">
+    <article class="about__hero-content">
+      <h1 class="about__title">Sobre ReparaFácil</h1>
+      <p class="about__subtitle">
+        Conectamos a personas con problemas técnicos con una comunidad dispuesta a ayudar
+      </p>
+    </article>
+  </section>
+
+  <!-- Misión -->
+  <section class="about__section">
+    <article class="about__container">
+      <h2 class="about__section-title">Nuestra Misión</h2>
+      <p class="about__text">
+        En ReparaFácil creemos que el conocimiento debe ser compartido. Nuestra plataforma
+        permite a los usuarios registrar incidencias de sus electrodomésticos y recibir ayuda
+        de una comunidad activa de expertos y entusiastas de la reparación.
+      </p>
+      <p class="about__text">
+        No vendemos productos, facilitamos soluciones. Cada incidencia reportada es una
+        oportunidad para que alguien aprenda y ayude a otros.
+      </p>
+    </article>
+  </section>
+
+  <!-- Características -->
+  <section class="about__section about__section--alt">
+    <article class="about__container">
+      <h2 class="about__section-title">¿Por qué elegirnos?</h2>
+      <div class="about__features">
+        <article *ngFor="let feature of features" class="about__feature">
+          <div class="about__feature-icon">
+            <img [src]="feature.icon" [alt]="feature.title">
+          </div>
+          <h3 class="about__feature-title">{{ feature.title }}</h3>
+          <p class="about__feature-description">{{ feature.description }}</p>
+        </article>
+      </div>
+    </article>
+  </section>
+
+  <!-- Cómo funciona -->
+  <section class="about__section">
+    <article class="about__container">
+      <h2 class="about__section-title">¿Cómo funciona?</h2>
+      <div class="about__steps">
+        <article class="about__step">
+          <span class="about__step-number">1</span>
+          <h3 class="about__step-title">Busca tu producto</h3>
+          <p class="about__step-description">
+            Encuentra el electrodoméstico que tiene el problema.
+          </p>
+        </article>
+        <article class="about__step">
+          <span class="about__step-number">2</span>
+          <h3 class="about__step-title">Reporta la incidencia</h3>
+          <p class="about__step-description">
+            Describe el problema con el mayor detalle posible.
+          </p>
+        </article>
+        <article class="about__step">
+          <span class="about__step-number">3</span>
+          <h3 class="about__step-title">Recibe ayuda</h3>
+          <p class="about__step-description">
+            La comunidad responderá con posibles soluciones.
+          </p>
+        </article>
+      </div>
+    </article>
+  </section>
+
+  <!-- Contacto -->
+  <section class="about__section about__section--cta">
+    <article class="about__container">
+      <h2 class="about__cta-title">¿Tienes alguna pregunta?</h2>
+      <p class="about__cta-text">
+        Estamos aquí para ayudarte. No dudes en contactarnos.
+      </p>
+      <button class="about__cta-button" routerLink="/">
+        Ir al inicio
+      </button>
+    </article>
+  </section>
+</main>
+
+

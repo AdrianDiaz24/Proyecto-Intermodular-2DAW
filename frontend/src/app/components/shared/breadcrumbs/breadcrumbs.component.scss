@@ -1,0 +1,83 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+.breadcrumbs {
+  padding: $spacing-3 0 $spacing-3 $spacing-8;
+
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: $spacing-2;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    font-size: $font-size-sm;
+  }
+
+  &__separator {
+    color: $color-gray-400;
+    font-weight: $font-weight-light;
+    padding-bottom: 8px;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+    color: $color-primary;
+    text-decoration: none;
+    @include transition(color);
+
+    &:hover {
+      color: $color-primary-hover;
+      text-decoration: underline;
+    }
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+
+  &__text {
+    white-space: nowrap;
+  }
+
+  &__current {
+    color: $color-gray-600;
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+    padding-bottom: 8px;
+  }
+
+  &__item--active {
+    .breadcrumbs__current {
+      color: $color-text-black;
+    }
+  }
+}
+
+// Responsive: ocultar breadcrumbs intermedios en móvil
+@media (max-width: $breakpoint-sm) {
+  .breadcrumbs {
+    &__item:not(:first-child):not(:last-child) {
+      display: none;
+    }
+
+    &__item:last-child {
+      .breadcrumbs__separator {
+        display: block;
+      }
+    }
+  }
+}
+

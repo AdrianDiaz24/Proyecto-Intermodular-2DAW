@@ -1,0 +1,61 @@
+<main class="not-found">
+  <section class="not-found__container">
+    <!-- Icono/Imagen de error -->
+    <article class="not-found__icon-wrapper">
+      <img
+        src="assets/images/logo-naranja.png"
+        alt="Error 404"
+        class="not-found__icon"
+      >
+      <span class="not-found__error-code">404</span>
+    </article>
+
+    <!-- Mensaje de error -->
+    <header class="not-found__header">
+      <h1 class="not-found__title">¡Ups! Página no encontrada</h1>
+      <p class="not-found__message">{{ errorMessage }}</p>
+      <p *ngIf="attemptedUrl" class="not-found__attempted-url">
+        URL intentada: <code>{{ attemptedUrl }}</code>
+      </p>
+    </header>
+
+    <!-- Sugerencias -->
+    <article class="not-found__suggestions">
+      <h2 class="not-found__suggestions-title">¿Qué puedes hacer?</h2>
+      <ul class="not-found__suggestions-list">
+        <li>Verificar que la URL esté escrita correctamente</li>
+        <li>Volver a la página anterior</li>
+        <li>Buscar el producto que necesitas</li>
+        <li>Ir a la página de inicio</li>
+      </ul>
+    </article>
+
+    <!-- Botones de acción -->
+    <nav class="not-found__actions">
+      <button
+        class="not-found__btn not-found__btn--primary"
+        (click)="goHome()"
+      >
+        <span>Ir al inicio</span>
+      </button>
+      <button
+        class="not-found__btn not-found__btn--secondary"
+        (click)="goBack()"
+      >
+        <span>Volver atrás</span>
+      </button>
+      <button
+        class="not-found__btn not-found__btn--outline"
+        (click)="goToSearch()"
+      >
+        <span>Buscar productos</span>
+      </button>
+    </nav>
+
+    <!-- Countdown -->
+    <footer class="not-found__countdown">
+      <p>Serás redirigido al inicio en <strong>{{ countdown }}</strong> segundos...</p>
+    </footer>
+  </section>
+</main>
+

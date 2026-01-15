@@ -1,14 +1,14 @@
-<section class="profile-page">
+<section class="profile-page" *ngIf="user">
   <section class="profile-container">
     <!-- Encabezado de perfil -->
     <header class="profile-header">
       <div class="profile-avatar">
-        <img [src]="user.profileImage" [alt]="user.username" class="profile-avatar__img">
+        <img [src]="user.profileImage || 'assets/icons/UsuarioBlanco.png'" [alt]="user.username" class="profile-avatar__img">
       </div>
       <div class="profile-info">
         <h1 class="profile-info__name">{{ user.username }}</h1>
         <p class="profile-info__email">{{ user.email }}</p>
-        <p class="profile-info__join-date">Miembro desde el {{ user.joinDate | date:'d MMMM yyyy':'':'es' }}</p>
+        <p class="profile-info__join-date">Miembro desde el {{ user.memberSince | date:'d MMMM yyyy':'':'es' }}</p>
       </div>
       <div class="profile-actions">
         <button

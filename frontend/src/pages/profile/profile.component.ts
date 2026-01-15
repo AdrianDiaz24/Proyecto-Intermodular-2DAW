@@ -1,26 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService, User } from '../../app/services/auth.service';
+import { NavigationService } from '../../app/services/navigation.service';
+import { CanComponentDeactivate } from '../../app/guards/unsaved-changes.guard';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
-  // Información del usuario (esto vendrá de un servicio en el futuro)
-  user = {
-    username: 'juan_perez',
-    email: 'juan@example.com',
-    phone: '+34 612 345 678',
-    joinDate: '2026-01-10',
-    profileImage: 'assets/icons/UsuarioBlanco.png'
-  };
+export class ProfileComponent implements OnInit, CanComponentDeactivate {
+  // Información del usuario
+  user: User | null = null;
 
+  // Estados del formulario
   editMode = false;
-  formData = { ...this.user };
+  formData: any = {};
+  hasUnsavedChanges = false;
+
+  // Estados de las cards
   isCardExpanded = false;
   isSecurityCardExpanded = false;
   isIncidenciesCardExpanded = false;
+
+  // Seguridad
   newPassword = '';
   confirmPassword = '';
   passwordChangeMessage = '';
@@ -48,35 +52,81 @@ export class ProfileComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit(): void {
-    // Verificar si el usuario está autenticado
-    // Si no, redirigir a login
+    // Obtener datos del resolver o del servicio
+    this.route.data.subscribe(data => {
+      if (data['user']) {
+        this.user = data['user'];
+        this.formData = { ...this.user };
+      }
+    });
+
+    // Si no hay datos del resolver, obtener del servicio
+    if (!this.user) {
+      this.authService.currentUser$.subscribe(user => {
+        if (user) {
+          this.user = user;
+          this.formData = { ...user };
+        }
+      });
+    }
+
+    // Verificar estado de navegación (mensaje de bienvenida)
+    const navState = this.navigationService.getNavigationState();
+    if (navState?.fromLogin || navState?.fromRegister) {
+      console.log('Bienvenido!', navState.user?.username);
+    }
+  }
+
+  /**
+   * Implementación del guard CanDeactivate
+   * Previene navegación si hay cambios sin guardar
+   */
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.hasUnsavedChanges) {
+      return confirm('Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?');
+    }
+    return true;
   }
 
   toggleEditMode(): void {
     if (this.editMode) {
       // Guardar cambios
-      this.user = { ...this.formData };
-      console.log('Perfil actualizado:', this.user);
+      this.saveProfile();
     }
     this.editMode = !this.editMode;
+  }
+
+  saveProfile(): void {
+    if (this.user) {
+      this.authService.updateUser(this.formData).subscribe(updatedUser => {
+        this.user = updatedUser;
+        this.hasUnsavedChanges = false;
+        console.log('Perfil actualizado:', this.user);
+      });
+    }
   }
 
   cancelEdit(): void {
     this.formData = { ...this.user };
     this.editMode = false;
+    this.hasUnsavedChanges = false;
   }
 
   logout(): void {
-    // Aquí se puede agregar la lógica de logout
-    console.log('Cerrando sesión...');
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 
   updateField(field: string, value: string): void {
     this.formData[field as keyof typeof this.formData] = value;
+    this.hasUnsavedChanges = true;
   }
 
   toggleCardExpanded(): void {
@@ -92,9 +142,11 @@ export class ProfileComponent implements OnInit {
   }
 
   goToIncidency(incidencyId: number): void {
-    // Navegar a la página de detalles de la incidencia
-    console.log('Ir a la incidencia:', incidencyId);
-    // this.router.navigate(['/incidencia', incidencyId]);
+    // Navegar a la página de detalles de la incidencia con parámetros
+    this.navigationService.navigateWithQueryParams(['/producto', '1'], {
+      incidenceId: incidencyId,
+      highlight: true
+    });
   }
 
   changePassword(): void {

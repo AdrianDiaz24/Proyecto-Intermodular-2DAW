@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationService } from '../../app/services/navigation.service';
+import { ProductService, Product, Incidence } from '../../app/services/product.service';
 
 @Component({
   selector: 'app-product',
@@ -7,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-  // Datos de productos disponibles
+  // Datos de productos disponibles (fallback si no hay resolver)
   private productsData: { [key: number]: any } = {
     1: {
       id: 1,
@@ -82,16 +84,78 @@ export class ProductComponent implements OnInit {
   searchQuery: string = '';
   filterStatus: 'all' | 'solved' | 'pending' = 'all';
   showReportIncidenceModal = false;
+  loading = false;
 
-  constructor(private route: ActivatedRoute) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private navigationService: NavigationService,
+    private productService: ProductService
+  ) {}
 
   ngOnInit(): void {
+    // Primero intentar obtener datos del resolver
+    this.route.data.subscribe(data => {
+      if (data['product']) {
+        this.product = this.mapResolvedProduct(data['product']);
+        this.loadIncidences(this.product.id);
+      }
+    });
+
+    // Si no hay datos del resolver, cargar por params
     this.route.params.subscribe(params => {
       const productId = +params['id'];
-      this.product = this.productsData[productId] || this.productsData[1];
-      this.loadIncidences(productId);
+      if (!this.product || this.product.id !== productId) {
+        this.product = this.productsData[productId] || this.productsData[1];
+        this.loadIncidences(productId);
+      }
     });
+
+    // Verificar query params para destacar incidencia específica
+    this.route.queryParams.subscribe(params => {
+      if (params['incidenceId'] && params['highlight']) {
+        this.highlightIncidence(+params['incidenceId']);
+      }
+    });
+  }
+
+  /**
+   * Mapea el producto del resolver al formato local
+   */
+  private mapResolvedProduct(resolved: Product): any {
+    return {
+      id: resolved.id,
+      name: resolved.name,
+      brand: resolved.brand,
+      model: resolved.model,
+      rating: 4.5,
+      reviews: 28,
+      image: resolved.image || '/assets/icons/logoNaranja.png',
+      description: `${resolved.name} - Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.`,
+      specifications: {
+        weight: resolved.weight || 'N/A',
+        width: resolved.dimensions?.width || 'N/A',
+        length: resolved.dimensions?.depth || 'N/A',
+        height: resolved.dimensions?.height || 'N/A',
+        consumption: resolved.energyConsumption || 'N/A',
+        characteristics: resolved.otherSpecs || 'N/A'
+      },
+      status: 'Disponible'
+    };
+  }
+
+  /**
+   * Destaca una incidencia específica (para navegación con query params)
+   */
+  private highlightIncidence(incidenceId: number): void {
+    setTimeout(() => {
+      const element = document.getElementById(`incidence-${incidenceId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.classList.add('highlighted');
+        setTimeout(() => element.classList.remove('highlighted'), 3000);
+      }
+    }, 500);
   }
 
   loadIncidences(productId: number): void {
@@ -138,9 +202,22 @@ export class ProductComponent implements OnInit {
   }
 
   viewIncidence(incidenceId: number): void {
-    // Navegar a la página de incidencia
+    // Navegar a la página de incidencia usando NavigationService
+    this.navigationService.navigateWithQueryParams(
+      ['/producto', this.product.id],
+      {
+        incidenceId: incidenceId,
+        view: 'detail'
+      }
+    );
     console.log('Ver incidencia:', incidenceId);
-    // Aquí irá la navegación a la página de incidencia
+  }
+
+  /**
+   * Volver a la lista de productos usando el historial de navegación
+   */
+  goBack(): void {
+    this.navigationService.goBack();
   }
 
   applyFilters(): void {

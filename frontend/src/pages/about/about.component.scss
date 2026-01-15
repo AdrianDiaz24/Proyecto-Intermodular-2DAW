@@ -1,0 +1,210 @@
+@use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
+
+.about {
+  min-height: 100vh;
+  background-color: $color-background;
+
+  &__hero {
+    background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
+    padding: $spacing-16 $spacing-8;
+    text-align: center;
+    color: $color-text-white;
+  }
+
+  &__hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: $font-size-5xl;
+    font-weight: $font-weight-bold;
+    margin: 0 0 $spacing-4;
+  }
+
+  &__subtitle {
+    font-size: $font-size-xl;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  &__section {
+    padding: $spacing-16 $spacing-8;
+
+    &--alt {
+      background-color: $color-text-white;
+    }
+
+    &--cta {
+      background: linear-gradient(135deg, $color-accent 0%, $color-accent-hover 100%);
+      color: $color-text-white;
+      text-align: center;
+    }
+  }
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__section-title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-black;
+    text-align: center;
+    margin: 0 0 $spacing-8;
+  }
+
+  &__text {
+    font-size: $font-size-lg;
+    color: $color-gray-600;
+    line-height: $line-height-relaxed;
+    max-width: 800px;
+    margin: 0 auto $spacing-6;
+    text-align: center;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Características
+  &__features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-8;
+  }
+
+  &__feature {
+    text-align: center;
+    padding: $spacing-8;
+    background-color: $color-gray-50;
+    border-radius: $radius-xl;
+    @include transition(all);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &__feature-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto $spacing-4;
+    background-color: $color-primary;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 32px;
+      height: 32px;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  &__feature-title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $color-text-black;
+    margin: 0 0 $spacing-3;
+  }
+
+  &__feature-description {
+    font-size: $font-size-base;
+    color: $color-gray-600;
+    margin: 0;
+  }
+
+  // Pasos
+  &__steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-8;
+  }
+
+  &__step {
+    text-align: center;
+    position: relative;
+  }
+
+  &__step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: $color-accent;
+    color: $color-text-white;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    border-radius: 50%;
+    margin-bottom: $spacing-4;
+  }
+
+  &__step-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-black;
+    margin: 0 0 $spacing-2;
+  }
+
+  &__step-description {
+    font-size: $font-size-base;
+    color: $color-gray-600;
+    margin: 0;
+  }
+
+  // CTA
+  &__cta-title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    margin: 0 0 $spacing-4;
+    color: $color-text-white;
+  }
+
+  &__cta-text {
+    font-size: $font-size-lg;
+    margin: 0 0 $spacing-8;
+    opacity: 0.9;
+  }
+
+  &__cta-button {
+    display: inline-block;
+    padding: $spacing-4 $spacing-8;
+    background-color: $color-text-white;
+    color: $color-accent;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    border: none;
+    border-radius: $radius-lg;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .about {
+    &__title {
+      font-size: $font-size-3xl;
+    }
+
+    &__subtitle {
+      font-size: $font-size-lg;
+    }
+
+    &__section {
+      padding: $spacing-12 $spacing-6;
+    }
+  }
+}
+
