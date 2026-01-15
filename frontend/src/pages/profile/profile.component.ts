@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService, User } from '../../app/services/auth.service';
+import { AuthService } from '../../app/services';
+import { User } from '../../app/models';
 import { NavigationService } from '../../app/services/navigation.service';
 import { CanComponentDeactivate } from '../../app/guards/unsaved-changes.guard';
 
@@ -62,21 +63,32 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   ngOnInit(): void {
     // Obtener datos del resolver o del servicio
     this.route.data.subscribe(data => {
-      if (data['user']) {
+      console.log('Profile route data:', data);
+      if (data['user'] && data['user'].id) {
         this.user = data['user'];
         this.formData = { ...this.user };
+        console.log('User loaded from resolver:', this.user);
       }
     });
 
     // Si no hay datos del resolver, obtener del servicio
     if (!this.user) {
       this.authService.currentUser$.subscribe(user => {
+        console.log('Current user from service:', user);
         if (user) {
           this.user = user;
           this.formData = { ...user };
         }
       });
     }
+
+    // Si no hay usuario después de resolver, redirigir a login
+    setTimeout(() => {
+      if (!this.user) {
+        console.warn('No user found, redirecting to login');
+        this.router.navigate(['/login']);
+      }
+    }, 100);
 
     // Verificar estado de navegación (mensaje de bienvenida)
     const navState = this.navigationService.getNavigationState();
@@ -142,7 +154,6 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   goToIncidency(incidencyId: number): void {
-    // Navegar a la página de detalles de la incidencia con parámetros
     this.navigationService.navigateWithQueryParams(['/producto', '1'], {
       incidenceId: incidencyId,
       highlight: true
@@ -153,33 +164,31 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     this.passwordChangeError = false;
     this.passwordChangeMessage = '';
 
-    // Validar que las contraseñas no estén vacías
+    // Validar que los campos estén completos
     if (!this.newPassword || !this.confirmPassword) {
       this.passwordChangeError = true;
       this.passwordChangeMessage = 'Por favor, completa todos los campos';
       return;
     }
 
-    // Validar que las contraseñas coincidan
+    // Validar que coincidan
     if (this.newPassword !== this.confirmPassword) {
       this.passwordChangeError = true;
       this.passwordChangeMessage = 'Las contraseñas no coinciden';
       return;
     }
 
-    // Validar la longitud mínima
+    // Validar longitud mínima
     if (this.newPassword.length < 6) {
       this.passwordChangeError = true;
       this.passwordChangeMessage = 'La contraseña debe tener al menos 6 caracteres';
       return;
     }
 
-    // Si todas las validaciones pasaron
     this.passwordChangeError = false;
     this.passwordChangeMessage = 'Contraseña cambiada correctamente';
-    console.log('Contraseña actualizada');
 
-    // Limpiar los campos después de 2 segundos
+    // Limpiar campos
     setTimeout(() => {
       this.newPassword = '';
       this.confirmPassword = '';

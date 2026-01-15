@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { appRoutes } from './app.routes';
 import { AppComponent } from './app.component';
 
@@ -39,18 +40,16 @@ import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { AboutComponent } from '../pages/about/about.component';
 
 // Services
-import { AuthService } from './services/auth.service';
-import { ProductService } from './services/product.service';
-import { NavigationService } from './services/navigation.service';
+import { AuthService, ProductService, NavigationService, BaseHttpService } from './services';
 
 // Guards
-import { AuthGuard } from './guards/auth.guard';
-import { GuestGuard } from './guards/guest.guard';
-import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
+import { AuthGuard, GuestGuard, UnsavedChangesGuard } from './guards';
 
 // Resolvers
-import { ProductResolver } from './resolvers/product.resolver';
-import { UserResolver } from './resolvers/user.resolver';
+import { ProductResolver, UserResolver } from './resolvers';
+
+// Interceptors
+import { AuthInterceptor, ErrorInterceptor, LoggingInterceptor } from './interceptors';
 
 @NgModule({
     declarations: [
@@ -88,6 +87,7 @@ import { UserResolver } from './resolvers/user.resolver';
     imports: [
         BrowserModule,
         CommonModule,
+        HttpClientModule,
         RouterModule.forRoot(appRoutes, {
             // Estrategia de precarga: cargar todos los módulos lazy después del inicio
             preloadingStrategy: PreloadAllModules,
@@ -112,13 +112,30 @@ import { UserResolver } from './resolvers/user.resolver';
         AuthService,
         ProductService,
         NavigationService,
+        BaseHttpService,
         // Guards
         AuthGuard,
         GuestGuard,
         UnsavedChangesGuard,
         // Resolvers
         ProductResolver,
-        UserResolver
+        UserResolver,
+        // HTTP Interceptors (el orden importa)
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoggingInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true
+        }
     ],
     bootstrap: [AppComponent]
 })

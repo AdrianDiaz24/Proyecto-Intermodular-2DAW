@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService } from '../../app/services/navigation.service';
-import { ProductService, Product, Incidence } from '../../app/services/product.service';
+import { ProductService } from '../../app/services';
+import { Product, Incidence } from '../../app/models';
 
 @Component({
   selector: 'app-product',
@@ -140,7 +141,9 @@ export class ProductComponent implements OnInit {
         consumption: resolved.energyConsumption || 'N/A',
         characteristics: resolved.otherSpecs || 'N/A'
       },
-      status: 'Disponible'
+      status: 'Disponible',
+      incidences: 5,  // Número de incidencias reportadas
+      solved: 3       // Número de incidencias resueltas
     };
   }
 

@@ -1981,31 +1981,31 @@ export class LoginFormComponent {
 <app-button variant="primary">Enviar</app-button>
 
 <!-- Button secundario grande con full width -->
-<app-button 
-  variant="secondary" 
-  size="lg" 
+<app-button
+  variant="secondary"
+  size="lg"
   [fullWidth]="true">
   Cancelar
 </app-button>
 
 <!-- Button peligroso, deshabilitado -->
-<app-button 
-  variant="danger" 
-  size="sm" 
+<app-button
+  variant="danger"
+  size="sm"
   [disabled]="true">
   Eliminar
 </app-button>
 
 <!-- Button con estado de carga -->
-<app-button 
-  variant="primary" 
+<app-button
+  variant="primary"
   [loading]="isLoading">
   Guardando...
 </app-button>
 
 <!-- Button ghost en tamaño pequeño -->
-<app-button 
-  variant="ghost" 
+<app-button
+  variant="ghost"
   size="sm">
   Ver más
 </app-button>
@@ -2615,7 +2615,7 @@ export class LoginFormComponent {
   border-radius: $radius-md;    // border-radius: 4px
   @include transition(all);     // Transición suave de 300ms
 
-  
+
   &__content {
     display: inline-flex;
     align-items: center;
@@ -2628,7 +2628,7 @@ export class LoginFormComponent {
     }
   }
 
-  
+
   &__spinner {
     display: inline-flex;
     align-items: center;
@@ -2637,7 +2637,7 @@ export class LoginFormComponent {
     animation: spin 2s linear infinite;
   }
 
-  
+
   &--primary {
     background-color: $color-primary;    // #659CCA
     color: $color-text-white;            // blanco
@@ -2654,34 +2654,34 @@ export class LoginFormComponent {
     }
   }
 
-  
+
   &--sm {
     padding: $spacing-2 $spacing-3;     // 8px 12px
     font-size: $font-size-sm;            // 14px
     border-radius: $radius-sm;           // 2px
   }
 
-  
+
   &--lg {
     padding: $spacing-4 $spacing-6;     // 16px 24px
     font-size: $font-size-lg;            // 20px
     border-radius: $radius-lg;           // 8px
   }
 
-  
+
   &--disabled {
     opacity: 0.6;
     cursor: not-allowed;
     pointer-events: none;
   }
 
-  
+
   &--loading {
     pointer-events: none;
     opacity: 0.8;
   }
 
-  
+
   &--block {
     width: 100%;
   }
@@ -2723,7 +2723,7 @@ export class LoginFormComponent {
   <div class="card__image">
     <img src="..." class="card__image-element" alt="..." />
   </div>
-  
+
   <div class="card__content">
     <h3 class="card__title">Título de la Card</h3>
     <p class="card__description">Descripción de contenido</p>
@@ -2740,7 +2740,7 @@ export class LoginFormComponent {
   <div class="card__image-side">
     <img src="..." class="card__image-element" alt="..." />
   </div>
-  
+
   <div class="card__content-side">
     <h3 class="card__title">Título de la Card</h3>
     <p class="card__description">Descripción</p>
@@ -2751,13 +2751,13 @@ export class LoginFormComponent {
 **SCSS Compilado:**
 ```scss
 .card {
-  
+
   background-color: $color-text-white;
   border-radius: $radius-lg;           // 8px
   overflow: hidden;
   @include transition(all);            // 300ms
 
-  
+
   &__image {
     width: 100%;
     height: 200px;
@@ -2765,7 +2765,7 @@ export class LoginFormComponent {
     background-color: $color-gray-100;
   }
 
- 
+
   &__image-element {
     width: 100%;
     height: 100%;
@@ -2779,12 +2779,12 @@ export class LoginFormComponent {
     }
   }
 
-  
+
   &__content {
     padding: $spacing-6;              // 24px
   }
 
-  
+
   &__content-side {
     display: flex;
     flex-direction: column;
@@ -2793,7 +2793,7 @@ export class LoginFormComponent {
     flex: 1;                          // Toma espacio restante
   }
 
-  
+
   &__title {
     font-size: $font-size-2xl;        // 31px
     font-weight: $font-weight-bold;   // 700
@@ -2802,7 +2802,7 @@ export class LoginFormComponent {
     line-height: $line-height-tight;  // 1.1
   }
 
-  
+
   &__description {
     font-size: $font-size-base;       // 16px
     color: $color-gray-600;
@@ -2810,19 +2810,19 @@ export class LoginFormComponent {
     line-height: $line-height-normal; // 1.5
   }
 
-  
+
   &__action {
     display: flex;
     gap: $spacing-2;
   }
 
-  
+
   &--basic {
     display: flex;
     flex-direction: column;
   }
 
-  
+
   &--horizontal {
     display: flex;
     flex-direction: row;
@@ -2837,7 +2837,7 @@ export class LoginFormComponent {
 
     @include media-query('sm') {
       flex-direction: column;        // Mobile: apilado
-      
+
       .card__image-side {
         width: 100%;
         height: 200px;
@@ -2845,7 +2845,7 @@ export class LoginFormComponent {
     }
   }
 
-  
+
   &--interactive {
     cursor: pointer;
     box-shadow: $shadow-md;
@@ -2861,7 +2861,7 @@ export class LoginFormComponent {
     }
   }
 
-  
+
   &:not(.card--interactive) {
     box-shadow: $shadow-sm;           // Sombra más suave
   }
