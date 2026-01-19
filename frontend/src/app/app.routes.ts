@@ -6,6 +6,7 @@ import { StyleGuideComponent } from '../pages/style-guide/style-guide.component'
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { SearchResultsComponent } from '../pages/search-results/search-results.component';
 import { ProductComponent } from '../pages/product/product.component';
+import { IncidenceDetailComponent } from '../pages/incidence-detail/incidence-detail.component';
 import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { AboutComponent } from '../pages/about/about.component';
 
@@ -164,6 +165,19 @@ export const appRoutes: Routes = [
         data: {
             breadcrumb: 'Guía de Estilos',
             title: 'Guía de Estilos'
+        }
+    },
+
+    // ==========================================
+    // RUTAS DE INCIDENCIAS
+    // ==========================================
+
+    {
+        path: 'incidencia/:id',
+        component: IncidenceDetailComponent,
+        data: {
+            breadcrumb: 'Detalle de Incidencia',
+            title: 'Detalle de Incidencia'
         }
     },
 

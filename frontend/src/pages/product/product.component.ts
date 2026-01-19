@@ -205,15 +205,9 @@ export class ProductComponent implements OnInit {
   }
 
   viewIncidence(incidenceId: number): void {
-    // Navegar a la página de incidencia usando NavigationService
-    this.navigationService.navigateWithQueryParams(
-      ['/producto', this.product.id],
-      {
-        incidenceId: incidenceId,
-        view: 'detail'
-      }
-    );
-    console.log('Ver incidencia:', incidenceId);
+    // Navegar a la página de detalle de incidencia
+    console.log('Navegando a incidencia:', incidenceId);
+    this.router.navigate(['/incidencia', incidenceId]);
   }
 
   /**

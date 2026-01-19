@@ -154,10 +154,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   goToIncidency(incidencyId: number): void {
-    this.navigationService.navigateWithQueryParams(['/producto', '1'], {
-      incidenceId: incidencyId,
-      highlight: true
-    });
+    this.router.navigate(['/incidencia', incidencyId]);
   }
 
   changePassword(): void {

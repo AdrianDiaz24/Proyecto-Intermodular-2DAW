@@ -75,6 +75,9 @@ export class SearchResultsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Inicializar con todos los productos
+    this.filteredResults = this.searchResults;
+
     // Obtener el parámetro de búsqueda de la URL
     this.route.queryParams.subscribe(params => {
       this.searchQuery = params['q'] || '';

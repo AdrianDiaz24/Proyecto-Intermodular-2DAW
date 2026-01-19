@@ -1,0 +1,96 @@
+<div class="incidence-detail-page">
+  <button class="back-button" (click)="goBack()">
+    ← Volver
+  </button>
+
+  <div class="incidence-layout" *ngIf="!isLoading && incidence">
+    <!-- CUADRADO IZQUIERDO: Detalles de la Incidencia -->
+    <div class="incidence-box">
+      <div class="incidence-header">
+        <h1 class="incidence-title">{{ incidence.title }}</h1>
+        <div class="incidence-badges">
+          <span [ngClass]="getStatusClass()" class="badge badge-status">
+            {{ getStatusLabel() }}
+          </span>
+          <span [ngClass]="getSeverityClass()" class="badge badge-severity">
+            {{ getSeverityLabel() }}
+          </span>
+        </div>
+      </div>
+
+      <div class="incidence-meta">
+        <div class="meta-item">
+          <label>Reportado por:</label>
+          <p>{{ incidence.createdBy }}</p>
+        </div>
+        <div class="meta-item">
+          <label>Categoría:</label>
+          <p>{{ getCategoryLabel() }}</p>
+        </div>
+        <div class="meta-item">
+          <label>Fecha de reporte:</label>
+          <p>{{ formatDate(incidence.createdAt) }}</p>
+        </div>
+      </div>
+
+      <div class="incidence-description">
+        <h2>Descripción del Problema</h2>
+        <p>{{ incidence.description }}</p>
+      </div>
+    </div>
+
+    <!-- DIVISOR NARANJA -->
+    <div class="divider-line"></div>
+
+    <!-- CUADRADO DERECHO: Soluciones Colaborativas -->
+    <div class="solutions-box">
+      <div class="solutions-header">
+        <h2>Soluciones de la Comunidad</h2>
+        <p class="solutions-subtitle">{{ responses.length }} usuarios han compartido sus soluciones</p>
+      </div>
+
+      <div class="solutions-container">
+        <div *ngFor="let response of responses" class="solution-item">
+          <div class="solution-user-info">
+            <img [src]="response.avatar" [alt]="response.author" class="solution-avatar">
+            <div class="solution-user-details">
+              <h3 class="solution-author">{{ response.author }}</h3>
+              <span class="solution-date">{{ formatDate(response.date) }}</span>
+            </div>
+          </div>
+          <div class="solution-content">
+            <p class="solution-message">{{ response.message }}</p>
+          </div>
+          <div class="solution-actions">
+            <button class="solution-btn">👍 Útil</button>
+            <button class="solution-btn">💬 Responder</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario para añadir solución -->
+      <div class="add-solution-form">
+        <h3>Comparte tu Solución</h3>
+        <p class="form-subtitle">¿Encontraste una solución? ¡Ayuda a otros usuarios!</p>
+        <textarea
+          [(ngModel)]="newResponseText"
+          placeholder="Describe cómo solucionaste el problema..."
+          class="solution-textarea"
+          rows="4"
+        ></textarea>
+        <button
+          (click)="postResponse()"
+          [disabled]="!newResponseText.trim()"
+          class="btn-submit-solution"
+        >
+          Publicar Solución
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="isLoading" class="loading">
+    <p>Cargando incidencia...</p>
+  </div>
+</div>
