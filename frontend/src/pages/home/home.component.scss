@@ -1,5 +1,6 @@
-// Importamos variables para usarlas aquí
+// Importamos variables y mixins
 @use 'src/styles/settings/variables' as *;
+@use 'src/styles/01-tools/mixins' as *;
 
 :host {
   display: block;
@@ -15,16 +16,26 @@
   margin: 0;
   padding: 0;
 
-  // Tu imagen de fondo (la del taller)
+  // Imagen de fondo
   background-image: url('/assets/images/hero-taller.jpg');
   background-size: cover;
   background-position: center;
+
+  // Desktop-first: Ajustes para tablets y móviles
+  @include tablet-down {
+    min-height: 80vh;
+  }
+
+  @include mobile-down {
+    min-height: 70vh;
+    background-position: center top;
+  }
 
   &__overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     z-index: 0;
-    background-color: transparent; // Hacer transparente para ver el texto
+    background-color: transparent;
   }
 
   &__text-container {
@@ -33,6 +44,26 @@
     left: 4rem;
     z-index: 10;
     text-align: left;
+
+    // Desktop-first: Responsive
+    @include tablet-down {
+      top: 3rem;
+      left: 2rem;
+      right: 2rem;
+    }
+
+    @include mobile-down {
+      top: 2rem;
+      left: 1rem;
+      right: 1rem;
+      text-align: center;
+    }
+
+    @include mobile-small {
+      top: 1.5rem;
+      left: 0.75rem;
+      right: 0.75rem;
+    }
   }
 
   &__title-line-1,
@@ -42,12 +73,44 @@
     color: $color-text-black;
     margin: 0;
     line-height: 1.1;
+
+    // Desktop-first: Responsive
+    @include desktop-down('xl') {
+      font-size: 3.5rem;
+    }
+
+    @include tablet-down {
+      font-size: 2.5rem;
+    }
+
+    @include mobile-down {
+      font-size: 2rem;
+    }
+
+    @include mobile-small {
+      font-size: 1.5rem;
+    }
   }
 
   &__subtitle {
     font-size: 1.75rem;
     color: $color-text-black;
     margin-top: 1rem;
+
+    // Desktop-first: Responsive
+    @include tablet-down {
+      font-size: 1.25rem;
+      margin-top: 0.75rem;
+    }
+
+    @include mobile-down {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    @include mobile-small {
+      font-size: 0.875rem;
+    }
   }
 
   &__search-box {
@@ -61,9 +124,25 @@
     gap: 0.5rem;
     width: 100%;
     max-width: 700px;
+    padding: 0 1rem;
+
+    // Desktop-first: Responsive
+    @include tablet-down {
+      max-width: 500px;
+    }
+
+    @include mobile-down {
+      max-width: 90%;
+      top: 55%;
+    }
+
+    @include mobile-small {
+      max-width: 95%;
+    }
 
     input {
       flex-grow: 1;
+      min-width: 150px;
       border: none;
       background: $color-text-white;
       padding: 0.75rem 1.5rem;
@@ -71,15 +150,38 @@
       outline: none;
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      font-family: $font-primary;
+
+      // Estilos del placeholder
+      &::placeholder {
+        color: #999;
+        opacity: 0.8;
+      }
+
+      // Desktop-first: Responsive
+      @include mobile-down {
+        padding: 0.625rem 1rem;
+        font-size: 0.875rem;
+        min-width: 120px;
+      }
+
+      @include mobile-small {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+        min-width: 100px;
+
+        &::placeholder {
+          font-size: 0.7rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
   }
 
   &__search-btn {
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 360px);
-    transform: translateY(-50%);
-    z-index: 5;
+    // Ahora está dentro del flexbox del search-box
+    // Por lo tanto, ya no necesita position: absolute
     background-color: $color-accent;
     color: $color-text-white;
     border: none;
@@ -95,21 +197,47 @@
     transition: all $transition-base;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 
+    // Desktop-first: Responsive
+    @include tablet-down {
+      width: 44px;
+      height: 44px;
+    }
+
+    @include mobile-down {
+      width: 40px;
+      height: 40px;
+    }
+
+    @include mobile-small {
+      width: 36px;
+      height: 36px;
+    }
+
     img {
       width: 24px;
       height: 24px;
       display: block;
       object-fit: contain;
       object-position: center;
+
+      @include mobile-down {
+        width: 20px;
+        height: 20px;
+      }
+
+      @include mobile-small {
+        width: 18px;
+        height: 18px;
+      }
     }
 
     &:hover {
       background-color: lighten($color-accent, 10%);
-      transform: translateY(-50%) scale(1.05);
+      transform: scale(1.05);
     }
 
     &:active {
-      transform: translateY(-50%) scale(0.95);
+      transform: scale(0.95);
     }
   }
 }

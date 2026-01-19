@@ -1,8 +1,10 @@
 @use 'src/styles/settings/variables' as *;
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -12,23 +14,22 @@ app-header {
   width: 100%;
   margin: 0;
   padding: 0;
+  flex-shrink: 0;
 }
 
 router-outlet {
   display: contents;
 }
 
-app-home {
-  display: block;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
+// Las páginas (a través de router-outlet) deben crecer y ocupar espacio
+// Esto se configura en cada página con flex: 1
 
 app-footer {
   display: block;
   width: 100%;
   margin: 0;
   padding: 0;
+  margin-top: auto;
+  flex-shrink: 0;
 }
 

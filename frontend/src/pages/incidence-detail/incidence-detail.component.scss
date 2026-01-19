@@ -1,8 +1,15 @@
 @use 'src/styles/settings/variables' as *;
 @use 'src/styles/01-tools/mixins' as *;
 
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
+
 .incidence-detail-page {
-  min-height: calc(100vh - 100px);
+  flex: 1;
   background: linear-gradient(135deg, $color-background 0%, rgba($color-accent, 0.05) 100%);
   padding: $spacing-4;
   overflow-x: hidden;
@@ -37,41 +44,41 @@
 .incidence-layout {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: $spacing-6;
-  max-width: 1400px;
+  gap: $spacing-8;
+  max-width: 1600px;
   margin: 0 auto;
   align-items: flex-start;
 }
 
 // CUADRADO IZQUIERDO: Detalles de la Incidencia
 .incidence-box {
-  background: $color-text-white;
+  background: #ffffff;
   border-radius: $radius-lg;
-  padding: $spacing-6;
+  padding: $spacing-8;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba($color-primary, 0.1);
-  min-height: 500px;
+  border: 2px solid $color-primary;
+  min-height: 550px;
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: $spacing-6;
   transition: all $transition-base;
 
   &:hover {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-    border-color: rgba($color-primary, 0.2);
+    border-color: $color-primary;
   }
 }
 
 .incidence-header {
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
-  padding-bottom: $spacing-4;
-  border-bottom: 2px solid rgba($color-primary, 0.1);
+  gap: $spacing-4;
+  padding-bottom: $spacing-6;
+  border-bottom: 2px solid $color-primary;
 }
 
 .incidence-title {
-  font-size: $font-size-2xl;
+  font-size: $font-size-3xl;
   font-weight: $font-weight-bold;
   color: $color-text-black;
   margin: 0;
@@ -80,15 +87,15 @@
 
 .incidence-badges {
   display: flex;
-  gap: $spacing-2;
+  gap: $spacing-3;
   flex-wrap: wrap;
 }
 
 .badge {
   display: inline-block;
-  padding: $spacing-2 $spacing-3;
+  padding: $spacing-3 $spacing-4;
   border-radius: $radius-md;
-  font-size: $font-size-xs;
+  font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -138,20 +145,20 @@
 .incidence-meta {
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
-  padding: $spacing-4;
+  gap: $spacing-4;
+  padding: $spacing-6;
   background: linear-gradient(135deg, rgba($color-primary, 0.05) 0%, rgba($color-accent, 0.05) 100%);
   border-radius: $radius-md;
-  border-left: 4px solid $color-primary;
+  border-left: 5px solid $color-primary;
 }
 
 .meta-item {
   display: flex;
   flex-direction: column;
-  gap: $spacing-1;
+  gap: $spacing-2;
 
   label {
-    font-size: $font-size-xs;
+    font-size: $font-size-sm;
     font-weight: $font-weight-bold;
     color: $color-text-black;
     text-transform: uppercase;
@@ -170,7 +177,7 @@
 .incidence-description {
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: $spacing-3;
   flex: 1;
 
   h2 {
@@ -201,40 +208,49 @@
 
 // CUADRADO DERECHO: Soluciones Colaborativas
 .solutions-box {
-  background: $color-text-white;
+  background: #ffffff;
   border-radius: $radius-lg;
-  padding: $spacing-6;
+  padding: $spacing-8;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba($color-accent, 0.2);
-  min-height: 500px;
+  border: 2px solid $color-accent;
+  min-height: 550px;
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: $spacing-6;
   transition: all $transition-base;
 
   &:hover {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-    border-color: rgba($color-accent, 0.3);
+    border-color: $color-accent;
   }
 }
 
 .solutions-header {
-  padding-bottom: $spacing-4;
-  border-bottom: 2px solid rgba($color-accent, 0.2);
+  padding-bottom: $spacing-6;
+  border-bottom: 2px solid $color-accent;
 
   h2 {
-    font-size: $font-size-xl;
+    font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     color: $color-text-black;
-    margin: 0 0 $spacing-1 0;
+    margin: 0 0 $spacing-2 0;
   }
 
   .solutions-subtitle {
-    font-size: $font-size-sm;
+    font-size: $font-size-base;
     color: $color-gray-500;
     margin: 0;
     font-weight: $font-weight-medium;
   }
+}
+
+// DIVISOR NARANJA EN EL CENTRO
+.divider-line {
+  width: 6px;
+  background: linear-gradient(to bottom, $color-accent, rgba($color-accent, 0.3));
+  border-radius: 3px;
+  min-height: 550px;
+  box-shadow: 0 4px 8px rgba($color-accent, 0.2);
 }
 
 .solutions-container {
@@ -264,10 +280,10 @@
 }
 
 .solution-item {
-  padding: $spacing-3;
+  padding: $spacing-4;
   background: linear-gradient(135deg, rgba($color-accent, 0.02) 0%, rgba($color-accent, 0.05) 100%);
   border-radius: $radius-md;
-  border-left: 4px solid $color-accent;
+  border-left: 5px solid $color-accent;
   transition: all $transition-base;
 
   &:hover {
@@ -279,14 +295,14 @@
 
 .solution-user-info {
   display: flex;
-  gap: $spacing-3;
-  margin-bottom: $spacing-2;
+  gap: $spacing-4;
+  margin-bottom: $spacing-3;
   align-items: flex-start;
 }
 
 .solution-avatar {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   border-radius: $radius-full;
   object-fit: cover;
   border: 2px solid $color-accent;
@@ -301,25 +317,25 @@
 }
 
 .solution-author {
-  font-size: $font-size-base;
+  font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   color: $color-text-black;
   margin: 0;
 }
 
 .solution-date {
-  font-size: $font-size-xs;
+  font-size: $font-size-sm;
   color: $color-gray-500;
 }
 
 .solution-content {
-  margin-bottom: $spacing-3;
+  margin-bottom: $spacing-4;
 }
 
 .solution-message {
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   color: $color-gray-700;
-  line-height: $line-height-normal;
+  line-height: $line-height-relaxed;
   margin: 0;
   word-break: break-word;
   white-space: pre-wrap;
@@ -327,9 +343,9 @@
 
 .solution-actions {
   display: flex;
-  gap: $spacing-2;
-  padding-top: $spacing-2;
-  border-top: 1px solid rgba($color-accent, 0.1);
+  gap: $spacing-3;
+  padding-top: $spacing-4;
+  border-top: 2px solid $color-accent;
 }
 
 .solution-btn {
@@ -356,21 +372,21 @@
 
 // FORMULARIO PARA AÑADIR SOLUCIÓN
 .add-solution-form {
-  padding-top: $spacing-4;
-  border-top: 2px solid rgba($color-accent, 0.2);
+  padding-top: $spacing-6;
+  border-top: 2px solid $color-accent;
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
+  gap: $spacing-4;
 
   h3 {
-    font-size: $font-size-base;
+    font-size: $font-size-lg;
     font-weight: $font-weight-bold;
     color: $color-text-black;
     margin: 0;
   }
 
   .form-subtitle {
-    font-size: $font-size-xs;
+    font-size: $font-size-sm;
     color: $color-gray-500;
     margin: 0;
   }
@@ -378,14 +394,15 @@
 
 .solution-textarea {
   width: 100%;
-  padding: $spacing-3;
-  border: 2px solid rgba($color-accent, 0.2);
+  padding: $spacing-4;
+  border: 2px solid $color-accent;
   border-radius: $radius-md;
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   font-family: $font-primary;
   color: $color-text-black;
   resize: vertical;
   transition: all $transition-base;
+  min-height: 120px;
 
   &:focus {
     outline: none;
@@ -399,13 +416,13 @@
 }
 
 .btn-submit-solution {
-  padding: $spacing-3 $spacing-6;
+  padding: $spacing-4 $spacing-8;
   background: linear-gradient(135deg, $color-accent 0%, darken($color-accent, 5%) 100%);
   color: $color-text-white;
   border: none;
   border-radius: $radius-md;
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
   cursor: pointer;
   transition: all $transition-base;
 
@@ -433,8 +450,22 @@
   color: $color-gray-600;
 }
 
-// RESPONSIVE DESIGN
-@media (max-width: $breakpoint-lg) {
+// ============================================================================
+// RESPONSIVE DESIGN - DESKTOP-FIRST
+// ============================================================================
+
+// Tablet y menores
+@include tablet-down {
+  .incidence-detail-page {
+    padding: $spacing-3;
+  }
+
+  .back-button {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-4;
+  }
+
   .incidence-layout {
     grid-template-columns: 1fr;
     gap: $spacing-4;
@@ -443,16 +474,62 @@
   .incidence-box,
   .solutions-box {
     min-height: auto;
+    padding: $spacing-5;
   }
 
   .divider-line {
     display: none;
   }
+
+  .incidence-title {
+    font-size: $font-size-xl;
+  }
+
+  .incidence-meta {
+    padding: $spacing-3;
+  }
+
+  .solutions-header h2 {
+    font-size: $font-size-lg;
+  }
+
+  .solution-item {
+    padding: $spacing-3;
+  }
+
+  .solution-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .add-solution-form {
+    padding-top: $spacing-3;
+  }
+
+  .solution-textarea {
+    font-size: $font-size-sm;
+  }
+
+  .btn-submit-solution {
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-sm;
+  }
 }
 
-@media (max-width: $breakpoint-md) {
+// Móvil
+@include mobile-down {
   .incidence-detail-page {
     padding: $spacing-2;
+  }
+
+  .back-button {
+    padding: $spacing-2;
+    font-size: $font-size-xs;
+    margin-bottom: $spacing-3;
+  }
+
+  .incidence-layout {
+    gap: $spacing-3;
   }
 
   .incidence-box,
@@ -461,16 +538,138 @@
     border-radius: $radius-md;
   }
 
-  .incidence-title {
-    font-size: $font-size-xl;
+  .incidence-header {
+    gap: $spacing-2;
+    padding-bottom: $spacing-3;
   }
 
-  .solutions-header h2 {
+  .incidence-title {
     font-size: $font-size-lg;
+  }
+
+  .incidence-badges {
+    gap: $spacing-1;
+  }
+
+  .badge {
+    padding: $spacing-1 $spacing-2;
+    font-size: 0.625rem;
+  }
+
+  .incidence-meta {
+    padding: $spacing-2;
+    gap: $spacing-2;
+  }
+
+  .meta-item {
+    label {
+      font-size: 0.625rem;
+    }
+    p {
+      font-size: $font-size-sm;
+    }
+  }
+
+  .incidence-description {
+    h2 {
+      font-size: $font-size-base;
+    }
+    p {
+      font-size: $font-size-sm;
+    }
+  }
+
+  .solutions-header {
+    padding-bottom: $spacing-3;
+
+    h2 {
+      font-size: $font-size-base;
+    }
+
+    .solutions-subtitle {
+      font-size: $font-size-xs;
+    }
+  }
+
+  .solution-item {
+    padding: $spacing-2;
+  }
+
+  .solution-user-info {
+    gap: $spacing-2;
+  }
+
+  .solution-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .solution-author {
+    font-size: $font-size-sm;
+  }
+
+  .solution-date {
+    font-size: 0.625rem;
+  }
+
+  .solution-message {
+    font-size: $font-size-xs;
+  }
+
+  .solution-actions {
+    flex-direction: column;
   }
 
   .solution-btn {
     font-size: $font-size-xs;
-    padding: $spacing-2 $spacing-2;
+    padding: $spacing-2;
+  }
+
+  .add-solution-form {
+    gap: $spacing-2;
+
+    h3 {
+      font-size: $font-size-sm;
+    }
+
+    .form-subtitle {
+      font-size: 0.625rem;
+    }
+  }
+
+  .solution-textarea {
+    padding: $spacing-2;
+    font-size: $font-size-xs;
+    rows: 3;
+  }
+
+  .btn-submit-solution {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-xs;
+  }
+}
+
+// Móvil pequeño (320px)
+@include mobile-small {
+  .incidence-detail-page {
+    padding: $spacing-1;
+  }
+
+  .back-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .incidence-box,
+  .solutions-box {
+    padding: $spacing-3;
+  }
+
+  .incidence-title {
+    font-size: $font-size-base;
+  }
+
+  .solution-actions {
+    gap: $spacing-1;
   }
 }

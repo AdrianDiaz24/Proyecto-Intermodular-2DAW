@@ -1,8 +1,15 @@
 @use 'src/styles/settings/variables' as *;
 @use 'src/styles/01-tools/mixins' as *;
 
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
+
 .profile-page {
-  min-height: calc(100vh - 100px);
+  flex: 1;
   padding: $spacing-8 $spacing-4;
   background-color: $color-background;
 }
@@ -344,4 +351,3 @@
     margin: 0;
   }
 }
-

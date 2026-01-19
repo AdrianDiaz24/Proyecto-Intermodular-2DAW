@@ -15,7 +15,54 @@
   transition: $properties $duration $easing;
 }
 
-// Media queries responsivas
+// ============================================================================
+// MEDIA QUERIES - DESKTOP-FIRST (max-width)
+// ============================================================================
+
+// Desktop-first: Estilos base son para desktop, se reducen para dispositivos menores
+@mixin desktop-down($breakpoint) {
+  @if $breakpoint == 'xl' {
+    @media (max-width: #{$breakpoint-xl - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: #{$breakpoint-lg - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: #{$breakpoint-md - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 'sm' {
+    @media (max-width: #{$breakpoint-sm - 1px}) {
+      @content;
+    }
+  }
+}
+
+// Alias más descriptivos para desktop-first
+@mixin tablet-down {
+  @media (max-width: #{$breakpoint-lg - 1px}) {
+    @content;
+  }
+}
+
+@mixin mobile-down {
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    @content;
+  }
+}
+
+@mixin mobile-small {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+// ============================================================================
+// MEDIA QUERIES - MOBILE-FIRST (min-width) - Para compatibilidad
+// ============================================================================
+
 @mixin media-query($breakpoint) {
   @if $breakpoint == 'sm' {
     @media (min-width: $breakpoint-sm) {
@@ -35,6 +82,42 @@
     }
   } @else if $breakpoint == '2xl' {
     @media (min-width: $breakpoint-2xl) {
+      @content;
+    }
+  }
+}
+
+// ============================================================================
+// CONTAINER QUERIES
+// ============================================================================
+
+// Define un contenedor para container queries
+@mixin container-query-parent($name: 'card') {
+  container-type: inline-size;
+  container-name: $name;
+}
+
+// Aplica estilos basados en el tamaño del contenedor
+@mixin container-query($size, $name: null) {
+  @if $name {
+    @container #{$name} (max-width: #{$size}) {
+      @content;
+    }
+  } @else {
+    @container (max-width: #{$size}) {
+      @content;
+    }
+  }
+}
+
+// Container query para tamaños mínimos
+@mixin container-query-min($size, $name: null) {
+  @if $name {
+    @container #{$name} (min-width: #{$size}) {
+      @content;
+    }
+  } @else {
+    @container (min-width: #{$size}) {
       @content;
     }
   }

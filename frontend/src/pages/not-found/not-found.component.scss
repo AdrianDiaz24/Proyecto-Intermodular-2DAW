@@ -1,8 +1,16 @@
 @use 'src/styles/settings/variables' as *;
 @use 'src/styles/01-tools/mixins' as *;
 
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
+
 .not-found {
-  min-height: 100vh;
+  flex: 1;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,65 +18,66 @@
   padding: $spacing-8;
 
   &__container {
-    max-width: 600px;
+    max-width: 700px;
     width: 100%;
     text-align: center;
     background-color: $color-text-white;
     border-radius: $radius-xl;
-    padding: $spacing-12;
+    padding: $spacing-16;
     box-shadow: $shadow-lg;
   }
 
   &__icon-wrapper {
     position: relative;
     display: inline-block;
-    margin-bottom: $spacing-8;
+    margin-bottom: $spacing-12;
   }
 
   &__icon {
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
     object-fit: contain;
     opacity: 0.8;
   }
 
   &__error-code {
     position: absolute;
-    bottom: -10px;
-    right: -20px;
-    font-size: $font-size-5xl;
+    bottom: -15px;
+    right: -25px;
+    font-size: 8rem;
     font-weight: $font-weight-bold;
     color: $color-accent;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   &__header {
-    margin-bottom: $spacing-8;
+    margin-bottom: $spacing-10;
   }
 
   &__title {
-    font-size: $font-size-3xl;
+    font-size: $font-size-4xl;
     font-weight: $font-weight-bold;
     color: $color-text-black;
-    margin: 0 0 $spacing-4;
+    margin: 0 0 $spacing-6;
   }
 
   &__message {
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
     color: $color-gray-600;
     margin: 0;
   }
 
   &__attempted-url {
-    margin-top: $spacing-4;
-    font-size: $font-size-sm;
+    margin-top: $spacing-6;
+    font-size: $font-size-base;
     color: $color-gray-500;
 
     code {
       background-color: $color-gray-100;
-      padding: $spacing-1 $spacing-2;
+      padding: $spacing-2 $spacing-3;
       border-radius: $radius-sm;
       font-family: monospace;
+      font-size: $font-size-sm;
     }
   }
 
@@ -76,24 +85,25 @@
     text-align: left;
     background-color: $color-gray-50;
     border-radius: $radius-lg;
-    padding: $spacing-6;
-    margin-bottom: $spacing-8;
+    padding: $spacing-8;
+    margin-bottom: $spacing-10;
   }
 
   &__suggestions-title {
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
     color: $color-text-black;
-    margin: 0 0 $spacing-4;
+    margin: 0 0 $spacing-6;
   }
 
   &__suggestions-list {
     margin: 0;
-    padding-left: $spacing-6;
+    padding-left: $spacing-8;
     color: $color-gray-600;
+    font-size: $font-size-base;
 
     li {
-      margin-bottom: $spacing-2;
+      margin-bottom: $spacing-3;
 
       &:last-child {
         margin-bottom: 0;
@@ -104,17 +114,18 @@
   &__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: $spacing-4;
+    gap: $spacing-6;
     justify-content: center;
-    margin-bottom: $spacing-8;
+    margin-bottom: $spacing-10;
   }
 
   &__btn {
-    padding: $spacing-3 $spacing-6;
+    padding: $spacing-4 $spacing-8;
     border-radius: $radius-lg;
-    font-size: $font-size-base;
+    font-size: $font-size-lg;
     font-weight: $font-weight-medium;
     cursor: pointer;
+    min-width: 180px;
     @include transition(all);
 
     &--primary {
@@ -159,7 +170,8 @@
 
   &__countdown {
     color: $color-gray-500;
-    font-size: $font-size-sm;
+    font-size: $font-size-base;
+    margin-top: $spacing-6;
 
     strong {
       color: $color-accent;
@@ -169,33 +181,65 @@
 }
 
 // Responsive
-@media (max-width: $breakpoint-sm) {
+@include mobile-down {
   .not-found {
     padding: $spacing-4;
+    min-height: calc(100vh - 80px);
 
     &__container {
-      padding: $spacing-8;
+      padding: $spacing-10;
     }
 
     &__icon {
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
     }
 
     &__error-code {
-      font-size: $font-size-3xl;
+      font-size: $font-size-4xl;
     }
 
     &__title {
-      font-size: $font-size-2xl;
+      font-size: $font-size-3xl;
+    }
+
+    &__message {
+      font-size: $font-size-lg;
+    }
+
+    &__suggestions {
+      padding: $spacing-6;
+      margin-bottom: $spacing-8;
+    }
+
+    &__suggestions-title {
+      font-size: $font-size-lg;
+    }
+
+    &__suggestions-list {
+      padding-left: $spacing-6;
+      font-size: $font-size-base;
+
+      li {
+        margin-bottom: $spacing-2;
+      }
     }
 
     &__actions {
       flex-direction: column;
+      gap: $spacing-4;
+      margin-bottom: $spacing-8;
     }
 
     &__btn {
       width: 100%;
+      padding: $spacing-3 $spacing-6;
+      font-size: $font-size-base;
+      min-width: auto;
+    }
+
+    &__countdown {
+      font-size: $font-size-sm;
     }
   }
 }

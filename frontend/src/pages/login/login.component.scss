@@ -254,3 +254,83 @@
   }
 }
 
+// ============================================================================
+// RESPONSIVE DESIGN - DESKTOP-FIRST
+// ============================================================================
+
+@include tablet-down {
+  .login-page {
+    padding: $spacing-4;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .login-card {
+    padding: $spacing-6;
+    border-radius: 16px;
+  }
+
+  .login-title {
+    font-size: $font-size-2xl;
+  }
+
+  .login-subtitle {
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-6;
+  }
+}
+
+@include mobile-down {
+  .login-page {
+    padding: $spacing-3;
+    min-height: calc(100vh - 80px);
+  }
+
+  .login-card {
+    padding: $spacing-4;
+    border-radius: 12px;
+    border-width: 2px;
+  }
+
+  .login-title {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-1;
+  }
+
+  .login-subtitle {
+    font-size: $font-size-xs;
+    margin-bottom: $spacing-4;
+  }
+
+  .login-form {
+    gap: $spacing-6;
+  }
+
+  .form-group {
+    label {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+@include mobile-small {
+  .login-page {
+    padding: $spacing-2;
+  }
+
+  .login-card {
+    padding: $spacing-3;
+    border-radius: 8px;
+  }
+
+  .login-title {
+    font-size: $font-size-lg;
+  }
+
+  .login-form {
+    gap: $spacing-4;
+  }
+}

@@ -7,15 +7,15 @@
         <p class="p-home-hero__subtitle">Arreglémoslo juntos.</p>
     </div>
 
-    <div class="p-home-hero__search-box">
+    <article class="p-home-hero__search-box">
         <input
           type="text"
-          placeholder="Busca el electrodoméstico o aparato a reparar..."
+          placeholder="Busca una reparación..."
           [(ngModel)]="searchQuery"
           (keypress)="onSearchKeyPress($event)"
         >
-    </div>
-    <button class="p-home-hero__search-btn" (click)="onSearch()">
-        <img src="/assets/icons/buscar.png" alt="Buscar">
-    </button>
+        <button class="p-home-hero__search-btn" (click)="onSearch()">
+            <img src="/assets/icons/buscar.png" alt="Buscar">
+        </button>
+    </article>
 </section>

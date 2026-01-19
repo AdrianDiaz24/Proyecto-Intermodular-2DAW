@@ -1,16 +1,25 @@
 @use 'src/styles/settings/variables' as *;
 @use 'src/styles/01-tools/mixins' as *;
 
+// ============================================================================
+// CARD COMPONENT - CON CONTAINER QUERIES
+// ============================================================================
 
+// Contenedor padre para Container Queries
+.card-container {
+  container-type: inline-size;
+  container-name: card;
+}
 
 .card {
-  // PROPIEDADES BASE
+  // PROPIEDADES BASE (Desktop)
   background-color: $color-text-white;
   border-radius: $radius-lg;
   overflow: hidden;
   @include transition(all);
 
 
+  // Variante interactiva
   &--interactive {
     box-shadow: $shadow-md;
 
@@ -26,11 +35,25 @@
   }
 
 
+  // ============================================
+  // IMAGEN
+  // ============================================
   &__image {
     width: 100%;
     height: 200px;
     overflow: hidden;
     background-color: $color-gray-100;
+
+
+    // Container Query: Imagen más pequeña en contenedores pequeños
+    @container card (max-width: 400px) {
+      height: 150px;
+    }
+
+
+    @container card (max-width: 300px) {
+      height: 120px;
+    }
   }
 
   &__image-element {
@@ -40,20 +63,34 @@
     object-position: center;
     @include transition(transform);
 
-    // Zoom en hover
+
     .card--interactive:hover & {
       transform: scale(1.05);
     }
   }
 
 
+  // ============================================
+  // CONTENIDO
+  // ============================================
   &__content {
     padding: $spacing-6;
     display: flex;
     flex-direction: column;
     gap: $spacing-3;
-  }
 
+
+    // Container Query: Padding reducido en contenedores pequeños
+    @container card (max-width: 400px) {
+      padding: $spacing-4;
+      gap: $spacing-2;
+    }
+
+
+    @container card (max-width: 300px) {
+      padding: $spacing-3;
+    }
+  }
 
   &__title {
     margin: 0;
@@ -61,35 +98,69 @@
     font-weight: $font-weight-bold;
     color: $color-text-black;
     line-height: $line-height-tight;
-  }
 
+
+    // Container Query: Título más pequeño
+    @container card (max-width: 400px) {
+      font-size: $font-size-lg;
+    }
+
+
+    @container card (max-width: 300px) {
+      font-size: $font-size-base;
+    }
+  }
 
   &__description {
     margin: 0;
     font-size: $font-size-base;
     color: $color-gray-600;
     line-height: $line-height-normal;
-  }
 
+
+    // Container Query: Descripción más pequeña
+    @container card (max-width: 400px) {
+      font-size: $font-size-sm;
+    }
+
+
+    @container card (max-width: 300px) {
+      font-size: $font-size-xs;
+      @include text-truncate(2);
+    }
+  }
 
   &__action {
     display: flex;
     gap: $spacing-2;
     margin-top: $spacing-2;
+
+
+    // Container Query: Botones apilados en contenedores pequeños
+    @container card (max-width: 350px) {
+      flex-direction: column;
+      gap: $spacing-2;
+    }
   }
 
 
+  // ============================================
+  // VARIANTE HORIZONTAL
+  // ============================================
   &--horizontal {
     display: flex;
     flex-direction: row;
     min-height: 200px;
 
 
-    @media (max-width: 768px) {
+    // Desktop-first: Responsive con max-width
+    @include tablet-down {
       flex-direction: column;
+      min-height: auto;
     }
 
-    // Imagen a la izquierda
+
+    // Imagen lateral
     .card__image-side {
       width: 40%;
       min-width: 250px;
@@ -98,10 +169,16 @@
       background-color: $color-gray-100;
       flex-shrink: 0;
 
-      @media (max-width: 768px) {
+
+      @include tablet-down {
         width: 100%;
         height: 200px;
         min-width: auto;
+      }
+
+
+      @include mobile-down {
+        height: 150px;
       }
     }
 
@@ -118,7 +195,7 @@
       }
     }
 
-    // Contenido a la derecha
+    // Contenido lateral
     .card__content-side {
       padding: $spacing-6;
       display: flex;
@@ -127,11 +204,57 @@
       flex: 1;
       justify-content: flex-start;
 
-      @media (max-width: 768px) {
+
+      @include tablet-down {
         padding: $spacing-4;
+      }
+
+
+      @include mobile-down {
+        padding: $spacing-3;
+        gap: $spacing-2;
+      }
+    }
+  }
+
+
+  // ============================================
+  // TAMAÑOS
+  // ============================================
+  &--sm {
+    .card__content {
+      padding: $spacing-4;
+    }
+    .card__title {
+      font-size: $font-size-lg;
+    }
+    .card__description {
+      font-size: $font-size-sm;
+    }
+  }
+
+  &--lg {
+    .card__image {
+      height: 280px;
+    }
+    .card__content {
+      padding: $spacing-8;
+    }
+    .card__title {
+      font-size: $font-size-2xl;
+    }
+
+
+    @include tablet-down {
+      .card__image {
+        height: 200px;
+      }
+      .card__content {
+        padding: $spacing-6;
+      }
+      .card__title {
+        font-size: $font-size-xl;
       }
     }
   }
 }
-
-
