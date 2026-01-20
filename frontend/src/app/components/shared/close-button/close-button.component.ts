@@ -6,7 +6,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./close-button.component.scss']
 })
 export class CloseButtonComponent {
-  @Input() icon: string = 'assets/icons/error.png';
+  @Input() icon: string = 'assets/icons/error.avif';
   @Input() title: string = 'Cerrar';
   @Output() click = new EventEmitter<void>();
 

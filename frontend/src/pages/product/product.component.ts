@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit {
       model: 'WM4000CW',
       rating: 4.5,
       reviews: 28,
-      image: '/assets/icons/logoNaranja.png',
+      image: '/assets/icons/logoNaranja.avif',
       description: 'Lavadora automática de carga frontal LG con capacidad de 8kg. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
       specifications: {
         weight: '85 kg',
@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
       model: 'WM5000CW',
       rating: 4.7,
       reviews: 42,
-      image: '/assets/icons/logoNaranja.png',
+      image: '/assets/icons/logoNaranja.avif',
       description: 'Lavadora LG inverter con tecnología AI DD y programa EcoHybrid. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
       specifications: {
         weight: '92 kg',
@@ -61,7 +61,7 @@ export class ProductComponent implements OnInit {
       model: 'CordZero R9',
       rating: 4.8,
       reviews: 156,
-      image: '/assets/icons/logoNaranja.png',
+      image: '/assets/icons/logoNaranja.avif',
       description: 'Aspiradora inalámbrica LG con motor sin escobillas y batería de larga duración. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
       specifications: {
         weight: '2.8 kg',
@@ -131,7 +131,7 @@ export class ProductComponent implements OnInit {
       model: resolved.model,
       rating: 4.5,
       reviews: 28,
-      image: resolved.image || '/assets/icons/logoNaranja.png',
+      image: resolved.image || '/assets/icons/logoNaranja.avif',
       description: `${resolved.name} - Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.`,
       specifications: {
         weight: resolved.weight || 'N/A',

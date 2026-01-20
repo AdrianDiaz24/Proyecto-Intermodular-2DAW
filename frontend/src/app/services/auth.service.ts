@@ -291,7 +291,7 @@ export class AuthService extends BaseHttpService {
             email: credentials.email,
             memberSince: new Date('2026-01-10'),
             phone: '+34 612 345 678',
-            profileImage: 'assets/icons/UsuarioBlanco.png',
+            profileImage: 'assets/icons/UsuarioBlanco.avif',
             joinDate: '2026-01-10'
           };
 
@@ -326,7 +326,7 @@ export class AuthService extends BaseHttpService {
             email: data.email,
             memberSince: new Date(),
             phone: '',
-            profileImage: 'assets/icons/UsuarioBlanco.png',
+            profileImage: 'assets/icons/UsuarioBlanco.avif',
             joinDate: new Date().toISOString().split('T')[0]
           };
 

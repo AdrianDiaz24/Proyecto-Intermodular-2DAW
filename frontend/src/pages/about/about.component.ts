@@ -16,17 +16,17 @@ export class AboutComponent {
 
   features = [
     {
-      icon: 'assets/icons/mas.png',
+      icon: 'assets/icons/mas.avif',
       title: 'Comunidad Activa',
       description: 'Miles de usuarios compartiendo soluciones y experiencias.'
     },
     {
-      icon: 'assets/icons/mas.png',
+      icon: 'assets/icons/mas.avif',
       title: 'Base de Conocimiento',
       description: 'Amplia colección de incidencias resueltas y guías de reparación.'
     },
     {
-      icon: 'assets/icons/mas.png',
+      icon: 'assets/icons/mas.avif',
       title: 'Soporte Gratuito',
       description: 'Ayuda de la comunidad sin costo alguno.'
     }
