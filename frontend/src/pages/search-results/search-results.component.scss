@@ -53,7 +53,7 @@
   &__title {
     font-size: $font-size-4xl;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0 0 $spacing-4 0;
 
     @include tablet-down {
@@ -72,7 +72,7 @@
 
   &__subtitle {
     font-size: $font-size-lg;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
 
     @include mobile-down {
