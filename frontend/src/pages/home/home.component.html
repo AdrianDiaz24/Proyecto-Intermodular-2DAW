@@ -1,4 +1,31 @@
 <section class="p-home-hero">
+    <!-- Imagen de fondo responsive con art direction -->
+    <picture class="p-home-hero__background">
+        <source
+            media="(max-width: 640px)"
+            srcset="/assets/images/hero-taller-mobile.avif 640w,
+                    /assets/images/hero-taller-mobile.avif 320w"
+            sizes="100vw"
+            type="image/avif">
+        <source
+            media="(max-width: 1024px)"
+            srcset="/assets/images/hero-taller-tablet.avif 1024w,
+                    /assets/images/hero-taller-tablet.avif 768w"
+            sizes="100vw"
+            type="image/avif">
+        <source
+            srcset="/assets/images/hero-taller.avif 1920w,
+                    /assets/images/hero-taller.avif 1280w"
+            sizes="100vw"
+            type="image/avif">
+        <img
+            src="/assets/images/hero-taller.avif"
+            alt="Taller de reparaciones - ReparaFácil"
+            class="p-home-hero__bg-img"
+            loading="eager"
+            decoding="async">
+    </picture>
+
     <div class="p-home-hero__overlay"></div>
 
     <div class="p-home-hero__text-container">
@@ -15,7 +42,12 @@
           (keypress)="onSearchKeyPress($event)"
         >
         <button class="p-home-hero__search-btn" (click)="onSearch()">
-            <img src="/assets/icons/buscar.avif" alt="Buscar">
+            <img
+                src="/assets/icons/buscar.avif"
+                alt="Buscar"
+                loading="lazy"
+                width="24"
+                height="24">
         </button>
     </article>
 </section>

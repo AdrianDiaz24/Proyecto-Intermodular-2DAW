@@ -13,9 +13,21 @@
     <!-- Recuadro único con toda la información -->
     <article class="p-product__card">
       <div class="p-product__card-grid">
-        <!-- Imagen principal -->
+        <!-- Imagen principal con responsive y lazy loading -->
         <div class="p-product__image-container">
-          <img [src]="product.image" [alt]="product.name" class="p-product__image">
+          <picture>
+            <source
+                [srcset]="product.image"
+                type="image/avif">
+            <img
+                [src]="product.image"
+                [alt]="product.name"
+                class="p-product__image"
+                loading="lazy"
+                decoding="async"
+                width="400"
+                height="400">
+          </picture>
         </div>
 
         <!-- Información del producto -->

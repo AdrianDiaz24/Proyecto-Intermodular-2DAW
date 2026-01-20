@@ -2,6 +2,57 @@
 @use 'src/styles/settings/variables' as *;
 @use 'src/styles/01-tools/mixins' as *;
 
+// ============================================
+// ANIMACIONES CSS OPTIMIZADAS
+// Solo usamos transform y opacity para mejor rendimiento
+// ============================================
+
+// Animación fade-in para elementos que aparecen
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animación slide-in desde la izquierda
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Animación de pulso suave para elementos interactivos
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+// Animación de loading spinner
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 :host {
   display: block;
   width: 100%;
@@ -15,11 +66,7 @@
   min-height: 100vh;
   margin: 0;
   padding: 0;
-
-  // Imagen de fondo
-  background-image: url('/assets/images/hero-taller.avif');
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
 
   // Desktop-first: Ajustes para tablets y móviles
   @include tablet-down {
@@ -28,7 +75,27 @@
 
   @include mobile-down {
     min-height: 70vh;
-    background-position: center top;
+  }
+
+  // Imagen de fondo responsive con picture element
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  &__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+
+    @include mobile-down {
+      object-position: center top;
+    }
   }
 
   &__overlay {
@@ -44,6 +111,8 @@
     left: 4rem;
     z-index: 10;
     text-align: left;
+    // Animación slide-in desde la izquierda
+    animation: slideInLeft 500ms ease-out forwards;
 
     // Desktop-first: Responsive
     @include tablet-down {
@@ -73,6 +142,9 @@
     color: $color-text-black;
     margin: 0;
     line-height: 1.1;
+    // Animación fade-in con delay escalonado
+    opacity: 0;
+    animation: fadeIn 400ms ease-out forwards;
 
     // Desktop-first: Responsive
     @include desktop-down('xl') {
@@ -92,10 +164,21 @@
     }
   }
 
+  &__title-line-1 {
+    animation-delay: 100ms;
+  }
+
+  &__title-line-2 {
+    animation-delay: 200ms;
+  }
+
   &__subtitle {
     font-size: 1.75rem;
     color: $color-text-black;
     margin-top: 1rem;
+    // Animación fade-in con delay
+    opacity: 0;
+    animation: fadeIn 400ms ease-out 300ms forwards;
 
     // Desktop-first: Responsive
     @include tablet-down {
@@ -115,29 +198,41 @@
 
   &__search-box {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     z-index: 5;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    width: 100%;
+    width: 90%;
     max-width: 700px;
     padding: 0 1rem;
+    // Centrado sin transform
+    top: 50%;
+    left: 50%;
+    margin-left: -350px;
+    margin-top: -25px;
+    // Animación fade-in con delay
+    opacity: 0;
+    animation: fadeIn 500ms ease-out 400ms forwards;
 
     // Desktop-first: Responsive
     @include tablet-down {
       max-width: 500px;
+      margin-left: -250px;
     }
 
     @include mobile-down {
-      max-width: 90%;
+      width: 85%;
+      max-width: 85%;
       top: 55%;
+      margin-left: -42.5%;
+      margin-top: -25px;
     }
 
     @include mobile-small {
-      max-width: 95%;
+      width: 90%;
+      max-width: 90%;
+      margin-left: -45%;
     }
 
     input {
@@ -151,6 +246,13 @@
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       font-family: $font-primary;
+      // Transición suave para focus
+      transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+
+      &:focus {
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      }
 
       // Estilos del placeholder
       &::placeholder {
@@ -180,8 +282,6 @@
   }
 
   &__search-btn {
-    // Ahora está dentro del flexbox del search-box
-    // Por lo tanto, ya no necesita position: absolute
     background-color: $color-accent;
     color: $color-text-white;
     border: none;
@@ -194,7 +294,8 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: all $transition-base;
+    // Transición optimizada solo con transform y opacity
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 
     // Desktop-first: Responsive
@@ -232,12 +333,17 @@
     }
 
     &:hover {
-      background-color: lighten($color-accent, 10%);
-      transform: scale(1.05);
+      transform: scale(1.08);
+      opacity: 0.95;
     }
 
     &:active {
       transform: scale(0.95);
+    }
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
     }
   }
 }

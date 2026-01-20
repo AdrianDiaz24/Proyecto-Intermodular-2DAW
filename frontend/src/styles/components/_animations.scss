@@ -1,0 +1,302 @@
+// ============================================
+// ANIMACIONES CSS GLOBALES OPTIMIZADAS
+// Solo usamos transform y opacity para mejor rendimiento GPU
+// Duraciones entre 150ms y 500ms
+// ============================================
+
+@use '../settings/variables' as *;
+
+// ============================================
+// KEYFRAMES - Definiciones de animaciones
+// ============================================
+
+// Animación fade-in básica
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animación fade-in desde abajo
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animación slide-in desde la izquierda
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Animación slide-in desde la derecha
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Animación de pulso suave
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+// Animación de bounce suave
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+// Animación de loading spinner
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Animación de escala para aparecer
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ============================================
+// CLASES DE UTILIDAD PARA ANIMACIONES
+// ============================================
+
+// Fade-in con delay opcional
+.animate-fade-in {
+  animation: fadeIn 400ms ease-out forwards;
+
+  &--delay-100 { animation-delay: 100ms; }
+  &--delay-200 { animation-delay: 200ms; }
+  &--delay-300 { animation-delay: 300ms; }
+  &--delay-400 { animation-delay: 400ms; }
+  &--delay-500 { animation-delay: 500ms; }
+}
+
+// Slide-in desde izquierda
+.animate-slide-left {
+  animation: slideInLeft 400ms ease-out forwards;
+}
+
+// Slide-in desde derecha
+.animate-slide-right {
+  animation: slideInRight 400ms ease-out forwards;
+}
+
+// Scale-in
+.animate-scale-in {
+  animation: scaleIn 300ms ease-out forwards;
+}
+
+// ============================================
+// LOADING SPINNER
+// ============================================
+
+.loading-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba($color-primary, 0.3);
+  border-top-color: $color-primary;
+  border-radius: 50%;
+  animation: spin 500ms linear infinite;
+
+  // Variantes de tamaño
+  &--sm {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+  }
+
+  &--lg {
+    width: 40px;
+    height: 40px;
+    border-width: 4px;
+  }
+
+  &--xl {
+    width: 56px;
+    height: 56px;
+    border-width: 5px;
+  }
+
+  // Variantes de color
+  &--white {
+    border-color: rgba($color-text-white, 0.3);
+    border-top-color: $color-text-white;
+  }
+
+  &--accent {
+    border-color: rgba($color-accent, 0.3);
+    border-top-color: $color-accent;
+  }
+}
+
+// Contenedor centrado para loading
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  width: 100%;
+}
+
+// ============================================
+// TRANSICIONES HOVER/FOCUS OPTIMIZADAS
+// Solo transform y opacity - 150ms a 500ms
+// ============================================
+
+// Transición base reutilizable
+.transition-base {
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+}
+
+// Hover lift (elemento sube ligeramente)
+.hover-lift {
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  &:active {
+    transform: translateY(-2px);
+  }
+}
+
+// Hover scale (elemento crece)
+.hover-scale {
+  transition: transform 150ms ease-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Hover glow (opacidad + scale)
+.hover-glow {
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+
+  &:hover {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+}
+
+// Focus visible mejorado
+.focus-visible {
+  transition: transform 150ms ease-out;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+    transform: scale(1.02);
+  }
+}
+
+// ============================================
+// MICRO-INTERACCIONES
+// ============================================
+
+// Botón con bounce al hacer click
+.btn-bounce {
+  transition: transform 200ms ease-out;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// Icono con rotación suave
+.icon-rotate {
+  transition: transform 300ms ease-out;
+
+  &:hover {
+    transform: rotate(15deg);
+  }
+}
+
+// Card con elevación
+.card-elevate {
+  transition: transform 250ms ease-out;
+
+  &:hover {
+    transform: translateY(-6px) scale(1.01);
+  }
+}
+
+// Link con subrayado animado (usando pseudo-elemento con transform)
+.link-underline {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 250ms ease-out;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+

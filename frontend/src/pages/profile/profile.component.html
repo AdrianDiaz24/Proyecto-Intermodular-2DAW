@@ -3,7 +3,7 @@
     <!-- Encabezado de perfil -->
     <header class="profile-header">
       <div class="profile-avatar">
-        <img [src]="user.profileImage || '/assets/icons/UsuarioBlanco.avif'" [alt]="user.username" class="profile-avatar__img">
+        <img [src]="user.profileImage || '/assets/icons/UsuarioBlanco.avif'" [alt]="user.username" class="profile-avatar__img" loading="lazy" decoding="async">
       </div>
       <div class="profile-info">
         <h1 class="profile-info__name">{{ user.username }}</h1>

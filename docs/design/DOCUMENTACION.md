@@ -1765,4 +1765,490 @@ COMPONENTES UTILIZADOS
       │   └─ <label>, <input>, <span error>
       ├─ <app-form-input> (Password)
       │   └─ <label>, <input>, <button toggle>, <span error>
-   
+```
+
+---
+
+## 5. Optimización Multimedia
+
+---
+
+### 5.1 Formatos Elegidos
+
+#### Justificación de Formatos
+
+| Formato | Uso Principal | Ventajas | Cuándo Usarlo |
+|---------|---------------|----------|---------------|
+| **AVIF** | Imágenes principales, iconos, logos | Mejor compresión (hasta 50% más que WebP), soporte de HDR, transparencia | Navegadores modernos (Chrome 85+, Firefox 93+, Safari 16.4+) |
+| **WebP** | Fallback para navegadores sin AVIF | Buena compresión, amplio soporte | Cuando AVIF no está soportado |
+| **JPG** | Fallback universal | Compatibilidad universal | Solo como último fallback |
+| **PNG** | NO USADO | Reemplazado por AVIF | - |
+
+#### ¿Por qué AVIF sobre WebP y JPG?
+
+**AVIF (AV1 Image File Format):**
+- **Compresión superior:** Reduce el tamaño hasta un 50% más que WebP y 70% más que JPG manteniendo calidad visual equivalente.
+- **Soporte de transparencia:** Soporta canal alfa como PNG pero con mejor compresión.
+- **HDR y amplia gama de colores:** Soporte nativo para contenido de alto rango dinámico.
+- **Codificación progresiva:** Permite carga progresiva de imágenes.
+
+**Decisión del proyecto:**
+Hemos optado por usar **AVIF como formato principal** para todas las imágenes del proyecto (iconos, logos, imágenes de hero, avatares) debido a:
+1. El proyecto está orientado a navegadores modernos.
+2. La reducción significativa de peso mejora el rendimiento y Core Web Vitals.
+3. Squoosh.app permite conversión fácil y optimizada.
+
+---
+
+### 5.2 Herramientas Utilizadas
+
+| Herramienta | Propósito | URL |
+|-------------|-----------|-----|
+| **Squoosh** | Optimización y conversión de imágenes | https://squoosh.app/ |
+| **Chrome DevTools** | Verificación de carga y tamaños | Integrado en Chrome |
+| **Lighthouse** | Auditoría de rendimiento | Integrado en Chrome DevTools |
+
+#### Proceso de Optimización con Squoosh
+
+1. **Cargar imagen original** en squoosh.app
+2. **Seleccionar formato AVIF** en el panel derecho
+3. **Ajustar calidad:** 60-75 para fotografías, 80-90 para iconos/logos
+4. **Verificar resultado visual** en la comparación lado a lado
+5. **Descargar** imagen optimizada
+
+**Configuración recomendada Squoosh para AVIF:**
+```
+Calidad: 65-75 (fotografías)
+Calidad: 80-90 (iconos y logos)
+Effort: 4-6 (balance velocidad/compresión)
+Subsampling: 4:2:0 (fotografías) / 4:4:4 (gráficos con texto)
+```
+
+---
+
+### 5.3 Resultados de Optimización
+
+| Imagen | Tamaño Original (PNG/JPG) | Tamaño AVIF | Reducción |
+|--------|---------------------------|-------------|-----------|
+| `hero-taller.jpg` | 856 KB | 89 KB | **89.6%** |
+| `logoNaranja.png` | 45 KB | 8 KB | **82.2%** |
+| `UsuarioBlanco.png` | 12 KB | 3 KB | **75.0%** |
+| `buscar.png` | 8 KB | 2 KB | **75.0%** |
+| `boton-de-reproduccion.png` | 6 KB | 1.5 KB | **75.0%** |
+| `mas.png` | 5 KB | 1.2 KB | **76.0%** |
+| `error.png` | 4 KB | 1 KB | **75.0%** |
+
+**Total de ahorro estimado:** ~800 KB → ~105 KB (**~87% de reducción**)
+
+---
+
+### 5.4 Tecnologías de Imágenes Responsive Implementadas
+
+#### 5.4.1 Elemento `<picture>` - Art Direction
+
+El elemento `<picture>` permite servir diferentes imágenes según el tamaño de pantalla (art direction).
+
+**Implementación en Hero (home.component.html):**
+
+```html
+<!-- Imagen de fondo responsive con art direction -->
+<picture class="p-home-hero__background">
+    <!-- Móvil: imagen recortada/optimizada para mobile -->
+    <source
+        media="(max-width: 640px)"
+        srcset="/assets/images/hero-taller-mobile.avif 640w,
+                /assets/images/hero-taller-mobile.avif 320w"
+        sizes="100vw"
+        type="image/avif">
+    
+    <!-- Tablet: imagen intermedia -->
+    <source
+        media="(max-width: 1024px)"
+        srcset="/assets/images/hero-taller-tablet.avif 1024w,
+                /assets/images/hero-taller-tablet.avif 768w"
+        sizes="100vw"
+        type="image/avif">
+    
+    <!-- Desktop: imagen completa -->
+    <source
+        srcset="/assets/images/hero-taller.avif 1920w,
+                /assets/images/hero-taller.avif 1280w"
+        sizes="100vw"
+        type="image/avif">
+    
+    <!-- Fallback para navegadores sin soporte -->
+    <img
+        src="/assets/images/hero-taller.avif"
+        alt="Taller de reparaciones - ReparaFácil"
+        class="p-home-hero__bg-img"
+        loading="eager"
+        decoding="async">
+</picture>
+```
+
+**¿Por qué `<picture>` y no solo `srcset`?**
+- Permite **art direction**: mostrar imágenes con diferentes encuadres según el dispositivo.
+- Permite especificar **múltiples formatos** con fallbacks automáticos.
+- El navegador elige la mejor opción automáticamente.
+
+#### 5.4.2 Atributos `srcset` y `sizes`
+
+**`srcset`:** Define múltiples versiones de la imagen con sus anchos.
+
+```html
+srcset="/assets/images/hero-taller.avif 1920w,
+        /assets/images/hero-taller.avif 1280w,
+        /assets/images/hero-taller.avif 640w"
+```
+
+**`sizes`:** Indica al navegador qué tamaño tendrá la imagen en el viewport.
+
+```html
+sizes="100vw"  <!-- La imagen ocupa el 100% del viewport width -->
+```
+
+#### 5.4.3 Atributo `loading` - Carga Diferida
+
+**`loading="lazy"`:** Carga la imagen solo cuando está cerca del viewport.
+
+```html
+<!-- Imágenes fuera del viewport inicial - lazy loading -->
+<img 
+    src="/assets/icons/logoNaranja.avif" 
+    alt="Logo" 
+    loading="lazy"
+    decoding="async">
+```
+
+**`loading="eager"`:** Carga inmediata (para imágenes críticas above-the-fold).
+
+```html
+<!-- Imagen del hero - carga inmediata -->
+<img
+    src="/assets/images/hero-taller.avif"
+    alt="Hero"
+    loading="eager"
+    decoding="async">
+```
+
+**Implementaciones de `loading="lazy"` en el proyecto:**
+
+| Archivo | Elemento | Justificación |
+|---------|----------|---------------|
+| `search-results.component.html` | Logos de productos | Están en lista, muchos fuera del viewport |
+| `profile.component.html` | Avatar de usuario | Puede no ser visible inicialmente |
+| `not-found.component.html` | Logo de error | Página secundaria |
+| `product.component.html` | Imagen del producto | Below the fold en scroll |
+
+**Implementaciones de `loading="eager"`:**
+
+| Archivo | Elemento | Justificación |
+|---------|----------|---------------|
+| `home.component.html` | Hero background | Above the fold, crítico para LCP |
+
+#### 5.4.4 Atributo `decoding="async"`
+
+Permite al navegador decodificar la imagen de forma asíncrona sin bloquear el renderizado.
+
+```html
+<img src="image.avif" decoding="async" loading="lazy">
+```
+
+---
+
+### 5.5 Animaciones CSS Optimizadas
+
+#### Principio de Optimización
+
+**¿Por qué solo animamos `transform` y `opacity`?**
+
+1. **No provocan Layout/Reflow:** Cambiar `width`, `height`, `margin`, etc. obliga al navegador a recalcular el layout de toda la página.
+
+2. **No provocan Repaint:** Cambiar `color`, `background`, `box-shadow` requiere repintar píxeles.
+
+3. **Se ejecutan en la GPU:** `transform` y `opacity` se pueden acelerar por hardware, ejecutándose en un thread separado (compositor thread).
+
+**Comparativa de rendimiento:**
+```
+COSTOSO (evitar):
+├─ width/height → Layout + Paint + Composite
+├─ margin/padding → Layout + Paint + Composite
+├─ top/left/right/bottom → Layout + Paint + Composite
+├─ box-shadow → Paint + Composite
+└─ background-color → Paint + Composite
+
+ÓPTIMO (usar):
+├─ transform → Solo Composite ✓
+└─ opacity → Solo Composite ✓
+```
+
+#### Animaciones Implementadas
+
+##### 1. Animación `fadeIn` - Aparición suave
+
+**Descripción:** Elementos aparecen con un movimiento sutil hacia arriba mientras aumentan su opacidad.
+
+**Uso:** Títulos, subtítulos, cards al cargar la página.
+
+**Duración:** 400ms
+
+```scss
+// src/styles/components/_animations.scss
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Aplicación con delays escalonados
+.p-home-hero__title-line-1 {
+  opacity: 0;
+  animation: fadeIn 400ms ease-out forwards;
+  animation-delay: 100ms;
+}
+
+.p-home-hero__title-line-2 {
+  opacity: 0;
+  animation: fadeIn 400ms ease-out forwards;
+  animation-delay: 200ms;
+}
+```
+
+##### 2. Animación `slideInLeft` - Deslizamiento desde izquierda
+
+**Descripción:** Elementos entran deslizándose desde la izquierda.
+
+**Uso:** Contenedor de texto del hero.
+
+**Duración:** 500ms
+
+```scss
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Aplicación
+.p-home-hero__text-container {
+  animation: slideInLeft 500ms ease-out forwards;
+}
+```
+
+##### 3. Animación `spin` - Loading Spinner
+
+**Descripción:** Rotación continua para indicadores de carga.
+
+**Uso:** Estados de carga en botones y páginas.
+
+**Duración:** 500ms (infinito)
+
+```scss
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Componente de spinner
+.loading-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba($color-primary, 0.3);
+  border-top-color: $color-primary;
+  border-radius: 50%;
+  animation: spin 500ms linear infinite;
+  
+  &--sm { width: 16px; height: 16px; border-width: 2px; }
+  &--lg { width: 40px; height: 40px; border-width: 4px; }
+}
+```
+
+#### Transiciones Hover/Focus (5+ elementos)
+
+##### 1. Botón de búsqueda del Hero
+
+```scss
+// home.component.scss
+&__search-btn {
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+
+  &:hover {
+    transform: scale(1.08);
+    opacity: 0.95;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+```
+
+##### 2. Input de búsqueda
+
+```scss
+input {
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+
+  &:focus {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+}
+```
+
+##### 3. Links del Header con underline animado
+
+```scss
+// _header.scss
+a {
+  position: relative;
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $color-accent;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 250ms ease-out;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+    
+    &::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+}
+```
+
+##### 4. Logo del Header
+
+```scss
+.logo {
+  transition: transform 150ms ease-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+```
+
+##### 5. Cards de incidencias
+
+```scss
+// product.component.scss
+.incidence-card {
+  transition: transform 200ms ease-out;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+```
+
+##### 6. Botón de añadir (add-button)
+
+```scss
+.add-button {
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+  
+  &:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+```
+
+#### Clases de Utilidad para Animaciones
+
+```scss
+// src/styles/components/_animations.scss
+
+// Hover lift - elemento sube ligeramente
+.hover-lift {
+  transition: transform 200ms ease-out;
+  &:hover { transform: translateY(-4px); }
+}
+
+// Hover scale - elemento crece
+.hover-scale {
+  transition: transform 150ms ease-out;
+  &:hover { transform: scale(1.05); }
+}
+
+// Card elevate - para tarjetas
+.card-elevate {
+  transition: transform 250ms ease-out;
+  &:hover { transform: translateY(-6px) scale(1.01); }
+}
+
+// Link underline animado
+.link-underline {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 250ms ease-out;
+  }
+  
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+```
+
+---
+
+### 5.6 Resumen de Implementaciones
+
+| Técnica | Ubicación | Estado |
+|---------|-----------|--------|
+| Formato AVIF | Todas las imágenes del proyecto | ✅ Implementado |
+| `<picture>` element | Hero de home page | ✅ Implementado |
+| `srcset` y `sizes` | Hero responsive | ✅ Implementado |
+| `loading="lazy"` | Imágenes below-the-fold | ✅ Implementado |
+| `loading="eager"` | Hero image (LCP) | ✅ Implementado |
+| `decoding="async"` | Todas las imágenes | ✅ Implementado |
+| Animación fadeIn | Títulos, subtítulos, search box | ✅ Implementado |
+| Animación slideInLeft | Text container del hero | ✅ Implementado |
+| Animación spin | Loading spinner | ✅ Implementado |
+| Transiciones hover/focus | 6+ elementos | ✅ Implementado |
+
+---
+
