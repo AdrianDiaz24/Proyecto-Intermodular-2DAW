@@ -31,6 +31,9 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   passwordChangeMessage = '';
   passwordChangeError = false;
 
+  // Tema
+  isDarkMode = false;
+
   // Incidencias creadas
   incidencies = [
     {
@@ -61,6 +64,19 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   ) {}
 
   ngOnInit(): void {
+    // Detectar tema actual
+    this.isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+
+    // Observar cambios de tema
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'data-theme') {
+          this.isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+
     // Obtener datos del resolver o del servicio
     this.route.data.subscribe(data => {
       console.log('Profile route data:', data);

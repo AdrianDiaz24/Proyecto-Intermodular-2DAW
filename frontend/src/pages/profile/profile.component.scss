@@ -25,7 +25,7 @@
   align-items: center;
   gap: $spacing-8;
   padding: $spacing-8;
-  background-color: $color-text-white;
+  background-color: var(--c-bg-primary);
   border-radius: $radius-lg;
   box-shadow: $shadow-md;
   margin-bottom: $spacing-8;
@@ -46,7 +46,7 @@
     border-radius: $radius-full;
     object-fit: cover;
     border: 3px solid $color-primary;
-    background-color: $color-gray-100;
+    background-color: var(--c-bg-tertiary);
   }
 }
 
@@ -56,19 +56,19 @@
   &__name {
     font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0 0 $spacing-2 0;
   }
 
   &__email {
     font-size: $font-size-base;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0 0 $spacing-1 0;
   }
 
   &__join-date {
     font-size: $font-size-sm;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
   }
 }
@@ -115,11 +115,11 @@
   }
 
   &--secondary {
-    background-color: $color-gray-200;
-    color: $color-text-black;
+    background-color: var(--c-bg-tertiary);
+    color: var(--c-text-primary);
 
     &:hover {
-      background-color: darken($color-gray-200, 10%);
+      background-color: var(--c-hover-bg);
       box-shadow: $shadow-md;
       transform: translateY(-2px);
     }
@@ -131,12 +131,12 @@
 
   &--tertiary {
     background-color: transparent;
-    color: $color-gray-600;
-    border: 1px solid $color-gray-300;
+    color: var(--c-text-secondary);
+    border: 1px solid var(--c-border-light);
 
     &:hover {
-      background-color: $color-gray-50;
-      border-color: $color-gray-400;
+      background-color: var(--c-hover-bg);
+      border-color: var(--c-border-medium);
     }
   }
 }
@@ -148,7 +148,7 @@
 }
 
 .profile-card {
-  background-color: $color-text-white;
+  background-color: var(--c-bg-primary);
   border-radius: $radius-lg;
   padding: $spacing-8;
   box-shadow: $shadow-md;
@@ -166,7 +166,7 @@
   &__title {
     font-size: $font-size-xl;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
     flex: 1;
   }
@@ -222,7 +222,7 @@
   align-items: center;
   gap: $spacing-4;
   padding: $spacing-4 0;
-  border-bottom: 1px solid $color-gray-100;
+  border-bottom: 1px solid var(--c-border-light);
 
   @media (max-width: $breakpoint-md) {
     grid-template-columns: 1fr;
@@ -231,23 +231,25 @@
 
   &__label {
     font-weight: $font-weight-medium;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     font-size: $font-size-base;
   }
 
   &__value {
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     font-size: $font-size-base;
     padding: $spacing-2;
   }
 
   &__input {
     padding: $spacing-2 $spacing-3;
-    border: 1px solid $color-gray-300;
+    border: 1px solid var(--c-border-light);
     border-radius: $radius-md;
     font-size: $font-size-base;
     font-family: $font-primary;
     transition: all $transition-base;
+    background-color: var(--c-bg-primary);
+    color: var(--c-text-primary);
 
     &:focus {
       outline: none;
@@ -301,7 +303,7 @@
 .profile-empty-message {
   padding: $spacing-6 $spacing-4;
   text-align: center;
-  color: $color-gray-600;
+  color: var(--c-text-secondary);
   font-size: $font-size-base;
 }
 
@@ -317,14 +319,14 @@
   justify-content: space-between;
   align-items: center;
   padding: $spacing-4;
-  border: 1px solid $color-gray-200;
+  border: 1px solid var(--c-border-light);
   border-radius: $radius-md;
-  background-color: $color-gray-50;
+  background-color: var(--c-bg-tertiary);
   transition: all $transition-base;
   gap: $spacing-6;
 
   &:hover {
-    background-color: $color-gray-100;
+    background-color: var(--c-hover-bg);
     box-shadow: $shadow-sm;
   }
 
@@ -341,13 +343,13 @@
   &__appliance {
     font-size: $font-size-base;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0 0 $spacing-2 0;
   }
 
   &__title {
     font-size: $font-size-sm;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
   }
 }

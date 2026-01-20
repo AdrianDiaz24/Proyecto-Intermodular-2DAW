@@ -3,7 +3,12 @@
     <!-- Encabezado de perfil -->
     <header class="profile-header">
       <div class="profile-avatar">
-        <img [src]="user.profileImage || '/assets/icons/UsuarioBlanco.avif'" [alt]="user.username" class="profile-avatar__img" loading="lazy" decoding="async">
+        <img
+          [src]="user.profileImage || (isDarkMode ? '/assets/icons/UsuarioBlanco.avif' : '/assets/icons/usuario.avif')"
+          [alt]="user.username"
+          class="profile-avatar__img"
+          loading="lazy"
+          decoding="async">
       </div>
       <div class="profile-info">
         <h1 class="profile-info__name">{{ user.username }}</h1>
@@ -11,6 +16,7 @@
         <p class="profile-info__join-date">Miembro desde el {{ user.memberSince | date:'d MMMM yyyy':'':'es' }}</p>
       </div>
       <div class="profile-actions">
+        <app-theme-switcher></app-theme-switcher>
         <button
           class="profile-btn profile-btn--secondary"
           (click)="logout()"

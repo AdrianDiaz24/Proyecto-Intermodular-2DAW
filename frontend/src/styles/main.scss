@@ -1,26 +1,17 @@
 
 @use 'settings/variables' as *;
-
-
 @use '01-tools/mixins' as *;
-
-
 @use '02-generic/reset' as *;
 @use '02-generic/typography' as *;
-
-
 @use '03-objects/layouts' as *;
-
-
 @use '04-elements/base' as *;
-
-
 @use '05-components/components' as *;
 @use '05-components/header' as *;
 @use '05-components/footer' as *;
-
-
 @use 'components/animations' as *;
-
-
 @use '06-utilities/utilities' as *;
+
+// Sistema de temas - importar después de todo lo demás
+@import 'themes/theme-variables';
+@import 'themes/theme-apply';
+

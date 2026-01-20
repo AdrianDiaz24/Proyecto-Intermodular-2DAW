@@ -1,0 +1,90 @@
+// ============================================
+// SISTEMA DE TEMAS CON CSS CUSTOM PROPERTIES
+// Usando colores de _variables.scss
+// ============================================
+
+// Tema Claro (por defecto)
+:root {
+  // Colores de fondo
+  --c-bg-primary: #ffffff;
+  --c-bg-secondary: #f9fafb;
+  --c-bg-tertiary: #f3f4f6;
+
+  // Colores de texto
+  --c-text-primary: #030303;
+  --c-text-secondary: #4b5563;
+  --c-text-tertiary: #9ca3af;
+
+  // Colores de borde
+  --c-border-light: #e5e7eb;
+  --c-border-medium: #d1d5db;
+
+  // Colores de sombra
+  --c-shadow: rgba(0, 0, 0, 0.1);
+
+  // Colores de marca
+  --c-primary: #659CCA;
+  --c-primary-hover: #2A7DC3;
+  --c-secondary: #134672;
+  --c-accent: #CA681F;
+  --c-accent-hover: #D45D05;
+
+  // Estados
+  --c-success: #15CA31;
+  --c-error: #EA1D1D;
+
+  // Hover/Active
+  --c-hover-bg: #f3f4f6;
+  --c-active-bg: #e5e7eb;
+}
+
+// Tema Oscuro
+[data-theme="dark"] {
+  // Colores de fondo (grises oscuros)
+  --c-bg-primary: #1f2937;
+  --c-bg-secondary: #111827;
+  --c-bg-tertiary: #374151;
+
+  // Colores de texto (claros)
+  --c-text-primary: #f3f4f6;
+  --c-text-secondary: #d1d5db;
+  --c-text-tertiary: #9ca3af;
+
+  // Colores de borde
+  --c-border-light: #374151;
+  --c-border-medium: #4b5563;
+
+  // Colores de sombra
+  --c-shadow: rgba(0, 0, 0, 0.4);
+
+  // Colores de marca (ajustados para oscuro)
+  --c-primary: #93badb;
+  --c-primary-hover: #659CCA;
+  --c-secondary: #4a90c7;
+  --c-accent: #f49d6a;
+  --c-accent-hover: #CA681F;
+
+  // Estados
+  --c-success: #34d399;
+  --c-error: #f87171;
+
+  // Hover/Active
+  --c-hover-bg: #374151;
+  --c-active-bg: #4b5563;
+}
+
+// Transiciones suaves entre temas (200ms)
+*,
+*::before,
+*::after {
+  transition: background-color 200ms ease-in-out,
+              color 200ms ease-in-out,
+              border-color 200ms ease-in-out,
+              box-shadow 200ms ease-in-out;
+}
+
+// Excepciones: no transicionar imágenes
+img, svg, video, iframe, canvas {
+  transition: none;
+}
+

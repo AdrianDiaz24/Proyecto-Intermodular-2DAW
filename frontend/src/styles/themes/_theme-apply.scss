@@ -1,0 +1,100 @@
+// ============================================
+// APLICACIÓN DE VARIABLES CSS A ELEMENTOS EXISTENTES
+// Solo cambia colores de fondo y texto, NO añade bordes ni sombras nuevas
+// EXCLUYE: header y footer (mantienen sus colores propios)
+// ============================================
+
+// Reset del body - quitar márgenes
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+// Body
+body {
+  background-color: var(--c-bg-secondary);
+  color: var(--c-text-primary);
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+// Contenedores principales (excluyendo header y footer)
+main {
+  background-color: var(--c-bg-secondary);
+  color: var(--c-text-primary);
+}
+
+// Solo aplicar a secciones dentro de main, no en header/footer
+main section {
+  color: var(--c-text-primary);
+}
+
+main article {
+  background-color: var(--c-bg-primary);
+  color: var(--c-text-primary);
+}
+
+// Títulos (excluyendo los de header y footer)
+main h1, main h2, main h3, main h4, main h5, main h6 {
+  color: var(--c-text-primary);
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+// Texto (excluyendo header y footer)
+main p, main span, main label, main legend {
+  color: var(--c-text-primary);
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+main small {
+  color: var(--c-text-secondary);
+}
+
+// Cards - solo cambio de fondo y texto
+.profile-card {
+  background-color: var(--c-bg-primary);
+  color: var(--c-text-primary);
+}
+
+// Formularios (en cualquier lugar)
+input,
+textarea,
+select {
+  background-color: var(--c-bg-primary);
+  color: var(--c-text-primary);
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  &::placeholder {
+    color: var(--c-text-tertiary);
+  }
+}
+
+// Botones
+button {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+// Links dentro de main - heredan color
+main a {
+  color: inherit;
+}
+
+// Listas dentro de main
+main ul, main ol {
+  color: var(--c-text-primary);
+}
+
+// ============================================
+// CAMBIO DE IMÁGENES EN MODO OSCURO
+// Las imágenes con variante oscura se invierten para verse blancas
+// ============================================
+[data-theme="dark"] {
+  // Iconos que deben invertirse a blanco en modo oscuro
+  img[src*="boton-de-reproduccion"],
+  img[src*="buscar"],
+  img[src*="mas"],
+  img[src*="error"],
+  img[src*="Cerrar"] {
+    filter: brightness(0) invert(1);
+  }
+}
+

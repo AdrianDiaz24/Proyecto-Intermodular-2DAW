@@ -1,0 +1,46 @@
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background-color: var(--c-bg-tertiary);
+  border: 2px solid var(--c-border-light);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--c-text-primary);
+
+  &:hover {
+    background-color: var(--c-primary);
+    border-color: var(--c-primary);
+    color: #ffffff;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus {
+    outline: 2px solid var(--c-primary);
+    outline-offset: 2px;
+  }
+
+  &__icon {
+    width: 22px;
+    height: 22px;
+    animation: rotateIn 250ms ease-out;
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+}
+

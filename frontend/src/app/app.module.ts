@@ -26,6 +26,7 @@ import { ReportIncidenceComponent } from './components/shared/report-incidence/r
 import { CloseButtonComponent } from './components/shared/close-button/close-button.component';
 import { BreadcrumbsComponent } from './components/shared/breadcrumbs/breadcrumbs.component';
 import { LoadingSpinnerComponent } from './components/shared/loading-spinner/loading-spinner.component';
+import { ThemeSwitcherComponent } from './components/shared/theme-switcher/theme-switcher.component';
 
 // Pages
 import { HomeComponent } from '../pages/home/home.component';
@@ -72,6 +73,7 @@ import { AuthInterceptor, ErrorInterceptor, LoggingInterceptor } from './interce
         CloseButtonComponent,
         BreadcrumbsComponent,
         LoadingSpinnerComponent,
+        ThemeSwitcherComponent,
         // Pages
         HomeComponent,
         LoginComponent,

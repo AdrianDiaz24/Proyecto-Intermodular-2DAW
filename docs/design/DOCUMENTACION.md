@@ -1931,21 +1931,6 @@ sizes="100vw"  <!-- La imagen ocupa el 100% del viewport width -->
     decoding="async">
 ```
 
-**Implementaciones de `loading="lazy"` en el proyecto:**
-
-| Archivo | Elemento | Justificación |
-|---------|----------|---------------|
-| `search-results.component.html` | Logos de productos | Están en lista, muchos fuera del viewport |
-| `profile.component.html` | Avatar de usuario | Puede no ser visible inicialmente |
-| `not-found.component.html` | Logo de error | Página secundaria |
-| `product.component.html` | Imagen del producto | Below the fold en scroll |
-
-**Implementaciones de `loading="eager"`:**
-
-| Archivo | Elemento | Justificación |
-|---------|----------|---------------|
-| `home.component.html` | Hero background | Above the fold, crítico para LCP |
-
 #### 5.4.4 Atributo `decoding="async"`
 
 Permite al navegador decodificar la imagen de forma asíncrona sin bloquear el renderizado.
@@ -2235,20 +2220,216 @@ a {
 
 ---
 
-### 5.6 Resumen de Implementaciones
-
-| Técnica | Ubicación | Estado |
-|---------|-----------|--------|
-| Formato AVIF | Todas las imágenes del proyecto | ✅ Implementado |
-| `<picture>` element | Hero de home page | ✅ Implementado |
-| `srcset` y `sizes` | Hero responsive | ✅ Implementado |
-| `loading="lazy"` | Imágenes below-the-fold | ✅ Implementado |
-| `loading="eager"` | Hero image (LCP) | ✅ Implementado |
-| `decoding="async"` | Todas las imágenes | ✅ Implementado |
-| Animación fadeIn | Títulos, subtítulos, search box | ✅ Implementado |
-| Animación slideInLeft | Text container del hero | ✅ Implementado |
-| Animación spin | Loading spinner | ✅ Implementado |
-| Transiciones hover/focus | 6+ elementos | ✅ Implementado |
+## 6. Sistema de Temas (Light/Dark Mode)
 
 ---
 
+### 6.1 Variables de Tema - CSS Custom Properties
+
+El sistema de temas utiliza CSS Custom Properties definidas en `:root` para el tema claro y en `[data-theme="dark"]` para el tema oscuro.
+
+#### Tema Claro (por defecto)
+
+```css
+:root {
+  /* Colores de fondo */
+  --c-bg-primary: #ffffff;
+  --c-bg-secondary: #f9fafb;
+  --c-bg-tertiary: #f3f4f6;
+  
+  /* Colores de texto */
+  --c-text-primary: #030303;
+  --c-text-secondary: #4b5563;
+  --c-text-tertiary: #9ca3af;
+  
+  /* Colores de borde */
+  --c-border-light: #e5e7eb;
+  --c-border-medium: #d1d5db;
+  
+  /* Colores de sombra */
+  --c-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Colores de marca */
+  --c-primary: #659CCA;
+  --c-primary-hover: #2A7DC3;
+  --c-secondary: #134672;
+  --c-accent: #CA681F;
+  --c-accent-hover: #D45D05;
+  
+  /* Estados */
+  --c-success: #15CA31;
+  --c-error: #EA1D1D;
+  
+  /* Hover/Active */
+  --c-hover-bg: #f3f4f6;
+  --c-active-bg: #e5e7eb;
+}
+```
+
+#### Tema Oscuro
+
+```css
+[data-theme="dark"] {
+  /* Colores de fondo (grises oscuros) */
+  --c-bg-primary: #1f2937;
+  --c-bg-secondary: #111827;
+  --c-bg-tertiary: #374151;
+  
+  /* Colores de texto (claros) */
+  --c-text-primary: #f3f4f6;
+  --c-text-secondary: #d1d5db;
+  --c-text-tertiary: #9ca3af;
+  
+  /* Colores de borde */
+  --c-border-light: #374151;
+  --c-border-medium: #4b5563;
+  
+  /* Colores de sombra */
+  --c-shadow: rgba(0, 0, 0, 0.4);
+  
+  /* Colores de marca (ajustados para oscuro) */
+  --c-primary: #93badb;
+  --c-primary-hover: #659CCA;
+  --c-secondary: #4a90c7;
+  --c-accent: #f49d6a;
+  --c-accent-hover: #CA681F;
+  
+  /* Estados */
+  --c-success: #34d399;
+  --c-error: #f87171;
+  
+  /* Hover/Active */
+  --c-hover-bg: #374151;
+  --c-active-bg: #4b5563;
+}
+```
+
+---
+
+### 6.2 Implementación del Theme Switcher
+
+#### Componente: `theme-switcher.component.ts`
+
+```typescript
+export class ThemeSwitcherComponent implements OnInit {
+  isDarkMode: boolean = false;
+
+  ngOnInit(): void {
+    this.loadThemePreference();
+  }
+
+  /**
+   * Cargar preferencia de tema
+   * Prioridad: 1. localStorage  2. Sistema  3. Claro por defecto
+   */
+  private loadThemePreference(): void {
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme) {
+      // Prioridad 1: Tema guardado
+      this.isDarkMode = savedTheme === 'dark';
+    } else {
+      // Prioridad 2: Preferencia del sistema
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      this.isDarkMode = prefersDark;
+    }
+    
+    this.applyTheme();
+  }
+
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    this.applyTheme();
+  }
+
+  private applyTheme(): void {
+    const html = document.documentElement;
+    
+    if (this.isDarkMode) {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+}
+```
+
+#### Ubicación del Theme Switcher
+
+El botón de cambio de tema se encuentra en la **página de perfil** (`profile.component.html`):
+
+```html
+<div class="profile-actions">
+  <app-theme-switcher></app-theme-switcher>
+  <button class="profile-btn profile-btn--secondary" (click)="logout()">
+    Cerrar sesión
+  </button>
+</div>
+```
+
+---
+
+### 6.3 Prioridad de Carga del Tema
+
+```
+1. localStorage (preferencia guardada del usuario)
+   ↓
+2. prefers-color-scheme (preferencia del sistema operativo)
+   ↓
+3. Tema claro (por defecto)
+```
+
+---
+
+### 6.4 Transiciones Suaves
+
+Las transiciones entre temas duran 200ms:
+
+```css
+*,
+*::before,
+*::after {
+  transition: background-color 200ms ease-in-out, 
+              color 200ms ease-in-out, 
+              border-color 200ms ease-in-out,
+              box-shadow 200ms ease-in-out;
+}
+
+/* Excepciones: imágenes no transicionan */
+img, svg, video, iframe, canvas {
+  transition: none;
+}
+```
+
+---
+
+### 6.5 Aplicación a Elementos Existentes
+
+El sistema de temas cambia automáticamente los colores de:
+
+- **Body**: Fondo y texto principal
+- **Cards**: Fondo, bordes y sombras
+- **Formularios**: Inputs, textareas, selects
+- **Títulos y texto**: h1-h6, p, span, labels
+- **Tablas**: Encabezados, filas, hover
+- **Links**: Color primario
+- **Botones deshabilitados**: Color gris
+
+---
+
+### 6.6 Resumen de Implementación
+
+| Componente | Función | Estado |
+|-----------|---------|--------|
+| CSS Custom Properties | Variables dinámicas de color | ✅ Implementado |
+| `:root` | Tema claro por defecto | ✅ Implementado |
+| `[data-theme="dark"]` | Tema oscuro | ✅ Implementado |
+| `ThemeSwitcherComponent` | Botón para cambiar tema | ✅ Implementado |
+| `localStorage` | Persistencia de preferencia | ✅ Implementado |
+| `prefers-color-scheme` | Detección del sistema | ✅ Implementado |
+| Transiciones CSS | Cambio suave (200ms) | ✅ Implementado |
+| Ubicación | Página de perfil | ✅ Implementado |
+
+---
