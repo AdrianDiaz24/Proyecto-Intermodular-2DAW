@@ -230,3 +230,32 @@
   }
 }
 
+// Modo oscuro: cambiar colores de texto
+:host-context([data-theme="dark"]) {
+  .about {
+    &__hero {
+      background: $color-secondary; // Azul más oscuro
+    }
+
+    &__hero-content {
+      background: $color-secondary;
+    }
+
+    &__title {
+      background: $color-secondary;
+    }
+
+    &__subtitle {
+      background: $color-secondary;
+    }
+
+    &__section-title {
+      color: $color-text-white;
+    }
+
+    &__text {
+      color: $color-gray-300;
+    }
+  }
+}
+

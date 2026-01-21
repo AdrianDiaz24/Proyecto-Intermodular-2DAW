@@ -32,7 +32,7 @@
     display: flex;
     align-items: center;
     gap: $spacing-1;
-    color: $color-text-black;
+    color: $color-primary;
     text-decoration: none;
     @include transition(color);
 
@@ -50,7 +50,7 @@
 
   &__text {
     white-space: nowrap;
-    color: $color-text-black;
+    color: $color-primary;
   }
 
   &__current {
@@ -78,6 +78,37 @@
       .breadcrumbs__separator {
         display: block;
       }
+    }
+  }
+}
+
+// Modo oscuro: ajustar colores
+:host-context([data-theme="dark"]) {
+  .breadcrumbs {
+    &__link {
+      color: #93badb; // Azul claro para modo oscuro
+
+      &:hover {
+        color: $color-primary-hover;
+      }
+    }
+
+    &__text {
+      color: #93badb; // Azul claro para modo oscuro
+    }
+
+    &__current {
+      color: $color-gray-300;
+    }
+
+    &__item--active {
+      .breadcrumbs__current {
+        color: $color-text-white;
+      }
+    }
+
+    &__separator {
+      color: $color-gray-500;
     }
   }
 }
