@@ -41,13 +41,18 @@
 .search-header {
   margin-bottom: $spacing-12;
   text-align: center;
+  padding: $spacing-6;
+  background-color: var(--c-bg-primary);
+  border-radius: $radius-lg;
 
   @include tablet-down {
     margin-bottom: $spacing-8;
+    padding: $spacing-4;
   }
 
   @include mobile-down {
     margin-bottom: $spacing-6;
+    padding: $spacing-3;
   }
 
   &__title {
@@ -85,6 +90,13 @@
   }
 }
 
+// Modo oscuro - search header subtítulo blanco
+:host-context([data-theme="dark"]) {
+  .search-header__subtitle {
+    color: $color-text-white;
+  }
+}
+
 // ============================================
 // INFORMACIÓN DE BÚSQUEDA
 // ============================================
@@ -94,7 +106,7 @@
   justify-content: space-between;
   margin-bottom: $spacing-8;
   padding: $spacing-4 $spacing-6;
-  background-color: $color-text-white;
+  background-color: var(--c-bg-primary);
   border-left: 4px solid $color-primary;
   border-radius: $radius-md;
 
@@ -112,7 +124,7 @@
 
   &__count {
     font-size: $font-size-base;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
 
     @include mobile-down {
@@ -217,7 +229,7 @@
   container-name: result-card;
   display: flex;
   flex-direction: column;
-  background-color: $color-text-white;
+  background-color: var(--c-bg-primary);
   border-radius: $radius-lg;
   box-shadow: $shadow-md;
   border: 2px solid $color-primary;
@@ -300,7 +312,7 @@
   &__title {
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
     line-height: $line-height-normal;
 
@@ -325,7 +337,7 @@
 
   &__description {
     font-size: $font-size-sm;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
     line-height: $line-height-normal;
 
@@ -465,3 +477,17 @@
     }
   }
 }
+
+// ============================================
+// ESTILOS DE MODO OSCURO ADICIONALES
+// ============================================
+:host-context([data-theme="dark"]) {
+  .search-info__count {
+    color: $color-text-white;
+  }
+
+  .result-card__description {
+    color: $color-gray-300;
+  }
+}
+

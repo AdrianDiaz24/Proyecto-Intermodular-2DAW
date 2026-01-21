@@ -21,6 +21,7 @@
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
+    background-color: $color-background;
 
     @include tablet-down {
       padding: $spacing-4;
@@ -71,7 +72,7 @@
   }
 
   &__card {
-    background-color: $color-text-white;
+    background-color: var(--c-bg-primary);
     border: 2px solid $color-primary;
     border-radius: $radius-lg;
     padding: $spacing-5;
@@ -150,7 +151,7 @@
   &__title {
     font-size: 2rem;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
     line-height: $line-height-tight;
 
@@ -169,7 +170,7 @@
 
   &__brand {
     font-size: $font-size-lg;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
 
     @include mobile-down {
@@ -177,24 +178,24 @@
     }
 
     strong {
-      color: $color-text-black;
+      color: var(--c-text-primary);
     }
   }
 
   &__model {
     font-size: $font-size-lg;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
 
     strong {
-      color: $color-text-black;
+      color: var(--c-text-primary);
     }
   }
 
   &__spec-title {
     font-size: 1.5rem;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: $spacing-5 0 $spacing-3 0;
     padding-top: $spacing-5;
     border-top: 2px solid $color-primary;
@@ -222,13 +223,13 @@
 
   &__spec-label {
     font-weight: $font-weight-semibold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
     font-size: $font-size-base;
   }
 
   &__spec-value {
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
     font-size: $font-size-base;
   }
@@ -251,7 +252,7 @@
   &__stat-label {
     display: block;
     font-size: $font-size-base;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin-bottom: $spacing-3;
     font-weight: $font-weight-medium;
   }
@@ -279,7 +280,7 @@
   &__incidences-title {
     font-size: 1.25rem;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
   }
 
@@ -296,7 +297,7 @@
     width: 2.5rem;
     height: 2.5rem;
     border: 2px solid $color-primary;
-    background-color: $color-text-white;
+    background-color: var(--c-bg-primary);
     color: $color-primary;
     border-radius: $radius-md;
     font-size: $font-size-2xl;
@@ -346,7 +347,7 @@
 
   &__incidence-card {
     flex: 0 0 calc(33.333% - 15px);
-    background-color: #ffffff;
+    background-color: var(--c-bg-primary);
     border: 2px solid $color-primary;
     border-radius: $radius-lg;
     padding: $spacing-3;
@@ -400,7 +401,7 @@
   &__incidence-title {
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
     line-height: $line-height-normal;
   }
@@ -424,13 +425,13 @@
   &__incidence-user {
     font-size: $font-size-base;
     font-weight: $font-weight-medium;
-    color: $color-gray-700;
+    color: var(--c-text-secondary);
     margin: 0;
   }
 
   &__incidence-date {
     font-size: $font-size-sm;
-    color: $color-gray-600;
+    color: var(--c-text-tertiary);
     margin: 0;
   }
 
@@ -443,7 +444,7 @@
 
   &__incidence-replies {
     font-size: $font-size-xs;
-    color: $color-gray-600;
+    color: var(--c-text-tertiary);
   }
 
   // Buscador y filtro de incidencias
@@ -515,7 +516,7 @@
   &__filter-label {
     font-size: $font-size-base;
     font-weight: $font-weight-medium;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     white-space: nowrap;
   }
 
@@ -525,9 +526,9 @@
     border-radius: $radius-md;
     font-size: $font-size-base;
     font-family: inherit;
-    background-color: $color-text-white;
+    background-color: var(--c-bg-primary);
     cursor: pointer;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin-bottom: $spacing-2;
 
     &:focus {
@@ -537,8 +538,8 @@
     }
 
     option {
-      background-color: $color-text-white;
-      color: $color-text-black;
+      background-color: var(--c-bg-primary);
+      color: var(--c-text-primary);
     }
   }
 
@@ -554,7 +555,7 @@
   }
 
   &__result-card {
-    background-color: $color-text-white;
+    background-color: var(--c-bg-primary);
     border: 2px solid $color-primary;
     border-radius: $radius-lg;
     padding: $spacing-3;
@@ -580,7 +581,7 @@
   &__result-title {
     font-size: $font-size-base;
     font-weight: $font-weight-semibold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
     flex: 1;
   }
@@ -603,13 +604,13 @@
   &__result-user {
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
-    color: $color-gray-700;
+    color: var(--c-text-secondary);
     margin: 0;
   }
 
   &__result-date {
     font-size: $font-size-sm;
-    color: $color-gray-600;
+    color: var(--c-text-tertiary);
     margin: 0;
   }
 
@@ -618,18 +619,18 @@
     justify-content: space-between;
     align-items: center;
     padding-top: $spacing-2;
-    border-top: 1px solid $color-gray-200;
+    border-top: 1px solid var(--c-border-light);
   }
 
   &__result-replies {
     font-size: $font-size-xs;
-    color: $color-gray-600;
+    color: var(--c-text-tertiary);
   }
 
   &__no-results {
     text-align: center;
     padding: $spacing-6;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     font-size: $font-size-base;
 
     @include mobile-down {
@@ -754,3 +755,15 @@
   }
 }
 
+// ============================================
+// ESTILOS DE MODO OSCURO
+// ============================================
+:host-context([data-theme="dark"]) {
+  .p-product {
+    background-color: var(--c-bg-secondary);
+
+    &__main {
+      background-color: var(--c-bg-secondary);
+    }
+  }
+}
