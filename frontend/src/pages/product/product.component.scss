@@ -280,7 +280,7 @@
   &__incidences-title {
     font-size: 1.25rem;
     font-weight: $font-weight-bold;
-    color: var(--c-text-primary);
+    color: $color-text-black;
     margin: 0;
   }
 
@@ -758,12 +758,4 @@
 // ============================================
 // ESTILOS DE MODO OSCURO
 // ============================================
-:host-context([data-theme="dark"]) {
-  .p-product {
-    background-color: var(--c-bg-secondary);
-
-    &__main {
-      background-color: var(--c-bg-secondary);
-    }
-  }
-}
+// El fondo siempre es amarillento, no cambia en modo oscuro
