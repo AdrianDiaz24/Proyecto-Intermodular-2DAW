@@ -10,7 +10,7 @@
 
 .incidence-detail-page {
   flex: 1;
-  background: $color-background;
+  background: var(--c-bg-page);
   padding: $spacing-4;
   overflow-x: hidden;
 }

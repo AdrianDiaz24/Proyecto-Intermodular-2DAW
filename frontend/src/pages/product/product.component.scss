@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: $color-background;
+  background-color: var(--c-bg-page);
   flex: 1;
 
   &__main {
@@ -21,7 +21,7 @@
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
-    background-color: $color-background;
+    background-color: var(--c-bg-page);
 
     @include tablet-down {
       padding: $spacing-4;

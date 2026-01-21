@@ -3,7 +3,7 @@
 
 .about {
   min-height: 100vh;
-  background-color: $color-background;
+  background-color: var(--c-bg-page);
 
   &__hero {
     background: $color-primary;
@@ -42,10 +42,10 @@
 
   &__section {
     padding: $spacing-16 $spacing-8;
-    background-color: $color-background;
+    background-color: var(--c-bg-page);
 
     &--alt {
-      background-color: $color-background;
+      background-color: var(--c-bg-page);
     }
 
     &--cta {
@@ -58,7 +58,7 @@
   &__container {
     max-width: 1200px;
     margin: 0 auto;
-    background-color: $color-background;
+    background-color: var(--c-bg-page);
   }
 
   &__section-title {
