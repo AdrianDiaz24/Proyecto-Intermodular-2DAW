@@ -6,7 +6,7 @@
   background-color: $color-background;
 
   &__hero {
-    background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
+    background: $color-primary;
     padding: $spacing-16 $spacing-8;
     text-align: center;
     color: $color-text-white;
@@ -15,25 +15,37 @@
   &__hero-content {
     max-width: 800px;
     margin: 0 auto;
+    background: $color-primary;
+    padding: $spacing-8;
+    border-radius: $radius-lg;
   }
 
   &__title {
     font-size: $font-size-5xl;
     font-weight: $font-weight-bold;
     margin: 0 0 $spacing-4;
+    background: $color-primary;
+    padding: $spacing-8;
+    border-radius: $radius-lg;
+    color: $color-text-white;
   }
 
   &__subtitle {
     font-size: $font-size-xl;
     margin: 0;
     opacity: 0.9;
+    background: $color-primary;
+    padding: $spacing-4 $spacing-6;
+    border-radius: $radius-md;
+    color: $color-text-white;
   }
 
   &__section {
     padding: $spacing-16 $spacing-8;
+    background-color: $color-background;
 
     &--alt {
-      background-color: $color-text-white;
+      background-color: $color-background;
     }
 
     &--cta {
@@ -46,6 +58,7 @@
   &__container {
     max-width: 1200px;
     margin: 0 auto;
+    background-color: $color-background;
   }
 
   &__section-title {
@@ -79,7 +92,7 @@
   &__feature {
     text-align: center;
     padding: $spacing-8;
-    background-color: $color-gray-50;
+    background-color: var(--c-bg-secondary);
     border-radius: $radius-xl;
     @include transition(all);
 
@@ -109,26 +122,35 @@
   &__feature-title {
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0 0 $spacing-3;
   }
 
   &__feature-description {
     font-size: $font-size-base;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
   }
 
   // Pasos
   &__steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: $spacing-8;
   }
 
   &__step {
     text-align: center;
     position: relative;
+    padding: $spacing-8;
+    background-color: var(--c-bg-secondary);
+    border-radius: $radius-xl;
+    @include transition(all);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-lg;
+    }
   }
 
   &__step-number {
@@ -148,13 +170,13 @@
   &__step-title {
     font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0 0 $spacing-2;
   }
 
   &__step-description {
     font-size: $font-size-base;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
   }
 
