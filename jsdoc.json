@@ -1,6 +1,6 @@
 {
   "source": {
-    "include": ["src"], // adjust to your source directory
+    "include": ["frontend/src"], 
     "includePattern": ".js$"
   },
   "opts": {
