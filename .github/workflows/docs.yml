@@ -2,11 +2,14 @@ name: Generar documentación automática
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build-docs:
@@ -20,49 +23,67 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
 
-    - name: Instalar dependencias
-      run: npm install jsdoc
+    - name: Instalar dependencias del frontend
+      working-directory: ./frontend
+      run: npm ci
 
-    - name: Generar documentación HTML
-      run: npx jsdoc -c jsdoc.json
+    - name: Instalar JSDoc globalmente
+      run: npm install -g jsdoc
+
+    - name: Generar documentación HTML con JSDoc
+      working-directory: ./frontend
+      run: |
+        echo "Generando documentación JSDoc..."
+        npx jsdoc -c jsdoc.json
+        echo "Contenido de docs/html:"
+        ls -la docs/html || echo "Directorio docs/html no encontrado"
 
     - name: Instalar wkhtmltopdf
-      run: sudo apt-get update && sudo apt-get install -y wkhtmltopdf
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wkhtmltopdf xvfb
 
     - name: Convertir HTMLs a PDFs
+      working-directory: ./frontend
       run: |
         mkdir -p docs/pdf
-        for html in $(find docs/html -type f -name "*.html"); do
-          base=$(basename "$html" .html)
-          pdf="docs/pdf/${base}.pdf"
-          echo "Generando $pdf..."
-          wkhtmltopdf --enable-local-file-access "file://$(pwd)/$html" "$pdf"
-        done
-        echo "Archivos PDF generados:"
-        ls -l docs/pdf
+        echo "Buscando archivos HTML en docs/html..."
+        
+        # Verificar que existen archivos HTML
+        if [ -d "docs/html" ]; then
+          for html in $(find docs/html -maxdepth 1 -type f -name "*.html"); do
+            base=$(basename "$html" .html)
+            pdf="docs/pdf/${base}.pdf"
+            echo "Convirtiendo $html a $pdf..."
+            xvfb-run wkhtmltopdf --enable-local-file-access --no-stop-slow-scripts --javascript-delay 1000 "file://$(pwd)/$html" "$pdf" || echo "Error al convertir $html"
+          done
+          echo "Archivos PDF generados:"
+          ls -la docs/pdf
+        else
+          echo "No se encontró el directorio docs/html"
+        fi
 
-    - name: Subir PDFs
+    - name: Subir documentación HTML como artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: jsdoc-html
+        path: frontend/docs/html/
+
+    - name: Subir PDFs como artifact
       uses: actions/upload-artifact@v4
       with:
         name: jsdoc-pdfs
-        path: docs/pdf/*.pdf
+        path: frontend/docs/pdf/*.pdf
+        if-no-files-found: warn
 
-    - name: Commit and push
+    - name: Commit y push de la documentación
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
-        cd .
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add docs
-        git commit -m "Actualizar jsdoc y PDFs [skip ci]" || echo "No changes to commit"
-        git push origin HEAD:${GITHUB_REF#refs/heads/}
-
-    - name: Subirlo a GitHub Pages
-      uses: Cecilapp/GitHub-Pages-deploy@v3
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        email: adiaang158@g.educaand.es
-        build_dir: docs/html
-        branch: gh-pages
-        commit_message: "Deploy Jsdoc HTML"
+        git add frontend/docs
+        git diff --staged --quiet || git commit -m "Actualizar documentación JSDoc y PDFs [skip ci]"
+        git push origin HEAD:main || echo "No se pudo hacer push"

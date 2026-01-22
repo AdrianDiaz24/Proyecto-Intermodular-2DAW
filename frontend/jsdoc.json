@@ -1,10 +1,17 @@
 {
   "source": {
     "include": ["assets/js"],
-    "includePattern": ".js$"
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
   },
   "opts": {
     "destination": "docs/html",
-    "recurse": true
+    "recurse": true,
+    "encoding": "utf8"
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
   }
 }
