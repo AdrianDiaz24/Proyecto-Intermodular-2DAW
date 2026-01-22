@@ -30,12 +30,17 @@ jobs:
       working-directory: ./frontend
       run: npm ci
 
-    - name: Instalar JSDoc globalmente
-      run: npm install -g jsdoc
+    - name: Instalar JSDoc
+      working-directory: ./frontend
+      run: npm install jsdoc --save-dev
 
     - name: Generar documentación HTML con JSDoc
       working-directory: ./frontend
       run: |
+        echo "Contenido del directorio actual:"
+        ls -la
+        echo "Verificando jsdoc.json:"
+        cat jsdoc.json
         echo "Generando documentación JSDoc..."
         npx jsdoc -c jsdoc.json
         echo "Contenido de docs/html:"
