@@ -1,0 +1,9 @@
+{
+  "source": {
+    "include": ["src"], // adjust to your source directory
+    "includePattern": ".js$"
+  },
+  "opts": {
+    "destination": "./docs"
+  }
+}
