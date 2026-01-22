@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService } from '../../app/services/navigation.service';
-import { ProductService } from '../../app/services';
+import { ProductService, AssetsService } from '../../app/services';
 import { Product, Incidence } from '../../app/models';
 
 @Component({
@@ -11,71 +11,7 @@ import { Product, Incidence } from '../../app/models';
 })
 export class ProductComponent implements OnInit {
   // Datos de productos disponibles (fallback si no hay resolver)
-  private productsData: { [key: number]: any } = {
-    1: {
-      id: 1,
-      name: 'Lavadora LG',
-      brand: 'LG',
-      model: 'WM4000CW',
-      rating: 4.5,
-      reviews: 28,
-      image: 'assets/icons/logoNaranja.avif',
-      description: 'Lavadora automática de carga frontal LG con capacidad de 8kg. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
-      specifications: {
-        weight: '85 kg',
-        width: '60 cm',
-        length: '55 cm',
-        height: '85 cm',
-        consumption: '237 kWh/año',
-        characteristics: 'Motor Inverter Direct Drive, 16 programas, Ruido 72dB'
-      },
-      status: 'Disponible',
-      incidences: 5,
-      solved: 3
-    },
-    7: {
-      id: 7,
-      name: 'Lavadora LG',
-      brand: 'LG',
-      model: 'WM5000CW',
-      rating: 4.7,
-      reviews: 42,
-      image: 'assets/icons/logoNaranja.avif',
-      description: 'Lavadora LG inverter con tecnología AI DD y programa EcoHybrid. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
-      specifications: {
-        weight: '92 kg',
-        width: '60 cm',
-        length: '55 cm',
-        height: '85 cm',
-        consumption: '214 kWh/año',
-        characteristics: 'Tecnología AI DD, 20 programas, WiFi Smart Diagnosis, Ruido 69dB'
-      },
-      status: 'Disponible',
-      incidences: 3,
-      solved: 3
-    },
-    8: {
-      id: 8,
-      name: 'Aspiradora LG',
-      brand: 'LG',
-      model: 'CordZero R9',
-      rating: 4.8,
-      reviews: 156,
-      image: 'assets/icons/logoNaranja.avif',
-      description: 'Aspiradora inalámbrica LG con motor sin escobillas y batería de larga duración. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
-      specifications: {
-        weight: '2.8 kg',
-        width: '24 cm',
-        length: '18 cm',
-        height: '110 cm',
-        consumption: '50 kWh/año',
-        characteristics: 'Motor sin escobillas, Batería 60 min, Filtro HEPA, Autonomía completa'
-      },
-      status: 'Disponible',
-      incidences: 2,
-      solved: 2
-    }
-  };
+  private productsData: { [key: number]: any } = {};
 
   product: any;
   incidences: any[] = [];
@@ -91,10 +27,84 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private navigationService: NavigationService,
-    private productService: ProductService
+    private productService: ProductService,
+    private assetsService: AssetsService
   ) {}
 
+  private initProductsData(): void {
+    const defaultImage = this.assetsService.getIconUrl('logoNaranja.avif');
+    console.log('Default image URL:', defaultImage);
+    this.productsData = {
+      1: {
+        id: 1,
+        name: 'Lavadora LG',
+        brand: 'LG',
+        model: 'WM4000CW',
+        rating: 4.5,
+        reviews: 28,
+        image: defaultImage,
+        description: 'Lavadora automática de carga frontal LG con capacidad de 8kg. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
+        specifications: {
+          weight: '85 kg',
+          width: '60 cm',
+          length: '55 cm',
+          height: '85 cm',
+          consumption: '237 kWh/año',
+          characteristics: 'Motor Inverter Direct Drive, 16 programas, Ruido 72dB'
+        },
+        status: 'Disponible',
+        incidences: 5,
+        solved: 3
+      },
+      7: {
+        id: 7,
+        name: 'Lavadora LG',
+        brand: 'LG',
+        model: 'WM5000CW',
+        rating: 4.7,
+        reviews: 42,
+        image: defaultImage,
+        description: 'Lavadora LG inverter con tecnología AI DD y programa EcoHybrid. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
+        specifications: {
+          weight: '92 kg',
+          width: '60 cm',
+          length: '55 cm',
+          height: '85 cm',
+          consumption: '214 kWh/año',
+          characteristics: 'Tecnología AI DD, 20 programas, WiFi Smart Diagnosis, Ruido 69dB'
+        },
+        status: 'Disponible',
+        incidences: 3,
+        solved: 3
+      },
+      8: {
+        id: 8,
+        name: 'Aspiradora LG',
+        brand: 'LG',
+        model: 'CordZero R9',
+        rating: 4.8,
+        reviews: 156,
+        image: defaultImage,
+        description: 'Aspiradora inalámbrica LG con motor sin escobillas y batería de larga duración. Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.',
+        specifications: {
+          weight: '2.8 kg',
+          width: '24 cm',
+          length: '18 cm',
+          height: '110 cm',
+          consumption: '50 kWh/año',
+          characteristics: 'Motor sin escobillas, Batería 60 min, Filtro HEPA, Autonomía completa'
+        },
+        status: 'Disponible',
+        incidences: 2,
+        solved: 2
+      }
+    };
+  }
+
   ngOnInit(): void {
+    // Inicializar datos de productos
+    this.initProductsData();
+
     // Primero intentar obtener datos del resolver
     this.route.data.subscribe(data => {
       if (data['product']) {
@@ -124,6 +134,7 @@ export class ProductComponent implements OnInit {
    * Mapea el producto del resolver al formato local
    */
   private mapResolvedProduct(resolved: Product): any {
+    const defaultImage = this.assetsService.getIconUrl('logoNaranja.avif');
     return {
       id: resolved.id,
       name: resolved.name,
@@ -131,7 +142,7 @@ export class ProductComponent implements OnInit {
       model: resolved.model,
       rating: 4.5,
       reviews: 28,
-      image: resolved.image || 'assets/icons/logoNaranja.avif',
+      image: resolved.image || defaultImage,
       description: `${resolved.name} - Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.`,
       specifications: {
         weight: resolved.weight || 'N/A',
@@ -142,8 +153,8 @@ export class ProductComponent implements OnInit {
         characteristics: resolved.otherSpecs || 'N/A'
       },
       status: 'Disponible',
-      incidences: 5,  // Número de incidencias reportadas
-      solved: 3       // Número de incidencias resueltas
+      incidences: 5,
+      solved: 3
     };
   }
 
@@ -162,7 +173,6 @@ export class ProductComponent implements OnInit {
   }
 
   loadIncidences(productId: number): void {
-    // Datos de ejemplo de incidencias para cada producto
     const incidencesData: { [key: number]: any[] } = {
       1: [
         {id: 1, title: 'No centrifuga', user: 'Juan M.', date: '2024-12-20', solved: false, replies: 3},
@@ -205,14 +215,10 @@ export class ProductComponent implements OnInit {
   }
 
   viewIncidence(incidenceId: number): void {
-    // Navegar a la página de detalle de incidencia
     console.log('Navegando a incidencia:', incidenceId);
     this.router.navigate(['/incidencia', incidenceId]);
   }
 
-  /**
-   * Volver a la lista de productos usando el historial de navegación
-   */
   goBack(): void {
     this.navigationService.goBack();
   }
@@ -220,14 +226,12 @@ export class ProductComponent implements OnInit {
   applyFilters(): void {
     let filtered = this.incidences;
 
-    // Filtrar por estado
     if (this.filterStatus === 'solved') {
       filtered = filtered.filter(inc => inc.solved);
     } else if (this.filterStatus === 'pending') {
       filtered = filtered.filter(inc => !inc.solved);
     }
 
-    // Filtrar por búsqueda
     if (this.searchQuery.trim()) {
       const query = this.searchQuery.toLowerCase();
       filtered = filtered.filter(inc =>
@@ -257,10 +261,8 @@ export class ProductComponent implements OnInit {
 
   onReportIncidenceSubmit(formData: any): void {
     console.log('Nueva incidencia reportada:', formData);
-    // Aquí irá la lógica para enviar la incidencia al servidor
-    // Por ahora solo cerramos el modal
     this.showReportIncidenceModal = false;
-    // Recargar incidencias desde el servidor
-    this.loadIncidences(1); // O el ID del producto actual
+    this.loadIncidences(this.product?.id || 1);
   }
 }
+
