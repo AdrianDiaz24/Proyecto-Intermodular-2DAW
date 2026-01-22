@@ -66,7 +66,7 @@
     }
 
     &-current {
-      color: $color-text-black;
+      color: var(--c-text-primary);
       font-weight: $font-weight-medium;
     }
   }
@@ -280,7 +280,7 @@
   &__incidences-title {
     font-size: 1.25rem;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
   }
 
@@ -516,7 +516,7 @@
   &__filter-label {
     font-size: $font-size-base;
     font-weight: $font-weight-medium;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     white-space: nowrap;
   }
 
