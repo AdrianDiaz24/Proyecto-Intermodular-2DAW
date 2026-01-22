@@ -15,7 +15,7 @@
 }
 
 .report-incidence-modal {
-  background-color: $color-text-white;
+  background-color: var(--c-bg-primary);
   border-radius: $radius-lg;
   box-shadow: $shadow-xl;
   max-width: 600px;
@@ -24,21 +24,22 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  border: 2px solid $color-primary;
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: $spacing-6;
-    border-bottom: 1px solid $color-gray-200;
+    border-bottom: 1px solid var(--c-border-light);
     flex-shrink: 0;
-    background-color: $color-text-white;
+    background-color: var(--c-bg-primary);
   }
 
   &__title {
     font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
   }
 
@@ -47,14 +48,14 @@
     justify-content: flex-end;
     gap: $spacing-4;
     padding: $spacing-6;
-    border-top: 1px solid $color-gray-200;
+    border-top: 1px solid var(--c-border-light);
     flex-shrink: 0;
-    background-color: $color-gray-50;
+    background-color: var(--c-bg-tertiary);
   }
 
   &__required-note {
     font-size: $font-size-xs;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: $spacing-4 0 0 0;
   }
 }
@@ -81,7 +82,7 @@
   &__label {
     font-size: $font-size-base;
     font-weight: $font-weight-medium;
-    color: $color-text-black;
+    color: var(--c-text-primary);
   }
 
   &__input {
@@ -90,10 +91,11 @@
     border-radius: $radius-md;
     font-size: $font-size-base;
     font-family: inherit;
-    color: $color-text-black;
+    color: var(--c-text-primary);
+    background-color: var(--c-bg-primary);
 
     &::placeholder {
-      color: $color-gray-400;
+      color: var(--c-text-muted);
     }
 
     &:focus {
@@ -118,12 +120,13 @@
     border-radius: $radius-md;
     font-size: $font-size-base;
     font-family: inherit;
-    color: $color-text-black;
+    color: var(--c-text-primary);
+    background-color: var(--c-bg-primary);
     resize: vertical;
     min-height: 120px;
 
     &::placeholder {
-      color: $color-gray-400;
+      color: var(--c-text-muted);
     }
 
     &:focus {
@@ -148,8 +151,8 @@
     border-radius: $radius-md;
     font-size: $font-size-base;
     font-family: inherit;
-    color: $color-text-black;
-    background-color: $color-text-white;
+    color: var(--c-text-primary);
+    background-color: var(--c-bg-primary);
     cursor: pointer;
 
     &:focus {
@@ -163,8 +166,8 @@
     }
 
     option {
-      background-color: $color-text-white;
-      color: $color-text-black;
+      background-color: var(--c-bg-primary);
+      color: var(--c-text-primary);
     }
   }
 
@@ -184,7 +187,7 @@
     gap: $spacing-2;
     cursor: pointer;
     font-size: $font-size-base;
-    color: $color-text-black;
+    color: var(--c-text-primary);
 
     input {
       cursor: pointer;
@@ -203,7 +206,7 @@
   }
 
   &__product-info {
-    background-color: $color-gray-50;
+    background-color: var(--c-bg-tertiary);
     border-left: 4px solid $color-primary;
     padding: $spacing-4;
     border-radius: $radius-md;
@@ -212,7 +215,7 @@
   &__product-name {
     margin: 0;
     font-size: $font-size-base;
-    color: $color-text-black;
+    color: var(--c-text-primary);
 
     strong {
       color: $color-primary;
@@ -252,17 +255,17 @@
   }
 
   &--secondary {
-    background-color: $color-gray-100;
-    color: $color-text-black;
-    border: 1px solid $color-gray-300;
+    background-color: var(--c-bg-tertiary);
+    color: var(--c-text-primary);
+    border: 1px solid var(--c-border-medium);
 
     &:hover:not(:disabled) {
-      background-color: $color-gray-200;
-      border-color: $color-gray-400;
+      background-color: var(--c-hover-bg);
+      border-color: var(--c-border-medium);
     }
 
     &:active:not(:disabled) {
-      background-color: $color-gray-100;
+      background-color: var(--c-bg-tertiary);
     }
   }
 }

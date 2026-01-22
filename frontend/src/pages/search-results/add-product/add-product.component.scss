@@ -18,7 +18,7 @@
 
 // Modal
 .add-product-modal {
-  background-color: $color-text-white;
+  background-color: var(--c-bg-primary);
   border-radius: $radius-lg;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   width: 100%;
@@ -34,16 +34,16 @@
     justify-content: space-between;
     align-items: center;
     padding: $spacing-6;
-    border-bottom: 1px solid $color-gray-100;
+    border-bottom: 1px solid var(--c-border-light);
     position: sticky;
     top: 0;
-    background-color: $color-text-white;
+    background-color: var(--c-bg-primary);
   }
 
   &__title {
     font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
   }
 
@@ -51,7 +51,7 @@
     background: none;
     border: none;
     font-size: $font-size-xl;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     cursor: pointer;
     padding: $spacing-2;
     display: flex;
@@ -60,7 +60,7 @@
     transition: all $transition-base;
 
     &:hover {
-      color: $color-text-black;
+      color: var(--c-text-primary);
       transform: scale(1.2);
     }
   }
@@ -92,7 +92,7 @@
   &__section-title {
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
     display: flex;
     align-items: center;
@@ -103,8 +103,8 @@
     display: flex;
     gap: $spacing-4;
     padding: $spacing-6;
-    border-top: 1px solid $color-gray-100;
-    background-color: $color-gray-50;
+    border-top: 1px solid var(--c-border-light);
+    background-color: var(--c-bg-tertiary);
     justify-content: flex-end;
   }
 
@@ -117,7 +117,7 @@
 
   &__required-note {
     font-size: $font-size-xs;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     text-align: right;
     margin: 0;
     margin-top: $spacing-4;
@@ -137,15 +137,15 @@
     flex-direction: column;
     gap: $spacing-4;
     padding: $spacing-4;
-    background-color: $color-gray-50;
+    background-color: var(--c-bg-tertiary);
     border-radius: $radius-md;
-    border: 1px solid $color-gray-200;
+    border: 1px solid var(--c-border-light);
   }
 
   &__section-title {
     font-size: $font-size-base;
     font-weight: $font-weight-semibold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -153,22 +153,23 @@
 
   &__label {
     font-weight: $font-weight-semibold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     font-size: $font-size-base;
   }
 
   &__input,
   &__textarea {
     padding: $spacing-3 $spacing-4;
-    border: 1px solid $color-gray-300;
+    border: 1px solid var(--c-border-medium);
     border-radius: $radius-md;
     font-size: $font-size-base;
     font-family: $font-primary;
-    color: $color-text-black;
+    color: var(--c-text-primary);
+    background-color: var(--c-bg-primary);
     transition: all $transition-base;
 
     &::placeholder {
-      color: $color-gray-400;
+      color: var(--c-text-muted);
     }
 
     &:focus {
@@ -233,7 +234,7 @@
 
   &__file-name {
     font-size: $font-size-sm;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -268,12 +269,12 @@
   }
 
   &--secondary {
-    background-color: $color-gray-200;
-    color: $color-text-black;
-    border: 1px solid $color-gray-300;
+    background-color: var(--c-bg-tertiary);
+    color: var(--c-text-primary);
+    border: 1px solid var(--c-border-medium);
 
     &:hover {
-      background-color: $color-gray-300;
+      background-color: var(--c-hover-bg);
       transform: translateY(-2px);
     }
 

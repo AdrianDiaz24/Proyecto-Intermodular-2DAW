@@ -468,6 +468,8 @@
     border-radius: $radius-md;
     font-size: $font-size-base;
     font-family: inherit;
+    background-color: var(--c-bg-primary);
+    color: var(--c-text-primary);
 
     &:focus {
       outline: none;
@@ -476,7 +478,7 @@
     }
 
     &::placeholder {
-      color: $color-gray-400;
+      color: var(--c-text-muted);
     }
   }
 

@@ -239,13 +239,14 @@
       flex-grow: 1;
       min-width: 150px;
       border: none;
-      background: $color-text-white;
+      background: var(--c-bg-primary);
       padding: 0.75rem 1.5rem;
       font-size: 1rem;
       outline: none;
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       font-family: $font-primary;
+      color: var(--c-text-primary);
       // Transición suave para focus
       transition: transform 200ms ease-out, box-shadow 200ms ease-out;
 
@@ -256,8 +257,8 @@
 
       // Estilos del placeholder
       &::placeholder {
-        color: #999;
-        opacity: 0.8;
+        color: var(--c-text-muted);
+        opacity: 1;
       }
 
       // Desktop-first: Responsive
