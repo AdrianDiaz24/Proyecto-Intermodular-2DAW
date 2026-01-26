@@ -33,7 +33,9 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.authService.login(credentials.email, credentials.password).subscribe({
+    // El backend espera username, pero el formulario puede enviar email
+    // Usamos el campo email como username para compatibilidad
+    this.authService.login({ username: credentials.email, password: credentials.password }).subscribe({
       next: (response) => {
         this.loading = false;
         // AuthResponse tiene token cuando es exitoso
@@ -54,7 +56,7 @@ export class LoginComponent implements OnInit {
       },
       error: (error) => {
         this.loading = false;
-        this.errorMessage = error.message || 'Error de conexión. Intenta de nuevo.';
+        this.errorMessage = error?.error?.message || error?.message || 'Credenciales inválidas. Verifica tu usuario y contraseña.';
         console.error('Login error:', error);
       }
     });

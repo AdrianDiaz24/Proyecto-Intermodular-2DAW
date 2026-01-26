@@ -22,11 +22,22 @@ export class RegisterComponent {
     this.loading = true;
     this.errorMessage = '';
 
-    this.authService.register(credentials.username, credentials.email, credentials.password).subscribe({
+    // Validar que las contraseñas coincidan
+    if (credentials.password !== credentials.passwordConfirm) {
+      this.loading = false;
+      this.errorMessage = 'Las contraseñas no coinciden';
+      return;
+    }
+
+    this.authService.register({
+      username: credentials.username,
+      email: credentials.email,
+      password: credentials.password
+    }).subscribe({
       next: (response) => {
         this.loading = false;
-        // AuthResponse tiene token cuando es exitoso
-        if (response.token) {
+        // AuthResponse tiene token cuando es exitoso (después del login automático)
+        if (response && response.token) {
           // Navegación programática con estado
           this.navigationService.navigateWithState(['/perfil'], {
             fromRegister: true,
@@ -38,12 +49,16 @@ export class RegisterComponent {
             }
           });
         } else {
-          this.errorMessage = 'Error al registrar';
+          // Si no hay token pero tampoco error, el registro fue exitoso pero sin login automático
+          this.navigationService.navigateWithState(['/login'], {
+            message: 'Cuenta creada exitosamente. Por favor inicia sesión.'
+          });
         }
       },
       error: (error) => {
         this.loading = false;
-        this.errorMessage = error.message || 'Error de conexión. Intenta de nuevo.';
+        // Extraer mensaje de error específico del backend
+        this.errorMessage = error?.error?.message || error?.message || 'Error al crear la cuenta. Intenta de nuevo.';
         console.error('Register error:', error);
       }
     });

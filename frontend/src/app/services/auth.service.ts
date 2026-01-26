@@ -6,7 +6,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap, delay } from 'rxjs/operators';
+import { catchError, map, tap, delay, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { BaseHttpService } from './base-http.service';
@@ -88,6 +88,7 @@ export class AuthService extends BaseHttpService {
 
   /**
    * Registro de nuevo usuario
+   * Después de registrar, inicia sesión automáticamente
    * @param userData Datos de registro
    * @returns Observable con la respuesta de autenticación
    */
@@ -116,11 +117,27 @@ export class AuthService extends BaseHttpService {
       role: data.role || 'USER'
     };
 
-    return this.post<UserCreateDto, AuthResponse>(`${this.AUTH_ENDPOINT}/register`, createDto).pipe(
-      tap(response => this.handleAuthSuccess(response)),
+    // Registrar usuario y luego iniciar sesión automáticamente
+    return this.post<UserCreateDto, User>(`${this.AUTH_ENDPOINT}/register`, createDto).pipe(
+      // Después de registrar exitosamente, hacer login automático
+      switchMap(registeredUser => {
+        console.log('Usuario registrado exitosamente:', registeredUser.username);
+        // Iniciar sesión con las credenciales del registro
+        return this.post<LoginCredentials, AuthResponse>(`${this.AUTH_ENDPOINT}/login`, {
+          username: data.username,
+          password: data.password
+        }).pipe(
+          tap(authResponse => {
+            console.log('Login automático exitoso');
+            this.handleAuthSuccess(authResponse);
+          })
+        );
+      }),
       catchError(error => {
-        console.error('Register error:', error);
-        return throwError(() => error);
+        console.error('Register/Login error:', error);
+        // Extraer mensaje de error del backend
+        const errorMessage = error?.error?.message || error?.message || 'Error al registrar usuario';
+        return throwError(() => new Error(errorMessage));
       })
     );
   }
@@ -180,8 +197,7 @@ export class AuthService extends BaseHttpService {
         id: response.userId,
         username: response.username,
         email: response.email,
-        role: response.role as 'USER' | 'ADMIN',
-        memberSince: new Date()
+        role: response.role as 'USER' | 'ADMIN'
       };
 
       this.currentUserSubject.next(user);
