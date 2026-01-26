@@ -98,19 +98,26 @@ public class IncidenciaService {
      * @throws ResourceNotFoundException Si el producto o usuario no existen
      */
     public IncidenciaDTO crear(IncidenciaCreateDTO createDTO) {
-        Producto producto = productoRepository.findById(createDTO.getProductoId())
-                .orElseThrow(() -> ResourceNotFoundException.withId("Producto", createDTO.getProductoId()));
-
         Usuario usuario = usuarioRepository.findById(createDTO.getUsuarioId())
                 .orElseThrow(() -> ResourceNotFoundException.withId("Usuario", createDTO.getUsuarioId()));
 
         Incidencia incidencia = new Incidencia();
         incidencia.setTitulo(createDTO.getTitulo());
         incidencia.setDescripcion(createDTO.getDescripcion());
-        incidencia.setProducto(producto);
+        incidencia.setCategoria(Incidencia.Categoria.valueOf(createDTO.getCategoria()));
+        incidencia.setSeveridad(Incidencia.Severidad.valueOf(createDTO.getSeveridad()));
         incidencia.setUsuario(usuario);
         incidencia.setEstado(Incidencia.Estado.ABIERTA);
         incidencia.setFechaCreacion(LocalDateTime.now());
+
+        // Producto es opcional
+        String productoNombre = "Sin producto";
+        if (createDTO.getProductoId() != null) {
+            Producto producto = productoRepository.findById(createDTO.getProductoId())
+                    .orElseThrow(() -> ResourceNotFoundException.withId("Producto", createDTO.getProductoId()));
+            incidencia.setProducto(producto);
+            productoNombre = producto.getNombre();
+        }
 
         Incidencia incidenciaGuardada = incidenciaRepository.save(incidencia);
 
@@ -121,7 +128,7 @@ public class IncidenciaService {
                 incidenciaGuardada.getId(),
                 usuario.getId(),
                 usuario.getUsername(),
-                "Incidencia creada: " + incidenciaGuardada.getTitulo() + " (Producto: " + producto.getNombre() + ")"
+                "Incidencia creada: " + incidenciaGuardada.getTitulo() + " (Producto: " + productoNombre + ", Categoría: " + createDTO.getCategoria() + ", Severidad: " + createDTO.getSeveridad() + ")"
         );
 
         return IncidenciaDTO.fromEntity(incidenciaGuardada);

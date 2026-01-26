@@ -15,7 +15,8 @@ import {
   AuthResponse,
   LoginCredentials,
   RegisterData,
-  UserUpdateDto
+  UserUpdateDto,
+  UserCreateDto
 } from '../models';
 
 // Re-exportar modelos para acceso desde otros archivos
@@ -61,15 +62,15 @@ export class AuthService extends BaseHttpService {
 
   /**
    * Login de usuario
-   * @param credentials Credenciales de login (email y password)
+   * @param credentials Credenciales de login (username y password)
    * @returns Observable con la respuesta de autenticación
    */
   login(credentials: LoginCredentials): Observable<AuthResponse>;
-  login(email: string, password: string): Observable<AuthResponse>;
-  login(emailOrCredentials: string | LoginCredentials, password?: string): Observable<AuthResponse> {
-    const credentials: LoginCredentials = typeof emailOrCredentials === 'string'
-      ? { email: emailOrCredentials, password: password! }
-      : emailOrCredentials;
+  login(username: string, password: string): Observable<AuthResponse>;
+  login(usernameOrCredentials: string | LoginCredentials, password?: string): Observable<AuthResponse> {
+    const credentials: LoginCredentials = typeof usernameOrCredentials === 'string'
+      ? { username: usernameOrCredentials, password: password! }
+      : usernameOrCredentials;
 
     // Si estamos en modo mock, usar datos simulados
     if (environment.enableMockData) {
@@ -80,10 +81,7 @@ export class AuthService extends BaseHttpService {
       tap(response => this.handleAuthSuccess(response)),
       catchError(error => {
         console.error('Login error:', error);
-        return throwError(() => ({
-          success: false,
-          error: error.message || 'Error de autenticación'
-        }));
+        return throwError(() => error);
       })
     );
   }
@@ -101,7 +99,7 @@ export class AuthService extends BaseHttpService {
     password?: string
   ): Observable<AuthResponse> {
     const data: RegisterData = typeof usernameOrData === 'string'
-      ? { username: usernameOrData, email: email!, password: password!, confirmPassword: password! }
+      ? { username: usernameOrData, email: email!, password: password! }
       : usernameOrData;
 
     // Si estamos en modo mock, usar datos simulados
@@ -109,14 +107,20 @@ export class AuthService extends BaseHttpService {
       return this.mockRegister(data);
     }
 
-    return this.post<RegisterData, AuthResponse>(`${this.AUTH_ENDPOINT}/register`, data).pipe(
+    // Crear el DTO para el backend
+    const createDto: UserCreateDto = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+      telefono: data.telefono,
+      role: data.role || 'USER'
+    };
+
+    return this.post<UserCreateDto, AuthResponse>(`${this.AUTH_ENDPOINT}/register`, createDto).pipe(
       tap(response => this.handleAuthSuccess(response)),
       catchError(error => {
         console.error('Register error:', error);
-        return throwError(() => ({
-          success: false,
-          error: error.message || 'Error de registro'
-        }));
+        return throwError(() => error);
       })
     );
   }
@@ -125,94 +129,8 @@ export class AuthService extends BaseHttpService {
    * Cierra la sesión del usuario
    */
   logout(): void {
-    // Si hay API, notificar al servidor
-    if (!environment.enableMockData) {
-      this.post(`${this.AUTH_ENDPOINT}/logout`, {}).subscribe({
-        error: (err) => console.error('Error al cerrar sesión en servidor:', err)
-      });
-    }
-
     this.clearAuthData();
     this.router.navigate(['/']);
-  }
-
-  /**
-   * Refresca el token de autenticación
-   */
-  refreshToken(): Observable<AuthResponse> {
-    const refreshToken = localStorage.getItem(environment.refreshTokenKey);
-
-    if (!refreshToken) {
-      return throwError(() => new Error('No refresh token available'));
-    }
-
-    return this.post<{ refreshToken: string }, AuthResponse>(
-      `${this.AUTH_ENDPOINT}/refresh`,
-      { refreshToken }
-    ).pipe(
-      tap(response => {
-        if (response.token) {
-          localStorage.setItem(environment.tokenKey, response.token);
-          if (response.refreshToken) {
-            localStorage.setItem(environment.refreshTokenKey, response.refreshToken);
-          }
-        }
-      })
-    );
-  }
-
-  /**
-   * Obtiene el perfil del usuario actual desde el servidor
-   */
-  getProfile(): Observable<User> {
-    return this.get<User>(`${this.AUTH_ENDPOINT}/profile`).pipe(
-      tap(user => {
-        this.currentUserSubject.next(user);
-        localStorage.setItem('currentUser', JSON.stringify(user));
-      })
-    );
-  }
-
-  /**
-   * Actualiza los datos del usuario
-   * @param userData Datos a actualizar
-   */
-  updateUser(userData: UserUpdateDto): Observable<User> {
-    // Si estamos en modo mock, usar datos simulados
-    if (environment.enableMockData) {
-      return this.mockUpdateUser(userData);
-    }
-
-    return this.patch<UserUpdateDto, User>(`${this.AUTH_ENDPOINT}/profile`, userData).pipe(
-      tap(updatedUser => {
-        this.currentUserSubject.next(updatedUser);
-        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-      })
-    );
-  }
-
-  /**
-   * Cambia la contraseña del usuario
-   */
-  changePassword(currentPassword: string, newPassword: string): Observable<{ success: boolean }> {
-    return this.post<any, { success: boolean }>(`${this.AUTH_ENDPOINT}/change-password`, {
-      currentPassword,
-      newPassword
-    });
-  }
-
-  /**
-   * Solicita recuperación de contraseña
-   */
-  forgotPassword(email: string): Observable<{ success: boolean; message: string }> {
-    return this.post(`${this.AUTH_ENDPOINT}/forgot-password`, { email });
-  }
-
-  /**
-   * Restablece la contraseña con token
-   */
-  resetPassword(token: string, newPassword: string): Observable<{ success: boolean }> {
-    return this.post(`${this.AUTH_ENDPOINT}/reset-password`, { token, newPassword });
   }
 
   // ============================================================================
@@ -240,6 +158,14 @@ export class AuthService extends BaseHttpService {
     return localStorage.getItem(environment.tokenKey);
   }
 
+  /**
+   * Obtiene el ID del usuario actual
+   */
+  getCurrentUserId(): number | null {
+    const user = this.currentUserSubject.value;
+    return user ? user.id : null;
+  }
+
   // ============================================================================
   // MÉTODOS PRIVADOS
   // ============================================================================
@@ -248,18 +174,52 @@ export class AuthService extends BaseHttpService {
    * Maneja el éxito de autenticación
    */
   private handleAuthSuccess(response: AuthResponse): void {
-    if (response.success && response.user) {
-      this.currentUserSubject.next(response.user);
-      this.isLoggedInSubject.next(true);
-      localStorage.setItem('currentUser', JSON.stringify(response.user));
+    if (response && response.token) {
+      // Construir el objeto User desde AuthResponse
+      const user: User = {
+        id: response.userId,
+        username: response.username,
+        email: response.email,
+        role: response.role as 'USER' | 'ADMIN',
+        memberSince: new Date()
+      };
 
-      if (response.token) {
-        localStorage.setItem(environment.tokenKey, response.token);
-      }
-      if (response.refreshToken) {
-        localStorage.setItem(environment.refreshTokenKey, response.refreshToken);
-      }
+      this.currentUserSubject.next(user);
+      this.isLoggedInSubject.next(true);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      localStorage.setItem(environment.tokenKey, response.token);
     }
+  }
+
+  /**
+   * Actualiza los datos del usuario
+   * @param userData Datos a actualizar
+   * @returns Observable con el usuario actualizado
+   */
+  updateUser(userData: Partial<User>): Observable<User> {
+    const currentUser = this.currentUserSubject.value;
+    if (!currentUser) {
+      return throwError(() => new Error('No hay usuario autenticado'));
+    }
+
+    // Si estamos en modo mock, actualizar localmente
+    if (environment.enableMockData) {
+      const updatedUser: User = { ...currentUser, ...userData };
+      this.currentUserSubject.next(updatedUser);
+      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      return of(updatedUser);
+    }
+
+    return this.put<Partial<User>, User>(`usuarios/${currentUser.id}`, userData).pipe(
+      tap(updatedUser => {
+        this.currentUserSubject.next(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      }),
+      catchError(error => {
+        console.error('Update user error:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
   /**
@@ -270,7 +230,6 @@ export class AuthService extends BaseHttpService {
     this.isLoggedInSubject.next(false);
     localStorage.removeItem('currentUser');
     localStorage.removeItem(environment.tokenKey);
-    localStorage.removeItem(environment.refreshTokenKey);
   }
 
   // ============================================================================
@@ -284,29 +243,19 @@ export class AuthService extends BaseHttpService {
     return of(null).pipe(
       delay(1000),
       map(() => {
-        if (credentials.email && credentials.password.length >= 6) {
-          const user: User = {
-            id: 1,
-            username: credentials.email.split('@')[0],
-            email: credentials.email,
-            memberSince: new Date('2026-01-10'),
-            phone: '+34 612 345 678',
-            profileImage: 'assets/icons/UsuarioBlanco.avif',
-            joinDate: '2026-01-10'
-          };
-
+        if (credentials.username && credentials.password.length >= 6) {
           const response: AuthResponse = {
-            success: true,
-            user,
             token: 'mock-jwt-token-' + Date.now(),
-            refreshToken: 'mock-refresh-token-' + Date.now(),
-            expiresIn: environment.tokenExpiry
+            userId: 1,
+            username: credentials.username,
+            email: credentials.username + '@example.com',
+            role: 'USER'
           };
 
           this.handleAuthSuccess(response);
           return response;
         } else {
-          return { success: false, error: 'Credenciales inválidas' };
+          throw new Error('Credenciales inválidas');
         }
       })
     );
@@ -320,50 +269,20 @@ export class AuthService extends BaseHttpService {
       delay(1000),
       map(() => {
         if (data.username && data.email && data.password.length >= 6) {
-          const user: User = {
-            id: Math.floor(Math.random() * 1000),
+          const response: AuthResponse = {
+            token: 'mock-jwt-token-' + Date.now(),
+            userId: Math.floor(Math.random() * 1000),
             username: data.username,
             email: data.email,
-            memberSince: new Date(),
-            phone: '',
-            profileImage: 'assets/icons/UsuarioBlanco.avif',
-            joinDate: new Date().toISOString().split('T')[0]
-          };
-
-          const response: AuthResponse = {
-            success: true,
-            user,
-            token: 'mock-jwt-token-' + Date.now(),
-            refreshToken: 'mock-refresh-token-' + Date.now(),
-            expiresIn: environment.tokenExpiry
+            role: 'USER'
           };
 
           this.handleAuthSuccess(response);
           return response;
         } else {
-          return { success: false, error: 'Datos de registro inválidos' };
+          throw new Error('Datos de registro inválidos');
         }
-      })
-    );
-  }
-
-  /**
-   * Simula la actualización de usuario
-   */
-  private mockUpdateUser(userData: UserUpdateDto): Observable<User> {
-    return of(null).pipe(
-      delay(500),
-      map(() => {
-        const currentUser = this.currentUserSubject.value;
-        if (currentUser) {
-          const updatedUser = { ...currentUser, ...userData };
-          this.currentUserSubject.next(updatedUser);
-          localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-          return updatedUser;
-        }
-        throw new Error('No user logged in');
       })
     );
   }
 }
-

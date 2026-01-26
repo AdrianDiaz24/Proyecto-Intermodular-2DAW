@@ -36,19 +36,25 @@ export class LoginComponent implements OnInit {
     this.authService.login(credentials.email, credentials.password).subscribe({
       next: (response) => {
         this.loading = false;
-        if (response.success) {
+        // AuthResponse tiene token cuando es exitoso
+        if (response.token) {
           // Navegación programática con estado
           this.navigationService.navigateWithState([this.returnUrl], {
             fromLogin: true,
-            user: response.user
+            user: {
+              id: response.userId,
+              username: response.username,
+              email: response.email,
+              role: response.role
+            }
           });
         } else {
-          this.errorMessage = response.error || 'Error al iniciar sesión';
+          this.errorMessage = 'Error al iniciar sesión';
         }
       },
       error: (error) => {
         this.loading = false;
-        this.errorMessage = 'Error de conexión. Intenta de nuevo.';
+        this.errorMessage = error.message || 'Error de conexión. Intenta de nuevo.';
         console.error('Login error:', error);
       }
     });

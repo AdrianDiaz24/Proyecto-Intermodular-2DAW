@@ -7,7 +7,7 @@
     <!-- CUADRADO IZQUIERDO: Detalles de la Incidencia -->
     <div class="incidence-box">
       <div class="incidence-header">
-        <h1 class="incidence-title">{{ incidence.title }}</h1>
+        <h1 class="incidence-title">{{ incidence.titulo }}</h1>
         <div class="incidence-badges">
           <span [ngClass]="getStatusClass()" class="badge badge-status">
             {{ getStatusLabel() }}
@@ -21,7 +21,7 @@
       <div class="incidence-meta">
         <div class="meta-item">
           <label>Reportado por:</label>
-          <p>{{ incidence.createdBy }}</p>
+          <p>{{ incidence.usuarioUsername }}</p>
         </div>
         <div class="meta-item">
           <label>Categoría:</label>
@@ -29,13 +29,13 @@
         </div>
         <div class="meta-item">
           <label>Fecha de reporte:</label>
-          <p>{{ formatDate(incidence.createdAt) }}</p>
+          <p>{{ formatDate(incidence.fechaCreacion) }}</p>
         </div>
       </div>
 
       <div class="incidence-description">
         <h2>Descripción del Problema</h2>
-        <p>{{ incidence.description }}</p>
+        <p>{{ incidence.descripcion }}</p>
       </div>
     </div>
 

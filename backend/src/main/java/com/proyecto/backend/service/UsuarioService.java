@@ -89,6 +89,7 @@ public class UsuarioService {
         usuario.setUsername(createDTO.getUsername());
         usuario.setEmail(createDTO.getEmail());
         usuario.setPassword(passwordEncoder.encode(createDTO.getPassword()));
+        usuario.setTelefono(createDTO.getTelefono());
         usuario.setRole(Usuario.Role.valueOf(createDTO.getRole()));
 
         Usuario usuarioGuardado = usuarioRepository.save(usuario);

@@ -137,20 +137,20 @@ export class ProductComponent implements OnInit {
     const defaultImage = this.assetsService.getIconUrl('logoNaranja.avif');
     return {
       id: resolved.id,
-      name: resolved.name,
-      brand: resolved.brand,
-      model: resolved.model,
+      name: resolved.nombre,
+      brand: resolved.marca,
+      model: resolved.modelo,
       rating: 4.5,
       reviews: 28,
-      image: resolved.image || defaultImage,
-      description: `${resolved.name} - Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.`,
+      image: resolved.imagenBase64 || defaultImage,
+      description: `${resolved.nombre} - Únete a la comunidad para reportar problemas y ayudar a otros usuarios con sus incidencias.`,
       specifications: {
-        weight: resolved.weight || 'N/A',
-        width: resolved.dimensions?.width || 'N/A',
-        length: resolved.dimensions?.depth || 'N/A',
-        height: resolved.dimensions?.height || 'N/A',
-        consumption: resolved.energyConsumption || 'N/A',
-        characteristics: resolved.otherSpecs || 'N/A'
+        weight: resolved.peso ? `${resolved.peso} kg` : 'N/A',
+        width: resolved.ancho ? `${resolved.ancho} cm` : 'N/A',
+        length: resolved.largo ? `${resolved.largo} cm` : 'N/A',
+        height: resolved.alto ? `${resolved.alto} cm` : 'N/A',
+        consumption: resolved.consumoElectrico || 'N/A',
+        characteristics: resolved.otrasCaracteristicas || 'N/A'
       },
       status: 'Disponible',
       incidences: 5,

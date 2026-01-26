@@ -76,14 +76,14 @@
           <div class="profile-field">
             <label class="profile-field__label">Teléfono</label>
             <div *ngIf="!editMode" class="profile-field__value">
-              {{ user.phone }}
+              {{ user.telefono || user.phone || 'No especificado' }}
             </div>
             <input
               *ngIf="editMode"
               type="tel"
               class="profile-field__input"
-              [value]="formData.phone"
-              (input)="updateField('phone', $any($event.target).value)"
+              [value]="formData.telefono || formData.phone || ''"
+              (input)="updateField('telefono', $any($event.target).value)"
               placeholder="Tu número de teléfono"
             >
           </div>

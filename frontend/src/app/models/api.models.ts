@@ -69,39 +69,41 @@ export interface FilterParams {
 // ============================================================================
 
 /**
- * Usuario del sistema
+ * Usuario del sistema (coincide con UsuarioDTO del backend)
  */
 export interface User {
   id: number;
   username: string;
   email: string;
-  memberSince: Date | string;
+  telefono?: string;
   phone?: string;
+  role: UserRole;
   profileImage?: string;
-  joinDate?: string;
-  role?: UserRole;
+  memberSince?: Date | string;
 }
 
 /**
  * Roles de usuario
  */
-export type UserRole = 'admin' | 'user' | 'moderator';
+export type UserRole = 'USER' | 'ADMIN';
 
 /**
- * Datos para crear/actualizar usuario
+ * Datos para crear usuario (coincide con UsuarioCreateDTO del backend)
  */
 export interface UserCreateDto {
   username: string;
   email: string;
   password: string;
-  phone?: string;
+  telefono?: string;
+  role: UserRole;
 }
 
 export interface UserUpdateDto {
   username?: string;
   email?: string;
-  phone?: string;
-  profileImage?: string;
+  password?: string;
+  telefono?: string;
+  role?: UserRole;
 }
 
 // ============================================================================
@@ -109,12 +111,11 @@ export interface UserUpdateDto {
 // ============================================================================
 
 /**
- * Credenciales de login
+ * Credenciales de login (coincide con LoginRequest del backend)
  */
 export interface LoginCredentials {
-  email: string;
+  username: string;
   password: string;
-  rememberMe?: boolean;
 }
 
 /**
@@ -124,19 +125,20 @@ export interface RegisterData {
   username: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
+  telefono?: string;
+  role?: UserRole;
 }
 
 /**
- * Respuesta de autenticación
+ * Respuesta de autenticación (coincide con LoginResponse del backend)
  */
 export interface AuthResponse {
-  success: boolean;
-  user?: User;
-  token?: string;
-  refreshToken?: string;
-  expiresIn?: number;
-  error?: string;
+  token: string;
+  userId: number;
+  username: string;
+  email: string;
+  role: string;
 }
 
 /**
@@ -144,8 +146,6 @@ export interface AuthResponse {
  */
 export interface DecodedToken {
   sub: string;
-  email: string;
-  role: UserRole;
   iat: number;
   exp: number;
 }
@@ -155,49 +155,56 @@ export interface DecodedToken {
 // ============================================================================
 
 /**
- * Producto
+ * Producto (coincide con ProductoDTO del backend)
  */
 export interface Product {
   id: number;
-  name: string;
-  brand: string;
-  model: string;
-  image?: string;
-  weight?: string;
-  dimensions?: ProductDimensions;
-  energyConsumption?: string;
-  otherSpecs?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  nombre: string;
+  marca: string;
+  modelo?: string;
+  imagenBase64?: string;
+  peso?: number;
+  ancho?: number;
+  largo?: number;
+  alto?: number;
+  consumoElectrico?: string;
+  otrasCaracteristicas?: string;
+  usuarioId: number;
+  usuarioUsername: string;
 }
 
 /**
- * Dimensiones del producto
- */
-export interface ProductDimensions {
-  width: string;
-  height: string;
-  depth: string;
-}
-
-/**
- * DTO para crear producto
+ * DTO para crear producto (coincide con ProductoCreateDTO del backend)
  */
 export interface ProductCreateDto {
-  name: string;
-  brand: string;
-  model: string;
-  image?: string;
-  weight?: string;
-  dimensions?: ProductDimensions;
-  energyConsumption?: string;
-  otherSpecs?: string;
+  nombre: string;
+  marca: string;
+  modelo?: string;
+  imagenBase64?: string;
+  peso?: number;
+  ancho?: number;
+  largo?: number;
+  alto?: number;
+  consumoElectrico?: string;
+  otrasCaracteristicas?: string;
+  usuarioId: number;
 }
 
 /**
- * DTO para actualizar producto
+ * DTO para actualizar producto (coincide con ProductoUpdateDTO del backend)
  */
-export interface ProductUpdateDto extends Partial<ProductCreateDto> {}
+export interface ProductUpdateDto {
+  nombre?: string;
+  marca?: string;
+  modelo?: string;
+  imagenBase64?: string;
+  peso?: number;
+  ancho?: number;
+  largo?: number;
+  alto?: number;
+  consumoElectrico?: string;
+  otrasCaracteristicas?: string;
+}
 
 /**
  * Filtros de búsqueda de productos
@@ -213,60 +220,59 @@ export interface ProductSearchParams extends PaginationParams {
 // ============================================================================
 
 /**
- * Severidad de incidencia
+ * Severidad de incidencia (coincide con Incidencia.Severidad del backend)
  */
-export type IncidenceSeverity = 'low' | 'medium' | 'high';
+export type IncidenceSeverity = 'BAJO' | 'MEDIO' | 'ALTO';
 
 /**
- * Estado de incidencia
+ * Estado de incidencia (coincide con Incidencia.Estado del backend)
  */
-export type IncidenceStatus = 'pending' | 'in_progress' | 'resolved' | 'closed';
+export type IncidenceStatus = 'ABIERTA' | 'EN_PROGRESO' | 'CERRADA';
 
 /**
- * Categoría de incidencia
+ * Categoría de incidencia (coincide con Incidencia.Categoria del backend)
  */
-export type IncidenceCategory = 'functionality' | 'performance' | 'appearance' | 'safety' | 'other';
+export type IncidenceCategory = 'FUNCIONALIDAD' | 'RENDIMIENTO' | 'APARIENCIA' | 'OTRO';
 
 /**
- * Incidencia
+ * Incidencia (coincide con IncidenciaDTO del backend)
  */
 export interface Incidence {
   id: number;
-  productId: number;
-  title: string;
-  description: string;
-  category: IncidenceCategory;
-  severity: IncidenceSeverity;
-  status: IncidenceStatus;
-  createdAt: Date | string;
-  updatedAt?: Date | string;
-  createdBy: string;
-  assignedTo?: string;
-  resolution?: string;
+  titulo: string;
+  descripcion: string;
+  categoria: IncidenceCategory;
+  severidad: IncidenceSeverity;
+  estado: IncidenceStatus;
+  fechaCreacion: string;
+  productoId?: number;
+  productoNombre?: string;
+  usuarioId: number;
+  usuarioUsername: string;
+  totalSoluciones?: number;
 }
 
 /**
- * DTO para crear incidencia
+ * DTO para crear incidencia (coincide con IncidenciaCreateDTO del backend)
  */
 export interface IncidenceCreateDto {
-  productId: number;
-  title: string;
-  description: string;
-  category: IncidenceCategory;
-  severity: IncidenceSeverity;
+  titulo: string;
+  descripcion: string;
+  categoria: IncidenceCategory;
+  severidad: IncidenceSeverity;
+  productoId?: number;
+  usuarioId: number;
 }
 
 /**
- * DTO para actualizar incidencia
+ * DTO para actualizar incidencia (coincide con IncidenciaUpdateDTO del backend)
  */
 export interface IncidenceUpdateDto {
-  title?: string;
-  description?: string;
-  category?: IncidenceCategory;
-  severity?: IncidenceSeverity;
-  status?: IncidenceStatus;
-  assignedTo?: string;
-  resolution?: string;
+  titulo?: string;
+  descripcion?: string;
+  categoria?: IncidenceCategory;
+  severidad?: IncidenceSeverity;
+  estado?: IncidenceStatus;
 }
 
 /**
@@ -335,4 +341,3 @@ export interface UploadProgress {
   total: number;
   percentage: number;
 }
-

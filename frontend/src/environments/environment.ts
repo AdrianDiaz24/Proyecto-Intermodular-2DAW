@@ -6,7 +6,7 @@ export const environment = {
   production: false,
 
   // API Configuration
-  apiUrl: 'http://localhost:8080/api',
+  apiUrl: 'http://localhost:8081/api',
   apiVersion: 'v1',
 
   // Timeouts (in milliseconds)
@@ -16,7 +16,7 @@ export const environment = {
 
   // Feature flags
   enableLogging: true,
-  enableMockData: true,  // TRUE para usar datos mock sin backend
+  enableMockData: false,  // FALSE para usar el backend real
 
   // Authentication
   tokenKey: 'auth_token',

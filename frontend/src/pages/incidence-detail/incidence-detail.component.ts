@@ -128,29 +128,34 @@ export class IncidenceDetailComponent implements OnInit {
   }
 
   getStatusLabel(): string {
-    switch (this.incidence?.status) {
-      case 'pending':
+    switch (this.incidence?.estado) {
+      case 'ABIERTA':
         return 'Pendiente';
-      case 'resolved':
+      case 'EN_PROGRESO':
+        return 'En Progreso';
+      case 'CERRADA':
         return 'Resuelta';
-      case 'closed':
-        return 'Cerrada';
       default:
         return 'Desconocido';
     }
   }
 
   getStatusClass(): string {
-    return `status-${this.incidence?.status || 'pending'}`;
+    const statusMap: { [key: string]: string } = {
+      'ABIERTA': 'pending',
+      'EN_PROGRESO': 'in-progress',
+      'CERRADA': 'resolved'
+    };
+    return `status-${statusMap[this.incidence?.estado || ''] || 'pending'}`;
   }
 
   getSeverityLabel(): string {
-    switch (this.incidence?.severity) {
-      case 'low':
+    switch (this.incidence?.severidad) {
+      case 'BAJO':
         return 'Baja';
-      case 'medium':
+      case 'MEDIO':
         return 'Media';
-      case 'high':
+      case 'ALTO':
         return 'Alta';
       default:
         return 'Desconocida';
@@ -158,19 +163,24 @@ export class IncidenceDetailComponent implements OnInit {
   }
 
   getSeverityClass(): string {
-    return `severity-${this.incidence?.severity || 'low'}`;
+    const severityMap: { [key: string]: string } = {
+      'BAJO': 'low',
+      'MEDIO': 'medium',
+      'ALTO': 'high'
+    };
+    return `severity-${severityMap[this.incidence?.severidad || ''] || 'low'}`;
   }
 
   getCategoryLabel(): string {
-    switch (this.incidence?.category) {
-      case 'functionality':
+    switch (this.incidence?.categoria) {
+      case 'FUNCIONALIDAD':
         return 'Funcionalidad';
-      case 'appearance':
+      case 'APARIENCIA':
         return 'Apariencia';
-      case 'performance':
+      case 'RENDIMIENTO':
         return 'Rendimiento';
-      case 'safety':
-        return 'Seguridad';
+      case 'OTRO':
+        return 'Otra';
       default:
         return 'Otra';
     }
