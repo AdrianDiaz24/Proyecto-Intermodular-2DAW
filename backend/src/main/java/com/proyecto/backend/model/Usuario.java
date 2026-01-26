@@ -28,6 +28,9 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
+    @Column(length = 20)
+    private String telefono;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.USER;
@@ -36,7 +39,7 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Producto> productos = new ArrayList<>();
 
-    // Las incidencias SÍ se borran al eliminar usuario
+    // Las incidencias creadas por el usuario
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Incidencia> incidencias = new ArrayList<>();
 

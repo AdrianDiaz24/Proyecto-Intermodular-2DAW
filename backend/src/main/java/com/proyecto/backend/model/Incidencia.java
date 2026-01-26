@@ -28,13 +28,21 @@ public class Incidencia {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    private Categoria categoria;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Severidad severidad;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Estado estado = Estado.ABIERTA;
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "producto_id", nullable = false)
+    @JoinColumn(name = "producto_id")
     private Producto producto;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,6 +55,14 @@ public class Incidencia {
     @PrePersist
     protected void onCreate() {
         fechaCreacion = LocalDateTime.now();
+    }
+
+    public enum Categoria {
+        FUNCIONALIDAD, RENDIMIENTO, APARIENCIA, OTRO
+    }
+
+    public enum Severidad {
+        ALTO, MEDIO, BAJO
     }
 
     public enum Estado {

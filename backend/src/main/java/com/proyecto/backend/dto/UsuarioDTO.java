@@ -13,6 +13,7 @@ public class UsuarioDTO {
     private Long id;
     private String username;
     private String email;
+    private String telefono;
     private String role;
 
     // Constructor desde entidad (sin password por seguridad)
@@ -21,6 +22,7 @@ public class UsuarioDTO {
                 usuario.getId(),
                 usuario.getUsername(),
                 usuario.getEmail(),
+                usuario.getTelefono(),
                 usuario.getRole().name()
         );
     }

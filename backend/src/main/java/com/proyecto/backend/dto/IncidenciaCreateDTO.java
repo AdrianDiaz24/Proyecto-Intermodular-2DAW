@@ -18,7 +18,14 @@ public class IncidenciaCreateDTO {
     @Size(min = 10, message = "La descripción debe tener al menos 10 caracteres")
     private String descripcion;
 
-    @NotNull(message = "El ID del producto es obligatorio")
+    @NotBlank(message = "La categoría es obligatoria")
+    @Pattern(regexp = "^(FUNCIONALIDAD|RENDIMIENTO|APARIENCIA|OTRO)$", message = "La categoría debe ser FUNCIONALIDAD, RENDIMIENTO, APARIENCIA u OTRO")
+    private String categoria;
+
+    @NotBlank(message = "La severidad es obligatoria")
+    @Pattern(regexp = "^(ALTO|MEDIO|BAJO)$", message = "La severidad debe ser ALTO, MEDIO o BAJO")
+    private String severidad;
+
     @Positive(message = "El ID del producto debe ser positivo")
     private Long productoId;
 

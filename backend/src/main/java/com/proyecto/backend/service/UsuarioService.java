@@ -147,6 +147,12 @@ public class UsuarioService {
             usuario.setPassword(passwordEncoder.encode(updateDTO.getPassword()));
         }
 
+        // Actualizar teléfono
+        if (updateDTO.getTelefono() != null) {
+            cambios += "Teléfono: " + usuario.getTelefono() + " -> " + updateDTO.getTelefono() + "; ";
+            usuario.setTelefono(updateDTO.getTelefono());
+        }
+
         // Actualizar rol
         if (updateDTO.getRole() != null && !updateDTO.getRole().isEmpty()) {
             cambios += "Role: " + usuario.getRole() + " -> " + updateDTO.getRole() + "; ";

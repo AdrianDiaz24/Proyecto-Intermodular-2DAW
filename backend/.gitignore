@@ -40,3 +40,8 @@ build/
 mvnw
 mvnw.cmd
 
+### Environment ###
+.env
+.env.local
+.env.*.local
+

@@ -22,6 +22,9 @@ public class UsuarioCreateDTO {
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String password;
 
+    @Size(max = 20, message = "El teléfono no puede tener más de 20 caracteres")
+    private String telefono;
+
     @NotBlank(message = "El rol es obligatorio")
     @Pattern(regexp = "^(USER|ADMIN)$", message = "El rol debe ser USER o ADMIN")
     private String role;

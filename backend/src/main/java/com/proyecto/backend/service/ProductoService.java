@@ -123,6 +123,42 @@ public class ProductoService {
             producto.setModelo(updateDTO.getModelo());
         }
 
+        if (updateDTO.getPeso() != null) {
+            cambios += "Peso: " + producto.getPeso() + " -> " + updateDTO.getPeso() + "; ";
+            producto.setPeso(updateDTO.getPeso());
+        }
+
+        if (updateDTO.getAncho() != null) {
+            cambios += "Ancho: " + producto.getAncho() + " -> " + updateDTO.getAncho() + "; ";
+            producto.setAncho(updateDTO.getAncho());
+        }
+
+        if (updateDTO.getLargo() != null) {
+            cambios += "Largo: " + producto.getLargo() + " -> " + updateDTO.getLargo() + "; ";
+            producto.setLargo(updateDTO.getLargo());
+        }
+
+        if (updateDTO.getAlto() != null) {
+            cambios += "Alto: " + producto.getAlto() + " -> " + updateDTO.getAlto() + "; ";
+            producto.setAlto(updateDTO.getAlto());
+        }
+
+        if (updateDTO.getConsumoElectrico() != null) {
+            cambios += "Consumo eléctrico actualizado; ";
+            producto.setConsumoElectrico(updateDTO.getConsumoElectrico());
+        }
+
+        if (updateDTO.getOtrasCaracteristicas() != null) {
+            cambios += "Otras características actualizadas; ";
+            producto.setOtrasCaracteristicas(updateDTO.getOtrasCaracteristicas());
+        }
+
+        // Procesar imagen Base64 si existe
+        if (updateDTO.getImagenBase64() != null && !updateDTO.getImagenBase64().isEmpty()) {
+            cambios += "Imagen actualizada; ";
+            producto.setImagen(java.util.Base64.getDecoder().decode(updateDTO.getImagenBase64()));
+        }
+
         Producto productoActualizado = productoRepository.save(producto);
 
         // Registrar en auditoría

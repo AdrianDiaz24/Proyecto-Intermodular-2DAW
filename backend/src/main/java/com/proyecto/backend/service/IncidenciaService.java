@@ -154,6 +154,18 @@ public class IncidenciaService {
             incidencia.setDescripcion(updateDTO.getDescripcion());
         }
 
+        if (updateDTO.getCategoria() != null && !updateDTO.getCategoria().isEmpty()) {
+            Incidencia.Categoria nuevaCategoria = Incidencia.Categoria.valueOf(updateDTO.getCategoria());
+            cambios += "Categoría: " + incidencia.getCategoria() + " -> " + nuevaCategoria + "; ";
+            incidencia.setCategoria(nuevaCategoria);
+        }
+
+        if (updateDTO.getSeveridad() != null && !updateDTO.getSeveridad().isEmpty()) {
+            Incidencia.Severidad nuevaSeveridad = Incidencia.Severidad.valueOf(updateDTO.getSeveridad());
+            cambios += "Severidad: " + incidencia.getSeveridad() + " -> " + nuevaSeveridad + "; ";
+            incidencia.setSeveridad(nuevaSeveridad);
+        }
+
         // Validación de lógica de negocio para cambio de estado
         if (updateDTO.getEstado() != null && !updateDTO.getEstado().isEmpty()) {
             Incidencia.Estado nuevoEstado = Incidencia.Estado.valueOf(updateDTO.getEstado());

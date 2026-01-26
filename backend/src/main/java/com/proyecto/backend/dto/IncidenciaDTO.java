@@ -15,6 +15,8 @@ public class IncidenciaDTO {
     private Long id;
     private String titulo;
     private String descripcion;
+    private String categoria;
+    private String severidad;
     private String estado;
     private LocalDateTime fechaCreacion;
     private Long productoId;
@@ -24,18 +26,25 @@ public class IncidenciaDTO {
     private Integer totalSoluciones;
 
     public static IncidenciaDTO fromEntity(Incidencia incidencia) {
-        return new IncidenciaDTO(
-                incidencia.getId(),
-                incidencia.getTitulo(),
-                incidencia.getDescripcion(),
-                incidencia.getEstado().name(),
-                incidencia.getFechaCreacion(),
-                incidencia.getProducto().getId(),
-                incidencia.getProducto().getNombre(),
-                incidencia.getUsuario().getId(),
-                incidencia.getUsuario().getUsername(),
-                incidencia.getSoluciones() != null ? incidencia.getSoluciones().size() : 0
-        );
+        IncidenciaDTO dto = new IncidenciaDTO();
+        dto.setId(incidencia.getId());
+        dto.setTitulo(incidencia.getTitulo());
+        dto.setDescripcion(incidencia.getDescripcion());
+        dto.setCategoria(incidencia.getCategoria().name());
+        dto.setSeveridad(incidencia.getSeveridad().name());
+        dto.setEstado(incidencia.getEstado().name());
+        dto.setFechaCreacion(incidencia.getFechaCreacion());
+        dto.setUsuarioId(incidencia.getUsuario().getId());
+        dto.setUsuarioUsername(incidencia.getUsuario().getUsername());
+        dto.setTotalSoluciones(incidencia.getSoluciones() != null ? incidencia.getSoluciones().size() : 0);
+
+        // Producto es opcional
+        if (incidencia.getProducto() != null) {
+            dto.setProductoId(incidencia.getProducto().getId());
+            dto.setProductoNombre(incidencia.getProducto().getNombre());
+        }
+
+        return dto;
     }
 }
 
