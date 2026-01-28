@@ -33,7 +33,7 @@
 
       <!-- Grid de resultados -->
       <section *ngIf="filteredResults.length > 0" class="results-container">
-        <article *ngFor="let result of filteredResults" class="result-card">
+        <article *ngFor="let result of filteredResults; trackBy: trackByResultId" class="result-card">
           <!-- Logo como placeholder -->
           <div class="result-card__image">
             <img src="assets/icons/logoNaranja.avif" alt="Logo" class="result-card__logo" loading="lazy" decoding="async">

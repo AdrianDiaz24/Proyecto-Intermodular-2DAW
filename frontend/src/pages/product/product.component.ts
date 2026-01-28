@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, Params, Data } from '@angular/router';
 import { NavigationService } from '../../app/services/navigation.service';
 import { ProductService, AssetsService } from '../../app/services';
 import { Product, Incidence } from '../../app/models';
 
+/**
+ * Componente de detalle de producto
+ * Implementa OnPush para optimización de rendimiento
+ */
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  styleUrls: ['./product.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
   // Datos de productos disponibles (fallback si no hay resolver)
   private productsData: { [key: number]: any } = {};
 
@@ -106,28 +113,44 @@ export class ProductComponent implements OnInit {
     this.initProductsData();
 
     // Primero intentar obtener datos del resolver
-    this.route.data.subscribe(data => {
-      if (data['product']) {
-        this.product = this.mapResolvedProduct(data['product']);
-        this.loadIncidences(this.product.id);
-      }
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: Data) => {
+        if (data['product']) {
+          this.product = this.mapResolvedProduct(data['product']);
+          this.loadIncidences(this.product.id);
+        }
+      });
 
     // Si no hay datos del resolver, cargar por params
-    this.route.params.subscribe(params => {
-      const productId = +params['id'];
-      if (!this.product || this.product.id !== productId) {
-        this.product = this.productsData[productId] || this.productsData[1];
-        this.loadIncidences(productId);
-      }
-    });
+    this.route.params
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params: Params) => {
+        const productId = +params['id'];
+        if (!this.product || this.product.id !== productId) {
+          this.product = this.productsData[productId] || this.productsData[1];
+          this.loadIncidences(productId);
+        }
+      });
 
     // Verificar query params para destacar incidencia específica
-    this.route.queryParams.subscribe(params => {
-      if (params['incidenceId'] && params['highlight']) {
-        this.highlightIncidence(+params['incidenceId']);
-      }
-    });
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params: Params) => {
+        if (params['incidenceId'] && params['highlight']) {
+          this.highlightIncidence(+params['incidenceId']);
+        }
+      });
+  }
+
+  /**
+   * TrackBy function para optimizar listas de incidencias
+   * @param index Índice del elemento
+   * @param item Elemento de la lista
+   * @returns ID único del elemento
+   */
+  trackByIncidenceId(index: number, item: { id: number }): number {
+    return item.id;
   }
 
   /**

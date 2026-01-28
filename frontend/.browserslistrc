@@ -1,0 +1,21 @@
+# Navegadores objetivo para ReparaFácil
+# Documentación: https://github.com/browserslist/browserslist
+
+# Últimas 2 versiones de navegadores principales
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
+
+# No incluir navegadores "muertos" (sin soporte)
+not dead
+
+# Navegadores con más del 0.5% de uso global
+> 0.5%
+
+# Soporte para iOS Safari
+iOS >= 15
+
+# Soporte para Android
+Android >= 100
+

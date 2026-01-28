@@ -110,7 +110,7 @@
         <!-- Contenedor de tarjetas -->
         <div class="p-product__carousel-container">
           <div class="p-product__carousel-track" [style.transform]="'translateX(' + (-currentSlide * 33.333) + '%)'">
-            <article class="p-product__incidence-card" *ngFor="let incidence of incidences" (click)="viewIncidence(incidence.id)">
+            <article class="p-product__incidence-card" *ngFor="let incidence of incidences; trackBy: trackByIncidenceId" (click)="viewIncidence(incidence.id)">
               <div class="p-product__incidence-header">
                 <div class="p-product__incidence-content">
                   <h3 class="p-product__incidence-title">{{ incidence.title }}</h3>
@@ -172,7 +172,7 @@
     <!-- Resultados de búsqueda -->
     <section class="p-product__search-results" *ngIf="filteredIncidences.length > 0 && (searchQuery || filterStatus !== 'all')">
       <div class="p-product__results-grid">
-        <article class="p-product__result-card" *ngFor="let incidence of filteredIncidences" (click)="viewIncidence(incidence.id)">
+        <article class="p-product__result-card" *ngFor="let incidence of filteredIncidences; trackBy: trackByIncidenceId" (click)="viewIncidence(incidence.id)">
           <div class="p-product__result-header">
             <h3 class="p-product__result-title">{{ incidence.title }}</h3>
             <span class="p-product__result-status" [ngClass]="{ 'solved': incidence.solved }">

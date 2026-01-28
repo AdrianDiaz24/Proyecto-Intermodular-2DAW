@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { NavigationService } from '../../app/services/navigation.service';
 import { ProductService } from '../../app/services/product.service';
 
+/**
+ * Componente de resultados de búsqueda
+ * Implementa OnPush para optimización de rendimiento
+ */
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss']
+  styleUrls: ['./search-results.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchResultsComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
   searchQuery: string = '';
   loading = false;
 
@@ -79,10 +86,23 @@ export class SearchResultsComponent implements OnInit {
     this.filteredResults = this.searchResults;
 
     // Obtener el parámetro de búsqueda de la URL
-    this.route.queryParams.subscribe(params => {
-      this.searchQuery = params['q'] || '';
-      this.filterResults();
-    });
+    // Usando takeUntilDestroyed para evitar memory leaks
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params: Params) => {
+        this.searchQuery = params['q'] || '';
+        this.filterResults();
+      });
+  }
+
+  /**
+   * TrackBy function para optimización de ngFor
+   * @param index Índice del elemento
+   * @param item Elemento de la lista
+   * @returns ID único del elemento
+   */
+  trackByResultId(index: number, item: { id: number }): number {
+    return item.id;
   }
 
   /**
