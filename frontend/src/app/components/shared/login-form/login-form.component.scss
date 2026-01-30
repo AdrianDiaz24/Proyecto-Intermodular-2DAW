@@ -21,7 +21,7 @@
 
   &__subtitle {
     font-size: $font-size-base;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
   }
 
@@ -43,7 +43,7 @@
   &__legend {
     font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin-bottom: $spacing-4;
     padding: 0;
     width: 100%;
@@ -82,7 +82,7 @@
   &__footer {
     text-align: center;
     margin-top: $spacing-6;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     font-size: $font-size-sm;
     margin: 0;
   }
@@ -111,7 +111,7 @@
     right: $spacing-3;
     background: none;
     border: none;
-    color: $color-gray-500;
+    color: var(--c-text-tertiary);
     cursor: pointer;
     font-size: $font-size-lg;
     padding: $spacing-2;

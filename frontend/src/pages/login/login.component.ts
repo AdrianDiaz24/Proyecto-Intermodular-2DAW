@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   errorMessage = '';
   returnUrl = '/perfil';
+  isDarkMode = false;
 
   constructor(
     private router: Router,
@@ -21,6 +22,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Detectar modo oscuro
+    this.isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+
     // Obtener URL de retorno de los query params
     this.route.queryParams.subscribe(params => {
       if (params['returnUrl']) {

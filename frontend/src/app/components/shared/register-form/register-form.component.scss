@@ -21,7 +21,7 @@
 
   &__subtitle {
     font-size: $font-size-base;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     margin: 0;
   }
 
@@ -43,7 +43,7 @@
   &__legend {
     font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     margin-bottom: $spacing-4;
     padding: 0;
     width: 100%;
@@ -82,7 +82,7 @@
   &__footer {
     text-align: center;
     margin-top: $spacing-6;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     font-size: $font-size-sm;
     margin: 0;
   }
@@ -113,7 +113,7 @@
 
   &__terms-label {
     font-size: $font-size-sm;
-    color: $color-gray-600;
+    color: var(--c-text-secondary);
     cursor: pointer;
 
     a {
@@ -127,6 +127,47 @@
   }
 
   &__terms-error {
+    color: $color-error;
+    font-size: $font-size-xs;
+    margin-top: $spacing-1;
+  }
+
+  &__checkbox {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    margin-top: $spacing-4;
+  }
+
+  &__checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-2;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &__checkbox-input {
+    cursor: pointer;
+    margin-top: $spacing-1;
+  }
+
+  &__checkbox-text {
+    font-size: $font-size-sm;
+    color: var(--c-text-primary);
+    cursor: pointer;
+
+    a {
+      color: $color-primary;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__error {
     color: $color-error;
     font-size: $font-size-xs;
     margin-top: $spacing-1;

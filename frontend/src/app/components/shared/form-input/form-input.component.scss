@@ -14,7 +14,7 @@
     display: block;
     margin-bottom: $spacing-2;
     font-weight: $font-weight-medium;
-    color: $color-text-black;
+    color: var(--c-text-primary);
     font-size: $font-size-base;
   }
 
@@ -44,12 +44,12 @@
     border-radius: $radius-md;
     font-size: $font-size-base;
     font-family: $font-primary;
-    color: $color-text-black;
-    background-color: $color-text-white;
+    color: var(--c-text-primary);
+    background-color: var(--c-card-bg);
     @include transition(border-color, box-shadow);
 
     &::placeholder {
-      color: $color-gray-400;
+      color: var(--c-text-muted);
     }
 
     &:focus {
@@ -59,8 +59,8 @@
     }
 
     &:disabled {
-      background-color: $color-gray-100;
-      color: $color-gray-500;
+      background-color: var(--c-bg-tertiary);
+      color: var(--c-text-tertiary);
       cursor: not-allowed;
       opacity: 0.6;
     }
@@ -83,7 +83,7 @@
     right: $spacing-3;
     background: none;
     border: none;
-    color: $color-gray-500;
+    color: var(--c-text-tertiary);
     cursor: pointer;
     font-size: $font-size-lg;
     padding: $spacing-2;
@@ -110,7 +110,7 @@
   &__help {
     display: block;
     margin-top: $spacing-1;
-    color: $color-gray-500;
+    color: var(--c-text-tertiary);
     font-size: $font-size-sm;
     font-style: italic;
   }

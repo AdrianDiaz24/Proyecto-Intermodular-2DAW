@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
  import { AuthService } from '../../app/services/auth.service';
 import { NavigationService } from '../../app/services/navigation.service';
@@ -8,15 +8,21 @@ import { NavigationService } from '../../app/services/navigation.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   loading = false;
   errorMessage = '';
+  isDarkMode = false;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private navigationService: NavigationService
   ) {}
+
+  ngOnInit(): void {
+    // Detectar modo oscuro
+    this.isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+  }
 
   onFormSubmit(credentials: { username: string; email: string; password: string; passwordConfirm: string }) {
     this.loading = true;

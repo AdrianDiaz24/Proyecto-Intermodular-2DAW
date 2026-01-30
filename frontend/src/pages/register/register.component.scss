@@ -40,7 +40,7 @@
 .register-card {
   width: 100%;
   max-width: 500px;
-  background-color: $color-text-white;
+  background-color: var(--c-card-bg);
   border: 3px solid $color-primary;
   border-radius: 20px;
   padding: $spacing-8;
@@ -51,6 +51,7 @@
   z-index: 10;
   backdrop-filter: blur(10px);
   animation: slideUp 0.5s ease-out;
+  @include transition(background-color);
 }
 
 @keyframes slideUp {
