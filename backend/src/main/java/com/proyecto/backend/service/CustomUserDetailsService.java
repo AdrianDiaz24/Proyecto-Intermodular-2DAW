@@ -21,16 +21,23 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UsuarioRepository usuarioRepository;
 
     /**
-     * Carga los detalles del usuario por nombre de usuario
+     * Carga los detalles del usuario por nombre de usuario O email
+     * Permite login tanto con username como con email
      *
-     * @param username Nombre de usuario
+     * @param usernameOrEmail Nombre de usuario o email
      * @return UserDetails del usuario
      * @throws UsernameNotFoundException Si el usuario no existe
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario '" + username + "' no encontrado"));
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+        // Primero intentar buscar por username
+        Usuario usuario = usuarioRepository.findByUsername(usernameOrEmail)
+                .orElseGet(() ->
+                    // Si no encuentra por username, buscar por email
+                    usuarioRepository.findByEmail(usernameOrEmail)
+                        .orElseThrow(() -> new UsernameNotFoundException(
+                            "Usuario con username o email '" + usernameOrEmail + "' no encontrado"))
+                );
 
         return new User(
                 usuario.getUsername(),

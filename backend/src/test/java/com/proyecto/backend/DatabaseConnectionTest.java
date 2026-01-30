@@ -47,4 +47,69 @@ public class DatabaseConnectionTest {
             throw new RuntimeException("Error de JdbcTemplate", e);
         }
     }
+
+    @Test
+    public void testVerificarTablas() {
+        System.out.println("\n========== VERIFICACIÓN DE TABLAS ==========");
+        try {
+            // Listar todas las tablas
+            var tablas = jdbcTemplate.queryForList("SHOW TABLES");
+            System.out.println("📋 Tablas en la base de datos:");
+            if (tablas.isEmpty()) {
+                System.out.println("  ⚠️ NO HAY TABLAS CREADAS");
+            } else {
+                for (var tabla : tablas) {
+                    System.out.println("  - " + tabla.values().iterator().next());
+                }
+            }
+
+            // Verificar si existe la tabla usuarios
+            String existeUsuarios = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = 'usuarios'";
+            Integer countUsuarios = jdbcTemplate.queryForObject(existeUsuarios, Integer.class);
+            if (countUsuarios != null && countUsuarios > 0) {
+                System.out.println("\n✓ Tabla 'usuarios' EXISTE");
+                // Contar registros
+                Integer numUsuarios = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM usuarios", Integer.class);
+                System.out.println("  - Número de usuarios: " + numUsuarios);
+
+                // Mostrar usuarios si hay
+                if (numUsuarios != null && numUsuarios > 0) {
+                    var usuarios = jdbcTemplate.queryForList("SELECT id, username, email, role FROM usuarios");
+                    System.out.println("  - Usuarios registrados:");
+                    for (var u : usuarios) {
+                        System.out.println("    * ID: " + u.get("id") + ", Username: " + u.get("username") + ", Email: " + u.get("email") + ", Role: " + u.get("role"));
+                    }
+                }
+            } else {
+                System.out.println("\n✗ Tabla 'usuarios' NO EXISTE");
+            }
+
+            // Verificar tabla productos
+            String existeProductos = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = 'productos'";
+            Integer countProductos = jdbcTemplate.queryForObject(existeProductos, Integer.class);
+            if (countProductos != null && countProductos > 0) {
+                System.out.println("✓ Tabla 'productos' EXISTE");
+                Integer numProductos = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM productos", Integer.class);
+                System.out.println("  - Número de productos: " + numProductos);
+            } else {
+                System.out.println("✗ Tabla 'productos' NO EXISTE");
+            }
+
+            // Verificar tabla incidencias
+            String existeIncidencias = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = 'incidencias'";
+            Integer countIncidencias = jdbcTemplate.queryForObject(existeIncidencias, Integer.class);
+            if (countIncidencias != null && countIncidencias > 0) {
+                System.out.println("✓ Tabla 'incidencias' EXISTE");
+                Integer numIncidencias = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM incidencias", Integer.class);
+                System.out.println("  - Número de incidencias: " + numIncidencias);
+            } else {
+                System.out.println("✗ Tabla 'incidencias' NO EXISTE");
+            }
+
+            System.out.println("=============================================\n");
+        } catch (Exception e) {
+            System.err.println("✗ Error verificando tablas: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

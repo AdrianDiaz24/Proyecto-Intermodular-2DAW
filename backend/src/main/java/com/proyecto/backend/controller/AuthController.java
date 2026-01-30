@@ -42,7 +42,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
-            // Autenticar usuario
+            // Autenticar usuario (puede ser username o email)
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getUsername(),
@@ -50,11 +50,14 @@ public class AuthController {
                     )
             );
 
-            // Generar token JWT
-            String token = jwtUtil.generateToken(authentication.getName());
+            // El authentication.getName() devuelve el username real (no el email)
+            String authenticatedUsername = authentication.getName();
 
-            // Obtener detalles del usuario
-            UsuarioDTO usuario = usuarioService.obtenerPorUsername(loginRequest.getUsername());
+            // Generar token JWT con el username real
+            String token = jwtUtil.generateToken(authenticatedUsername);
+
+            // Obtener detalles del usuario usando el username autenticado
+            UsuarioDTO usuario = usuarioService.obtenerPorUsername(authenticatedUsername);
 
             // Retornar respuesta con token
             LoginResponse response = new LoginResponse(

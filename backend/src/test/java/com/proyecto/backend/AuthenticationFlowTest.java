@@ -76,7 +76,7 @@ public class AuthenticationFlowTest {
     @Test
     @Order(2)
     void testLoginExitoso() {
-        System.out.println("\n========== TEST 2: LOGIN EXITOSO ==========");
+        System.out.println("\n========== TEST 2: LOGIN EXITOSO CON USERNAME ==========");
 
         String url = "http://localhost:" + port + "/api/auth/login";
 
@@ -99,15 +99,46 @@ public class AuthenticationFlowTest {
 
         authToken = response.getBody().getToken();
 
-        System.out.println("✓ Login exitoso");
+        System.out.println("✓ Login con username exitoso");
         System.out.println("  - Token generado: " + authToken.substring(0, 20) + "...");
         System.out.println("  - Username: " + response.getBody().getUsername());
     }
 
     @Test
     @Order(3)
+    void testLoginConEmail() {
+        System.out.println("\n========== TEST 3: LOGIN EXITOSO CON EMAIL ==========");
+
+        String url = "http://localhost:" + port + "/api/auth/login";
+
+        // Usar EMAIL en lugar de username
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername(testEmail);  // Enviamos el email como "username"
+        loginRequest.setPassword(testPassword);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<LoginRequest> request = new HttpEntity<>(loginRequest, headers);
+
+        ResponseEntity<LoginResponse> response = restTemplate.postForEntity(url, request, LoginResponse.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertNotNull(response.getBody().getToken());
+        // El response debe devolver el username correcto, no el email
+        assertEquals(testUsername, response.getBody().getUsername());
+        assertEquals(testEmail, response.getBody().getEmail());
+
+        System.out.println("✓ Login con EMAIL exitoso");
+        System.out.println("  - Email usado: " + testEmail);
+        System.out.println("  - Username devuelto: " + response.getBody().getUsername());
+    }
+
+    @Test
+    @Order(4)
     void testLoginCredencialesInvalidas() {
-        System.out.println("\n========== TEST 3: LOGIN CON CREDENCIALES INVÁLIDAS ==========");
+        System.out.println("\n========== TEST 4: LOGIN CON CREDENCIALES INVÁLIDAS ==========");
 
         String url = "http://localhost:" + port + "/api/auth/login";
 
@@ -130,9 +161,9 @@ public class AuthenticationFlowTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void testLoginUsuarioNoExiste() {
-        System.out.println("\n========== TEST 4: LOGIN CON USUARIO INEXISTENTE ==========");
+        System.out.println("\n========== TEST 5: LOGIN CON USUARIO INEXISTENTE ==========");
 
         String url = "http://localhost:" + port + "/api/auth/login";
 
@@ -155,9 +186,9 @@ public class AuthenticationFlowTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void testValidarToken() {
-        System.out.println("\n========== TEST 5: VALIDAR TOKEN JWT ==========");
+        System.out.println("\n========== TEST 6: VALIDAR TOKEN JWT ==========");
 
         assertNotNull(authToken, "El token debe existir del test anterior");
 
@@ -177,9 +208,9 @@ public class AuthenticationFlowTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void testObtenerUsuarioActual() {
-        System.out.println("\n========== TEST 6: OBTENER USUARIO ACTUAL ==========");
+        System.out.println("\n========== TEST 7: OBTENER USUARIO ACTUAL ==========");
 
         assertNotNull(authToken, "El token debe existir del test anterior");
 
@@ -202,7 +233,7 @@ public class AuthenticationFlowTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void testRegistroDuplicado() {
         System.out.println("\n========== TEST 7: REGISTRO DUPLICADO ==========");
 
