@@ -16,7 +16,7 @@ export const environment = {
 
   // Feature flags
   enableLogging: true,
-  enableMockData: false,  // FALSE para usar el backend real
+  enableMockData: true,  // TRUE para usar datos mock (sin necesidad de backend)
 
   // Authentication
   tokenKey: 'auth_token',
