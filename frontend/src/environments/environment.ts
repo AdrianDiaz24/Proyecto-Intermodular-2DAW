@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  // API Configuration
+  // API Configuration - Conectar con backend en puerto 8081
   apiUrl: 'http://localhost:8081/api',
   apiVersion: 'v1',
 
@@ -16,7 +16,7 @@ export const environment = {
 
   // Feature flags
   enableLogging: true,
-  enableMockData: true,  // TRUE para usar datos mock (sin necesidad de backend)
+  enableMockData: false,  // FALSE para usar datos reales del backend
 
   // Authentication
   tokenKey: 'auth_token',

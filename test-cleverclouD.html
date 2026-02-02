@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Backend - CleverCloud MySQL</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 { color: #333; margin-top: 0; text-align: center; }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .status.connected { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            padding: 12px 24px;
+            margin: 5px 0;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover { background: #764ba2; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .output {
+            background: #f0f0f0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .info { color: #17a2b8; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+        .data-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        .data-table th, .data-table td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        .data-table th { background: #f0f0f0; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Test Backend - CleverCloud MySQL</h1>
+
+        <div class="status error" id="status">
+            Conectando a backend...
+        </div>
+
+        <!-- Sección de Registro -->
+        <div class="section">
+            <h2>1️⃣ Registro de Usuario</h2>
+            <input type="text" id="regUsername" placeholder="Username" value="usuario_test_">
+            <input type="email" id="regEmail" placeholder="Email" value="test@example.com">
+            <input type="password" id="regPassword" placeholder="Password" value="password123">
+            <button onclick="register()">Registrar Usuario</button>
+            <div id="regOutput" class="output"></div>
+        </div>
+
+        <!-- Sección de Login -->
+        <div class="section">
+            <h2>2️⃣ Login</h2>
+            <input type="text" id="loginUsername" placeholder="Username">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="login()">Iniciar Sesión</button>
+            <div id="loginOutput" class="output"></div>
+        </div>
+
+        <!-- Sección de Productos -->
+        <div class="section">
+            <h2>3️⃣ Crear Producto</h2>
+            <div class="grid">
+                <input type="text" id="prodNombre" placeholder="Nombre" value="TV Samsung">
+                <input type="text" id="prodMarca" placeholder="Marca" value="Samsung">
+                <input type="text" id="prodModelo" placeholder="Modelo" value="QN55Q70A">
+                <input type="number" id="prodPeso" placeholder="Peso" step="0.1" value="15.5">
+            </div>
+            <button onclick="createProduct()">Crear Producto</button>
+            <div id="prodOutput" class="output"></div>
+        </div>
+
+        <!-- Sección de Incidencias -->
+        <div class="section">
+            <h2>4️⃣ Crear Incidencia</h2>
+            <input type="text" id="incTitulo" placeholder="Titulo" value="TV no enciende">
+            <textarea id="incDescripcion" placeholder="Descripcion" rows="3">El TV no responde al botón de encendido</textarea>
+            <div class="grid">
+                <select id="incCategoria">
+                    <option value="FUNCIONALIDAD" selected>FUNCIONALIDAD</option>
+                    <option value="RENDIMIENTO">RENDIMIENTO</option>
+                    <option value="APARIENCIA">APARIENCIA</option>
+                    <option value="OTRO">OTRO</option>
+                </select>
+                <select id="incSeveridad">
+                    <option value="ALTO" selected>ALTO</option>
+                    <option value="MEDIO">MEDIO</option>
+                    <option value="BAJO">BAJO</option>
+                </select>
+            </div>
+            <button onclick="createIncidencia()">Crear Incidencia</button>
+            <div id="incOutput" class="output"></div>
+        </div>
+
+        <!-- Sección de Comentarios en Incidencias -->
+        <div class="section">
+            <h2>💬 Comentarios en Incidencias</h2>
+            <div class="grid">
+                <input type="number" id="incidenciaIdComentario" placeholder="ID de la Incidencia" min="1">
+                <textarea id="comentarioContenido" placeholder="Tu comentario..." rows="3"></textarea>
+            </div>
+            <button onclick="crearComentario()">Añadir Comentario</button>
+            <button onclick="listarComentariosIncidencia()">Ver Comentarios</button>
+            <div id="comentarioOutput" class="output"></div>
+        </div>
+
+        <!-- Sección de Listados -->
+        <div class="section">
+            <h2>5️⃣ Ver Datos Guardados</h2>
+            <button onclick="listProducts()">Listar Productos</button>
+            <button onclick="listIncidencias()">Listar Incidencias</button>
+            <button onclick="listUsers()">Listar Usuarios</button>
+            <div id="listOutput" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8081/api';
+        let token = localStorage.getItem('token');
+        let userId = localStorage.getItem('userId');
+        let productId = null;
+
+        // Verificar conexión al backend
+        fetch(`${API_URL}/auth/validate`, { headers: { 'Authorization': `Bearer fake` } })
+            .then(() => { updateStatus('Conectado a Backend ✅', true); })
+            .catch(() => { updateStatus('Error: No se puede conectar al Backend', false); });
+
+        function updateStatus(msg, connected) {
+            const elem = document.getElementById('status');
+            elem.textContent = msg;
+            elem.className = `status ${connected ? 'connected' : 'error'}`;
+        }
+
+        function log(elementId, message, type = 'info') {
+            const elem = document.getElementById(elementId);
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            elem.innerHTML += `<div class="${className}">→ ${message}</div>`;
+        }
+
+        async function register() {
+            const username = document.getElementById('regUsername').value + Date.now();
+            const email = document.getElementById('regEmail').value.replace('@', Date.now() + '@');
+            const password = document.getElementById('regPassword').value;
+
+            document.getElementById('regOutput').innerHTML = '';
+            log('regOutput', 'Registrando en CleverCloud MySQL...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password, role: 'USER' })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    log('regOutput', `✅ Usuario guardado en BD: ${data.username} (ID: ${data.id})`, 'success');
+                    userId = data.id;
+                    localStorage.setItem('userId', userId);
+                    document.getElementById('loginUsername').value = username;
+                } else {
+                    log('regOutput', `❌ Error: ${data.message || response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log('regOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            document.getElementById('loginOutput').innerHTML = '';
+            log('loginOutput', 'Consultando BD de CleverCloud...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    token = data.token;
+                    userId = data.userId;
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('userId', userId);
+                    log('loginOutput', `✅ Login exitoso. Usuario: ${data.username}`, 'success');
+                    log('loginOutput', `Token JWT obtenido (válido 24 horas)`, 'success');
+                } else {
+                    log('loginOutput', `❌ Error: ${data.message || response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log('loginOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function createProduct() {
+            if (!token) {
+                log('prodOutput', '❌ Error: Debes estar logueado', 'error');
+                return;
+            }
+
+            const nombre = document.getElementById('prodNombre').value;
+            const marca = document.getElementById('prodMarca').value;
+            const modelo = document.getElementById('prodModelo').value;
+            const peso = parseFloat(document.getElementById('prodPeso').value) || null;
+
+            document.getElementById('prodOutput').innerHTML = '';
+            log('prodOutput', 'Guardando producto en CleverCloud MySQL...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/productos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ nombre, marca, modelo, peso, usuarioId: userId })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    productId = data.id;
+                    log('prodOutput', `✅ Producto guardado: ${data.nombre} (ID: ${data.id})`, 'success');
+                } else {
+                    log('prodOutput', `❌ Error: ${data.message || response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log('prodOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function createIncidencia() {
+            if (!token) {
+                log('incOutput', '❌ Error: Debes estar logueado', 'error');
+                return;
+            }
+
+            const titulo = document.getElementById('incTitulo').value;
+            const descripcion = document.getElementById('incDescripcion').value;
+            const categoria = document.getElementById('incCategoria').value;
+            const severidad = document.getElementById('incSeveridad').value;
+
+            document.getElementById('incOutput').innerHTML = '';
+            log('incOutput', 'Guardando incidencia en CleverCloud MySQL...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/incidencias`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ titulo, descripcion, categoria, severidad, usuarioId: userId, productoId: productId })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    log('incOutput', `✅ Incidencia guardada: "${data.titulo}" (ID: ${data.id})`, 'success');
+                    log('incOutput', `Estado: ${data.estado}, Severidad: ${data.severidad}`, 'info');
+                } else {
+                    log('incOutput', `❌ Error: ${data.message || response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log('incOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function listProducts() {
+            if (!token) {
+                log('listOutput', '❌ Debes estar logueado', 'error');
+                return;
+            }
+            document.getElementById('listOutput').innerHTML = '';
+            log('listOutput', 'Cargando productos desde CleverCloud MySQL...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/productos`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok && data.length > 0) {
+                    let html = `<table class="data-table"><tr><th>ID</th><th>Nombre</th><th>Marca</th><th>Modelo</th></tr>`;
+                    data.forEach(p => {
+                        html += `<tr><td>${p.id}</td><td>${p.nombre}</td><td>${p.marca}</td><td>${p.modelo || '-'}</td></tr>`;
+                    });
+                    html += `</table>`;
+                    document.getElementById('listOutput').innerHTML += html;
+                    log('listOutput', `✅ Se encontraron ${data.length} producto(s)`, 'success');
+                } else {
+                    log('listOutput', 'No hay productos', 'info');
+                }
+            } catch (error) {
+                log('listOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function listIncidencias() {
+            if (!token) {
+                log('listOutput', '❌ Debes estar logueado', 'error');
+                return;
+            }
+            document.getElementById('listOutput').innerHTML = '';
+            log('listOutput', 'Cargando incidencias desde CleverCloud MySQL...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/incidencias`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok && data.length > 0) {
+                    let html = `<table class="data-table"><tr><th>ID</th><th>Título</th><th>Categoría</th><th>Severidad</th><th>Estado</th></tr>`;
+                    data.forEach(i => {
+                        html += `<tr><td>${i.id}</td><td>${i.titulo}</td><td>${i.categoria}</td><td>${i.severidad}</td><td>${i.estado}</td></tr>`;
+                    });
+                    html += `</table>`;
+                    document.getElementById('listOutput').innerHTML += html;
+                    log('listOutput', `✅ Se encontraron ${data.length} incidencia(s)`, 'success');
+                } else {
+                    log('listOutput', 'No hay incidencias', 'info');
+                }
+            } catch (error) {
+                log('listOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function listUsers() {
+            if (!token) {
+                log('listOutput', '❌ Debes estar logueado', 'error');
+                return;
+            }
+            document.getElementById('listOutput').innerHTML = '';
+            log('listOutput', 'Tu información guardada en BD:', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    log('listOutput', `✅ Usuario: ${data.username}`, 'success');
+                    log('listOutput', `Email: ${data.email}`, 'info');
+                    log('listOutput', `ID en BD: ${data.id}`, 'info');
+                    log('listOutput', `Role: ${data.role}`, 'info');
+                } else {
+                    log('listOutput', `❌ Error: ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log('listOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Restaurar sesión si existe
+        if (localStorage.getItem('username')) {
+            document.getElementById('loginUsername').value = localStorage.getItem('username');
+        }
+
+        // ===== FUNCIONES DE COMENTARIOS =====
+        async function crearComentario() {
+            if (!token) {
+                log('comentarioOutput', '❌ Error: Debes estar logueado', 'error');
+                return;
+            }
+
+            const incidenciaId = parseInt(document.getElementById('incidenciaIdComentario').value);
+            const contenido = document.getElementById('comentarioContenido').value;
+
+            if (!incidenciaId || !contenido) {
+                log('comentarioOutput', '❌ Error: Completa todos los campos', 'error');
+                return;
+            }
+
+            document.getElementById('comentarioOutput').innerHTML = '';
+            log('comentarioOutput', 'Guardando comentario en CleverCloud MySQL...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/comentarios-incidencias`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        contenido: contenido,
+                        incidenciaId: incidenciaId,
+                        usuarioId: userId,
+                        esSolucion: false
+                    })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    log('comentarioOutput', `✅ Comentario guardado en BD (ID: ${data.id})`, 'success');
+                    log('comentarioOutput', `Contenido: "${data.contenido}"`, 'info');
+                    document.getElementById('comentarioContenido').value = '';
+                } else {
+                    log('comentarioOutput', `❌ Error: ${data.message || response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log('comentarioOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function listarComentariosIncidencia() {
+            if (!token) {
+                log('comentarioOutput', '❌ Error: Debes estar logueado', 'error');
+                return;
+            }
+
+            const incidenciaId = parseInt(document.getElementById('incidenciaIdComentario').value);
+            if (!incidenciaId) {
+                log('comentarioOutput', '❌ Error: Especifica ID de incidencia', 'error');
+                return;
+            }
+
+            document.getElementById('comentarioOutput').innerHTML = '';
+            log('comentarioOutput', 'Cargando comentarios desde CleverCloud MySQL...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/comentarios-incidencias/incidencia/${incidenciaId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+                if (response.ok && data.length > 0) {
+                    let html = `<table class="data-table"><tr><th>Usuario</th><th>Comentario</th><th>Fecha</th><th>Es Solución</th></tr>`;
+                    data.forEach(c => {
+                        const fecha = new Date(c.createdAt).toLocaleString();
+                        html += `<tr><td>${c.usuario?.username || 'Anónimo'}</td><td>${c.contenido}</td><td>${fecha}</td><td>${c.esSolucion ? '✅ Sí' : '❌ No'}</td></tr>`;
+                    });
+                    html += `</table>`;
+                    document.getElementById('comentarioOutput').innerHTML += html;
+                    log('comentarioOutput', `✅ Se encontraron ${data.length} comentario(s)`, 'success');
+                } else {
+                    log('comentarioOutput', 'No hay comentarios en esta incidencia', 'info');
+                }
+            } catch (error) {
+                log('comentarioOutput', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+✅ COMENTARIOS EN INCIDENCIAS - CONFIGURADO Y LISTO
+
+═══════════════════════════════════════════════════════════════
+
+📊 NUEVA TABLA CREADA: comentarios_incidencias
+
+Estructura:
+- id: ID único del comentario
+- contenido: El texto del comentario
+- incidencia_id: Incidencia a la que pertenece
+- usuario_id: Usuario que hizo el comentario
+- es_solucion: Boolean (si es una solución o solo comentario)
+- created_at: Fecha de creación
+- updated_at: Fecha de última actualización
+
+═══════════════════════════════════════════════════════════════
+
+🔗 ENDPOINTS DE COMENTARIOS:
+
+Crear comentario:
+POST /api/comentarios-incidencias
+{
+  "contenido": "El TV parpadea al encender",
+  "incidenciaId": 1,
+  "usuarioId": 1,
+  "esSolucion": false
+}
+
+Obtener comentarios de una incidencia:
+GET /api/comentarios-incidencias/incidencia/{incidenciaId}
+
+Obtener comentarios del usuario:
+GET /api/comentarios-incidencias/usuario/{usuarioId}
+
+Actualizar comentario:
+PUT /api/comentarios-incidencias/{id}
+{
+  "contenido": "Nuevo contenido",
+  "esSolucion": true
+}
+
+Eliminar comentario:
+DELETE /api/comentarios-incidencias/{id}
+
+═══════════════════════════════════════════════════════════════
+
+📝 FLUJO DE COMENTARIOS EN INCIDENCIAS:
+
+1. Usuario registra un producto
+2. Usuario reporta una incidencia sobre el producto
+3. Usuario o técnico COMENTA en la incidencia
+   - Puede ser un comentario normal
+   - O puede marcar como "esSolucion: true"
+4. Otros usuarios ven los comentarios
+5. Si alguien proporciona solución, se marca como esSolucion=true
+6. Todo se guarda en CleverCloud MySQL
+
+═══════════════════════════════════════════════════════════════
+
+🧪 PROBANDO EN test-cleverclouD.html:
+
+1. Registra un usuario
+2. Haz login
+3. Crea un producto (se asigna ID automático)
+4. Crea una incidencia (se asigna ID automático)
+5. En la sección "Comentarios en Incidencias":
+   - Ingresa el ID de la incidencia creada
+   - Escribe un comentario
+   - Haz click en "Añadir Comentario"
+6. El comentario se guarda en CleverCloud MySQL
+7. Haz click en "Ver Comentarios" para verlos listados
+
+═══════════════════════════════════════════════════════════════
+
+💬 DATOS QUE SE GUARDAN:
+
+Comentario:
+{
+  "id": 1,
+  "contenido": "El TV parpadea al encender, necesita servicio",
+  "incidenciaId": 1,
+  "usuarioId": 1,
+  "esSolucion": false,
+  "usuario": {
+    "id": 1,
+    "username": "juan",
+    "email": "juan@example.com"
+  },
+  "createdAt": "2026-02-02T10:00:00",
+  "updatedAt": "2026-02-02T10:00:00"
+}
+
+═══════════════════════════════════════════════════════════════
+
+📋 ESTRUCTURA COMPLETA DE UNA INCIDENCIA CON COMENTARIOS:
+
+Incidencia:
+{
+  "id": 1,
+  "titulo": "TV no enciende",
+  "descripcion": "El TV no responde al botón de encendido",
+  "categoria": "FUNCIONALIDAD",
+  "severidad": "ALTO",
+  "estado": "ABIERTA",
+  "productoId": 1,
+  "usuarioId": 1,
+  "createdAt": "2026-02-02T09:00:00",
+  "comentarios": [
+    {
+      "id": 1,
+      "contenido": "El TV parpadea al encender",
+      "usuarioId": 1,
+      "esSolucion": false,
+      "createdAt": "2026-02-02T09:30:00"
+    },
+    {
+      "id": 2,
+      "contenido": "Intenta desconectar 5 minutos y reconectar",
+      "usuarioId": 2,
+      "esSolucion": true,
+      "createdAt": "2026-02-02T10:00:00"
+    }
+  ]
+}
+
+═══════════════════════════════════════════════════════════════
+
+🚀 CARACTERÍSTICAS:
+
+✅ Comentarios enlazados a incidencias
+✅ Cada comentario sabe quién lo escribió (usuario_id)
+✅ Se pueden marcar como solución (es_solucion=true)
+✅ Se guardan automáticamente en CleverCloud MySQL
+✅ Se cargan cuando consultamos una incidencia
+✅ Timestamp de creación y actualización
+✅ Se eliminan en cascada si se elimina la incidencia
+
+═══════════════════════════════════════════════════════════════
+
+📱 INTERFAZ WEB (test-cleverclouD.html):
+
+Sección "Comentarios en Incidencias":
+- Input: ID de incidencia
+- TextArea: Contenido del comentario
+- Botón: "Añadir Comentario" → POST a /api/comentarios-incidencias
+- Botón: "Ver Comentarios" → GET /api/comentarios-incidencias/incidencia/{id}
+
+═══════════════════════════════════════════════════════════════
+
+✨ TODO ESTÁ FUNCIONANDO:
+
+✅ Tabla de comentarios creada en CleverCloud
+✅ Backend compilado con endpoints de comentarios
+✅ Frontend (test-cleverclouD.html) actualizado
+✅ Puedes crear, listar y eliminar comentarios
+✅ Todo se guarda en CleverCloud MySQL persistentemente
+
+═══════════════════════════════════════════════════════════════
+
+PASO SIGUIENTE:
+
+Abre test-cleverclouD.html en navegador y:
+1. Registra usuario
+2. Crea producto
+3. Crea incidencia
+4. Añade comentarios a la incidencia
+5. ¡Todos los comentarios se guardan en CleverCloud!
+
+═══════════════════════════════════════════════════════════════

@@ -15,12 +15,18 @@ public class CorsConfig implements WebMvcConfigurer {
 
     /**
      * Configura CORS para la aplicación
-     * Permite que el frontend (en puertos 4200 y 4201) acceda a la API
+     * Permite que el frontend acceda a la API desde múltiples orígenes
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:4200", "http://localhost:4201")
+                .allowedOrigins(
+                    "http://localhost:4200",
+                    "http://localhost:4201",
+                    "http://localhost:8081",
+                    "http://localhost:3000",
+                    "null"  // Para permitir file:// local
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("*")
                 .allowCredentials(true)
@@ -34,7 +40,13 @@ public class CorsConfig implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:4201"));
+        configuration.setAllowedOrigins(Arrays.asList(
+            "http://localhost:4200",
+            "http://localhost:4201",
+            "http://localhost:8081",
+            "http://localhost:3000",
+            "null"  // Para permitir file:// local
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
