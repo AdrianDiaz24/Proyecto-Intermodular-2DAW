@@ -102,3 +102,18 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     INDEX idx_usuario_id_audit (usuario_id),
     INDEX idx_timestamp (timestamp)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabla de Notas para Incidencias (NUEVA)
+CREATE TABLE IF NOT EXISTS notas (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    contenido TEXT NOT NULL,
+    incidencia_id BIGINT NOT NULL,
+    usuario_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (incidencia_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    INDEX idx_incidencia_id (incidencia_id),
+    INDEX idx_usuario_id_notas (usuario_id),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
