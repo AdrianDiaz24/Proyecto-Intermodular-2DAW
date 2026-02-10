@@ -9,6 +9,9 @@ import { ProductComponent } from '../pages/product/product.component';
 import { IncidenceDetailComponent } from '../pages/incidence-detail/incidence-detail.component';
 import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { AboutComponent } from '../pages/about/about.component';
+import { NotasComponent } from "../pages/notas/notas.component";
+
+import { AuthService } from './services/auth.service';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
@@ -179,6 +182,17 @@ export const appRoutes: Routes = [
             breadcrumb: 'Detalle de Incidencia',
             title: 'Detalle de Incidencia'
         }
+    },
+
+
+    {
+        path: 'notas',
+        component: NotasComponent,
+        data: {
+            breadcrumb: 'Notas',
+            title: 'Notas'
+        }
+
     },
 
     // ==========================================
