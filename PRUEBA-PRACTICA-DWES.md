@@ -10,4 +10,4 @@ La seguridad en si ya estaba implemetada desde antes con JWT para que al iniciar
 
 mvnw springboot:run
 curl -X POST http://localhost:8080/api/auth/login -H "Content-Type: application/json" -d '{"email":"adiaan158g@gmail.com","password":"123456"}'
-curl -X POST http://localhost:8080/api/notas -H "Content-Type: application/json" -
+curl -X POST http://localhost:8080/api/notas -H "Content-Type: application/json" -H "Authorization : Bearer <TOKEN>" -d '{"titulo":"Nota de prueba","contenido":"Contenido de la nota de prueba"}'
