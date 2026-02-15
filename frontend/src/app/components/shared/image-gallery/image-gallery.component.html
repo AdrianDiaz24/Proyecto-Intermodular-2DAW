@@ -1,0 +1,118 @@
+<!-- Galería de imágenes accesible -->
+<section
+  class="gallery"
+  [attr.aria-label]="galleryTitle"
+  role="region">
+
+  <h2 class="gallery__title" id="gallery-title">{{ galleryTitle }}</h2>
+
+  <!-- Grid de miniaturas -->
+  <ul
+    class="gallery__grid"
+    role="list"
+    [style.--columns]="columns"
+    aria-labelledby="gallery-title">
+
+    <li
+      *ngFor="let image of images; let i = index"
+      class="gallery__item"
+      role="listitem">
+
+      <figure class="gallery__figure">
+        <button
+          class="gallery__button"
+          type="button"
+          (click)="openModal(image, i)"
+          (keydown.enter)="openModal(image, i)"
+          [attr.aria-label]="'Ver imagen: ' + image.alt + '. ' + image.caption"
+          [attr.aria-describedby]="'caption-' + i">
+
+          <img
+            [src]="image.src"
+            [srcset]="image.srcset || ''"
+            [alt]="image.alt"
+            loading="lazy"
+            decoding="async"
+            class="gallery__image">
+        </button>
+
+        <figcaption
+          [id]="'caption-' + i"
+          class="gallery__caption">
+          {{ image.caption }}
+        </figcaption>
+      </figure>
+    </li>
+  </ul>
+</section>
+
+<!-- Modal de imagen ampliada -->
+<div
+  *ngIf="isModalOpen && selectedImage"
+  class="gallery-modal"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="'Visor de imagen: ' + selectedImage.alt">
+
+  <!-- Overlay para cerrar -->
+  <div
+    class="gallery-modal__overlay"
+    (click)="closeModal()"
+    aria-hidden="true">
+  </div>
+
+  <!-- Contenido del modal -->
+  <div class="gallery-modal__content">
+
+    <!-- Botón cerrar -->
+    <button
+      class="gallery-modal__close"
+      type="button"
+      (click)="closeModal()"
+      aria-label="Cerrar visor de imagen (Escape)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <!-- Navegación anterior -->
+    <button
+      class="gallery-modal__nav gallery-modal__nav--prev"
+      type="button"
+      (click)="previousImage()"
+      aria-label="Imagen anterior (flecha izquierda)"
+      [attr.aria-disabled]="images.length <= 1">
+      <span aria-hidden="true">&#10094;</span>
+    </button>
+
+    <!-- Imagen principal -->
+    <figure class="gallery-modal__figure">
+      <img
+        [src]="selectedImage.src"
+        [alt]="selectedImage.alt"
+        class="gallery-modal__image"
+        loading="eager">
+
+      <figcaption class="gallery-modal__caption">
+        <p class="gallery-modal__description">{{ selectedImage.caption }}</p>
+        <p class="gallery-modal__position" aria-live="polite">
+          Imagen {{ getPositionIndicator() }}
+        </p>
+      </figcaption>
+    </figure>
+
+    <!-- Navegación siguiente -->
+    <button
+      class="gallery-modal__nav gallery-modal__nav--next"
+      type="button"
+      (click)="nextImage()"
+      aria-label="Imagen siguiente (flecha derecha)"
+      [attr.aria-disabled]="images.length <= 1">
+      <span aria-hidden="true">&#10095;</span>
+    </button>
+  </div>
+
+  <!-- Instrucciones de navegación para lectores de pantalla -->
+  <div class="sr-only" aria-live="polite">
+    Usa las flechas izquierda y derecha para navegar entre imágenes.
+    Presiona Escape para cerrar el visor.
+  </div>
+</div>

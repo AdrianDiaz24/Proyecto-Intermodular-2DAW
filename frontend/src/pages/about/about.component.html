@@ -1,12 +1,12 @@
 
-<main class="about">
+<div class="about">
   <!-- Breadcrumbs -->
   <app-breadcrumbs></app-breadcrumbs>
 
   <!-- Hero Section -->
-  <section class="about__hero">
+  <section class="about__hero" aria-labelledby="about-title">
     <article class="about__hero-content">
-      <h1 class="about__title">Sobre ReparaFácil</h1>
+      <h1 id="about-title" class="about__title">Sobre ReparaFácil</h1>
       <p class="about__subtitle">
         Conectamos a personas con problemas técnicos con una comunidad dispuesta a ayudar
       </p>
@@ -29,6 +29,17 @@
     </article>
   </section>
 
+  <!-- Galería de Imágenes Accesible -->
+  <section class="about__section about__section--gallery">
+    <article class="about__container">
+      <app-image-gallery
+        [images]="galleryImages"
+        [galleryTitle]="'Nuestro Taller y Comunidad'"
+        [columns]="3">
+      </app-image-gallery>
+    </article>
+  </section>
+
   <!-- Características -->
   <section class="about__section about__section--alt">
     <article class="about__container">
@@ -36,7 +47,7 @@
       <div class="about__features">
         <article *ngFor="let feature of features" class="about__feature">
           <div class="about__feature-icon">
-            <img [src]="feature.icon" [alt]="feature.title">
+            <img [src]="feature.icon" [alt]="feature.title + ' - icono decorativo'" aria-hidden="true">
           </div>
           <h3 class="about__feature-title">{{ feature.title }}</h3>
           <p class="about__feature-description">{{ feature.description }}</p>
@@ -51,21 +62,21 @@
       <h2 class="about__section-title">¿Cómo funciona?</h2>
       <div class="about__steps">
         <article class="about__step">
-          <span class="about__step-number">1</span>
+          <span class="about__step-number" aria-hidden="true">1</span>
           <h3 class="about__step-title">Busca tu producto</h3>
           <p class="about__step-description">
             Encuentra el electrodoméstico que tiene el problema.
           </p>
         </article>
         <article class="about__step">
-          <span class="about__step-number">2</span>
+          <span class="about__step-number" aria-hidden="true">2</span>
           <h3 class="about__step-title">Reporta la incidencia</h3>
           <p class="about__step-description">
             Describe el problema con el mayor detalle posible.
           </p>
         </article>
         <article class="about__step">
-          <span class="about__step-number">3</span>
+          <span class="about__step-number" aria-hidden="true">3</span>
           <h3 class="about__step-title">Recibe ayuda</h3>
           <p class="about__step-description">
             La comunidad responderá con posibles soluciones.
@@ -74,6 +85,6 @@
       </div>
     </article>
   </section>
-</main>
+</div>
 
 

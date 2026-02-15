@@ -1,11 +1,14 @@
-<header class="c-header">
-    <a routerLink="/" class="c-header__logo" title="Volver a inicio">
+<header class="c-header" role="banner">
+    <a routerLink="/" class="c-header__logo" title="Volver a inicio" aria-label="ReparaFácil - Ir a inicio">
         <i class="fas fa-tools" aria-hidden="true"></i>
         <span>ReparaFácil</span>
     </a>
 
     <!-- Navegación normal -->
-    <nav class="c-header__nav" [class.c-header__nav--open]="menuOpen" *ngIf="!isSearchPage">
+    <nav class="c-header__nav"
+         [class.c-header__nav--open]="menuOpen"
+         *ngIf="!isSearchPage"
+         aria-label="Navegación principal">
         <a routerLink="/" class="c-header__nav-item" (click)="closeMenu()">Inicio</a>
         <a routerLink="/perfil" class="c-header__nav-item" (click)="closeMenu()">Perfil</a>
         <a routerLink="/buscar" class="c-header__nav-item" (click)="closeMenu()">Productos</a>
@@ -13,16 +16,19 @@
     </nav>
 
     <!-- Buscador en página de búsqueda -->
-    <div class="c-header__search" *ngIf="isSearchPage">
+    <div class="c-header__search" *ngIf="isSearchPage" role="search">
+        <label for="header-search" class="sr-only">Buscar electrodomésticos</label>
         <input
           type="text"
+          id="header-search"
           class="c-header__search-input"
           placeholder="Busca el electrodoméstico o aparato a reparar..."
           [(ngModel)]="searchQuery"
           (keypress)="onSearchKeyPress($event)"
+          aria-label="Buscar electrodomésticos o aparatos"
         >
-        <button class="c-header__search-button" (click)="onSearch()">
-            <img src="assets/icons/buscar.avif" alt="Buscar">
+        <button class="c-header__search-button" (click)="onSearch()" aria-label="Realizar búsqueda">
+            <img src="assets/icons/buscar.avif" alt="" aria-hidden="true">
         </button>
     </div>
 
@@ -33,9 +39,10 @@
             class="c-header__user-btn"
             routerLink="/login"
             title="Ir a iniciar sesión"
+            aria-label="Ir a página de inicio de sesión"
             type="button"
         >
-            <img class="c-header__user-btn_img" src="assets/icons/UsuarioBlanco.avif" alt="Perfil de usuario">
+            <img class="c-header__user-btn_img" src="assets/icons/UsuarioBlanco.avif" alt="" aria-hidden="true">
         </button>
 
         <!-- Botón hamburguesa -->
@@ -44,12 +51,14 @@
             [class.c-header__hamburger--open]="menuOpen"
             (click)="toggleMenu()"
             type="button"
-            aria-label="Menú de navegación"
+            aria-label="Abrir menú de navegación"
+            [attr.aria-expanded]="menuOpen"
+            aria-controls="mobile-nav"
             *ngIf="!isSearchPage"
         >
-            <span class="c-header__line"></span>
-            <span class="c-header__line"></span>
-            <span class="c-header__line"></span>
+            <span class="c-header__line" aria-hidden="true"></span>
+            <span class="c-header__line" aria-hidden="true"></span>
+            <span class="c-header__line" aria-hidden="true"></span>
         </button>
     </div>
 </header>

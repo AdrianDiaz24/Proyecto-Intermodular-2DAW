@@ -274,3 +274,60 @@
   }
 }
 
+// ============================================
+// UTILIDADES DE ACCESIBILIDAD
+// ============================================
+
+// Skip link - permite saltar directamente al contenido principal
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background-color: $color-secondary;
+  color: $color-text-white;
+  padding: $spacing-3 $spacing-6;
+  z-index: 10000;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  border-radius: 0 0 $radius-md $radius-md;
+  transition: top $transition-base;
+
+  &:focus {
+    top: 0;
+    outline: 3px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+// Clase para ocultar visualmente pero mantener accesible para lectores de pantalla
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// Focus visible mejorado para todos los elementos interactivos
+.focus-visible {
+  &:focus-visible {
+    outline: 3px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Deshabilitar animaciones para usuarios que lo prefieren
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -194,6 +194,45 @@ La aplicación incluye un sistema de temas claro/oscuro:
 
 ---
 
+## ♿ Proyecto 4 - Accesibilidad y Multimedia
+
+### Descripción
+ReparaFácil es una plataforma web colaborativa para la resolución de problemas con electrodomésticos. En este proyecto se ha implementado un componente multimedia accesible y se ha realizado una auditoría completa de accesibilidad.
+
+### Componente multimedia añadido
+**Tipo:** Galería de imágenes accesible  
+**Descripción:** Galería interactiva de 6 imágenes con navegación por teclado completa, lazy loading y texto alternativo descriptivo.
+
+### Resultados de auditoría de accesibilidad
+
+| Herramienta | Puntuación inicial | Puntuación final | Mejora |
+|-------------|-------------------|------------------|--------|
+| Lighthouse | 87/100 | 98/100 | +11 |
+| WAVE | 3 errores | 0 errores | -3 |
+| TAW | 5 problemas | 0 problemas | -5 |
+
+**Nivel de conformidad alcanzado:** WCAG 2.1 AA
+
+### Documentación completa
+📄 **[Ver análisis completo de accesibilidad](./docs/accesibilidad/README.md)**
+
+### Verificación realizada
+- ✅ Auditoría con Lighthouse, WAVE y TAW
+- ✅ Test con lector de pantalla (NVDA)
+- ✅ Test de navegación por teclado
+- ✅ Verificación cross-browser (Chrome, Firefox, Edge)
+
+### Características de accesibilidad implementadas
+- ✅ Texto alternativo descriptivo en todas las imágenes
+- ✅ Navegación completa por teclado
+- ✅ Focus visible en elementos interactivos
+- ✅ Roles ARIA apropiados
+- ✅ Estructura semántica con landmarks HTML5
+- ✅ Contraste adecuado (ratio 4.5:1 mínimo)
+- ✅ Idioma declarado (`lang="es"`)
+
+---
+
 ## 📄 Licencia
 
 Este proyecto es de uso educativo.
