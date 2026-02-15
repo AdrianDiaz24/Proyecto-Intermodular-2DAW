@@ -118,11 +118,11 @@ Componente interactivo que muestra una colección de 6 imágenes del taller y la
 
 ### Herramientas utilizadas
 
-| Herramienta | Puntuación/Errores | Captura |
-|-------------|-------------------|---------|
-| Lighthouse | 87/100 | ![Lighthouse inicial](./capturas/lighthouse-antes.png) |
-| WAVE | 3 errores, 12 alertas | ![WAVE inicial](./capturas/wave-antes.png) |
-| TAW | 5 problemas nivel A | ![TAW](./capturas/taw.png) |
+| Herramienta | Puntuación/Errores | 
+|-------------|-------------------|
+| Lighthouse | 87/100 | 
+| WAVE | 3 errores, 12 alertas 
+| TAW | 5 problemas nivel A | 
 
 ### Los 3 problemas más graves detectados
 
@@ -376,11 +376,6 @@ H1: Sobre ReparaFácil (título principal de la página)
 | Firefox | 122.0 | ✅ | ✅ | Sin problemas |
 | Edge | 121.0 | ✅ | ✅ | Sin problemas |
 
-**Capturas de pantalla:**
-- [Chrome](./capturas/chrome.png)
-- [Firefox](./capturas/firefox.png)
-- [Edge](./capturas/edge.png)
-
 ---
 
 ## Sección 7: Resultados finales después de correcciones
@@ -393,9 +388,6 @@ H1: Sobre ReparaFácil (título principal de la página)
 | WAVE | 3 errores | 0 errores | -3 errores |
 | TAW | 5 problemas | 0 problemas | -5 problemas |
 
-**Capturas de resultados finales:**
-- [Lighthouse después](./capturas/lighthouse-despues.png)
-- [WAVE después](./capturas/wave-despues.png)
 
 ### Checklist de conformidad WCAG 2.1 Nivel AA
 
@@ -459,9 +451,3 @@ La accesibilidad no es un extra opcional, sino un requisito fundamental del desa
 
 ---
 
-## Referencias
-
-- [WCAG 2.1 - W3C](https://www.w3.org/TR/WCAG21/)
-- [Introducción a la Accesibilidad Web - W3C WAI](https://www.w3.org/WAI/fundamentals/accessibility-intro/es)
-- [WebAIM - Recursos de Accesibilidad](https://webaim.org/)
-- [NVDA - Lector de Pantalla](https://www.nvaccess.org/)
