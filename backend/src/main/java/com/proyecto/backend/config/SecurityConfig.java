@@ -61,12 +61,18 @@ public class SecurityConfig {
         http
             .csrf()
                 .disable()
+            .cors()
+                .and()
             .authorizeHttpRequests(auth -> auth
-                // Endpoints públicos
+                // Endpoints públicos - sin autenticación
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/register").permitAll()
+                .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
+
                 // Endpoints de auditoría solo para ADMIN
                 .requestMatchers("/api/auditoria/**").hasRole("ADMIN")
+
                 // Todos los demás endpoints requieren autenticación
                 .anyRequest().authenticated()
             )
@@ -74,9 +80,16 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+                .and()
             .headers()
-                .frameOptions().disable();
+                .frameOptions().disable()
+                .and()
+            .exceptionHandling()
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(401);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"error\": \"No autorizado - Token inválido o expirado\"}");
+                });
 
         return http.build();
     }
