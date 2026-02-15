@@ -33,6 +33,11 @@ main article {
   color: var(--c-text-primary);
 }
 
+// Excepción: el buscador del hero no debe tener fondo
+main article.p-home-hero__search-box {
+  background-color: transparent;
+}
+
 // Títulos (excluyendo los de header y footer)
 main h1, main h2, main h3, main h4, main h5, main h6 {
   color: var(--c-text-primary);
